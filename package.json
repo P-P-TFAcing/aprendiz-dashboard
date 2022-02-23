@@ -1,0 +1,37 @@
+{
+    "name": "aprendiz-dashboard",
+    "version": "1.0.0",
+    "description": "Aprendiz Dashboard",
+    "main": "webpack.config.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "dev": "webpack --watch --progress --colors --content-base src/main/js",
+        "start": "webpack-dev-server -d --content-base src/main/webapp",
+        "build": "webpack --progress --colors --content-base src/main/webapp"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git@github.com:P-P-TFAcing/aprendiz-dashboard.git"
+    },
+    "author": "Timothy Heider",
+    "license": "ISC",
+    "devDependencies": {
+        "babel-core": "6.7.7",
+        "babel-loader": "6.2.4",
+        "css-loader": "^0.23.1",
+        "webpack": "1.13.0"
+    },
+    "dependencies": {
+        "bootstrap": "3.3.7",
+        "angular": "1.8.2",
+        "angular-sanitize": "1.8.2",
+        "angular-route": "1.8.2",
+        "angular-cookies": "1.8.2",
+        "angular-animate": "1.8.2",
+        "angular-file-upload": "2.5.0",
+        "angular-ui-router": "0.3.1",
+        "angular-messages": "1.8.2",
+        "angular-ui-bootstrap": "2.2.0",
+        "angular-loading-bar": "0.9.0"
+    }
+}
