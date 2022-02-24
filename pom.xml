@@ -3,8 +3,9 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>io.happycoding</groupId>
-  <artifactId>app-engine-hello-world</artifactId>
+  <groupId>com.pptpdx</groupId>
+  <artifactId>aprendiz-dashboard</artifactId>
+  <name>Aprendiz Dashboard AppEngine Web Application</name>
   <version>1</version>
 
   <properties>
@@ -15,11 +16,18 @@
     <jetty.version>9.4.35.v20201120</jetty.version>
 
     <!-- Project-specific properties -->
-    <exec.mainClass>io.happycoding.ServerMain</exec.mainClass>
+    <exec.mainClass>com.pptpdx.ServerMain</exec.mainClass>
     <googleCloudProjectId>aprendiz-dashboard</googleCloudProjectId>
   </properties>
 
   <dependencies>
+      
+    <dependency>
+      <groupId>com.google.apis</groupId>
+      <artifactId>google-api-services-appengine</artifactId>
+      <version>v1-rev20211016-1.32.1</version>
+    </dependency>      
+      
     <!-- Java Servlets API -->
     <dependency>
       <groupId>javax.servlet</groupId>

@@ -1,9 +1,7 @@
-package io.happycoding;
+package com.pptpdx;
 
 import java.net.URL;
 import org.eclipse.jetty.annotations.AnnotationConfiguration;
-import org.eclipse.jetty.server.Handler;
-import org.eclipse.jetty.server.handler.DefaultHandler;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.DefaultServlet;
 import org.eclipse.jetty.webapp.Configuration;
