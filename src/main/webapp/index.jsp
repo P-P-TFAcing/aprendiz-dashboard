@@ -17,7 +17,8 @@
 
 -->
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="com.example.appengine.Utils" %>
+<%@ page import="com.pptpdx.Utils" %>
+<%@ page import="com.pptpdx.ClassroomController" %>
 <%@ page import="com.google.api.client.auth.oauth2.Credential" %>
 
 <html>
@@ -41,6 +42,8 @@
     String username = Utils.getUserInfo(credential);
 %>
   <p> Hello, <%= username %>!</p>
+  
+  <p><% ClassroomController.getBasicData(); %></p>
 
   <form action="/logout" method="post">
     <button>Log Out</button>

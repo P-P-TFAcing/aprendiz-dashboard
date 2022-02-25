@@ -13,7 +13,6 @@
 # limitations under the License.
 
 runtime: java11
-
 # [START gae_java11_oauth2_yaml]
 env_variables:
   CLIENT_ID: '306377984914-p28n8601j01jsv6cudu632vss51idh4b.apps.googleusercontent.com'

@@ -1,12 +1,9 @@
 package com.pptpdx;
 
 import java.net.URL;
-import org.eclipse.jetty.annotations.AnnotationConfiguration;
 import org.eclipse.jetty.server.Server;
-import org.eclipse.jetty.servlet.DefaultServlet;
 import org.eclipse.jetty.webapp.Configuration;
 import org.eclipse.jetty.webapp.WebAppContext;
-import org.eclipse.jetty.webapp.WebInfConfiguration;
 
 /**
  * Starts up the server, including a DefaultServlet that handles static files,
@@ -20,33 +17,31 @@ public class ServerMain {
     int listenerPort = Integer.parseInt(System.getenv().getOrDefault("PORT", "8080"));
     
     Server server = new Server(listenerPort);
-    WebAppContext webAppContext = new WebAppContext();
-    server.setHandler(webAppContext);
 
-    // Load static content from inside the jar file.
+    WebAppContext webapp = new WebAppContext();
+    webapp.setContextPath("/");
+    webapp.addServlet("com.pptpdx.Oauth2AuthorizationCodeServlet", "/login");
+    webapp.addServlet("com.pptpdx.Oauth2CallbackServlet", "/oauth2callback/*");
+    webapp.addServlet("com.pptpdx.LogoutServlet", "/logout");
+    String warName = "aprendiz-dashboard.war";
     URL webAppDir =
         ServerMain.class.getClassLoader().getResource("META-INF/resources");
-    webAppContext.setResourceBase(webAppDir.toURI().toString());
+    System.out.println("starting " + warName + " server main");
+    webapp.setResourceBase(webAppDir.toURI().toString());      
+    //webapp.setResourceBase(webAppDir.toURI().toString());    
+    Configuration.ClassList classlist = Configuration.ClassList.setServerDefault(server);
 
-    // Enable annotations so the server sees classes annotated with @WebServlet.
-    webAppContext.setConfigurations(new Configuration[]{ 
-      new AnnotationConfiguration(),
-      new WebInfConfiguration(), 
-    });
+    // Enable Annotation Scanning.
+    classlist.addBefore(
+        "org.eclipse.jetty.webapp.JettyWebXmlConfiguration",
+        "org.eclipse.jetty.annotations.AnnotationConfiguration");
 
-    // Look for annotations in the classes directory (dev server) and in the
-    // jar file (live server)
-    webAppContext.setAttribute(
-        "org.eclipse.jetty.server.webapp.ContainerIncludeJarPattern", 
-        ".*/target/classes/|.*\\.jar");
+    // Set the the WebAppContext as the ContextHandler for the server.
+    server.setHandler(webapp);
 
-    // Handle static resources, e.g. html files.
-//    webAppContext.addServlet(DefaultServlet.class, "/");
-
-    // Start the server! 🚀
+    // Start the server
     server.start();
     System.out.println("Aprendiz Dashboard server started port " + listenerPort);
-
     // Keep the main thread alive while the server is running.
     server.join();
   }

@@ -5,6 +5,7 @@
 
     <groupId>com.pptpdx</groupId>
     <artifactId>aprendiz-dashboard</artifactId>
+    <packaging>jar</packaging>
     <name>Aprendiz Dashboard AppEngine Web Application</name>
     <version>1</version>
 
@@ -45,21 +46,9 @@
         </dependency>
         <!-- [END gae_java11_oauth2_dependencies] -->
         <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-            <version>4.0.1</version>
-            <type>jar</type>
-        </dependency>
-        <dependency>
-            <groupId>jstl</groupId>
-            <artifactId>jstl</artifactId>
-            <version>1.2</version>
-        </dependency>
-        <dependency>
             <groupId>org.eclipse.jetty</groupId>
             <artifactId>jetty-server</artifactId>
             <version>9.4.44.v20210927</version>
-            <type>jar</type>
         </dependency>
         <dependency>
             <groupId>org.eclipse.jetty</groupId>
@@ -69,13 +58,40 @@
         </dependency>
         <dependency>
             <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-annotations</artifactId>
+            <artifactId>jetty-util</artifactId>
             <version>9.4.44.v20210927</version>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-annotations</artifactId>
+            <version>9.4.43.v20210629</version>
             <type>jar</type>
         </dependency>
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>apache-jsp</artifactId>
+            <version>9.4.44.v20210927</version>
+        </dependency>
+        <dependency>
+            <groupId>jstl</groupId>
+            <artifactId>jstl</artifactId>
+            <version>1.2</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.apis</groupId>
+            <artifactId>google-api-services-classroom</artifactId>
+            <version>v1-rev20211029-1.32.1</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>com.google.api-client</groupId>
+            <artifactId>google-api-client-appengine</artifactId>
+            <version>1.33.2</version>
+        </dependency>        
     </dependencies>
 
     <build>
+        <finalName>aprendiz-dashboard</finalName>
         <plugins>
             <!-- Copy static resources like html files into the output jar file. -->
             <plugin>
