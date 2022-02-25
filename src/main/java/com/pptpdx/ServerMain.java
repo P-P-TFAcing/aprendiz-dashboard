@@ -17,7 +17,9 @@ public class ServerMain {
   public static void main(String[] args) throws Exception {
 
     // Create a server that listens on port 8080.
-    Server server = new Server(8080);
+    int listenerPort = Integer.parseInt(System.getenv().getOrDefault("PORT", "8080"));
+    
+    Server server = new Server(listenerPort);
     WebAppContext webAppContext = new WebAppContext();
     server.setHandler(webAppContext);
 
@@ -39,11 +41,11 @@ public class ServerMain {
         ".*/target/classes/|.*\\.jar");
 
     // Handle static resources, e.g. html files.
-    webAppContext.addServlet(DefaultServlet.class, "/");
+//    webAppContext.addServlet(DefaultServlet.class, "/");
 
     // Start the server! 🚀
     server.start();
-    System.out.println("Server started!");
+    System.out.println("Aprendiz Dashboard server started port " + listenerPort);
 
     // Keep the main thread alive while the server is running.
     server.join();
