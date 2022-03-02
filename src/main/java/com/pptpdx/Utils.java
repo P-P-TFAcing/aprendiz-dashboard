@@ -30,13 +30,16 @@ import java.util.Arrays;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import org.apache.log4j.Logger;
 
 public class Utils {
+
+    private static final Logger LOGGER = Logger.getLogger(Utils.class);
 
     /**
      * Get application name from the runtime environment variable
      */
-    static final String APP_NAME = System.getenv("GAE_APPLICATION");
+    static final String APP_NAME = System.getenv("APRENDIZ_DASHBOARD");
 
     /**
      * Global instance of the {@link DataStoreFactory}. The best practice is to
@@ -58,9 +61,9 @@ public class Utils {
     /**
      * Set your OAuth 2.0 Client Credentials
      */
-    private static String CLIENT_ID = System.getenv("CLIENT_ID");
+    private static final String CLIENT_ID = System.getProperty("GOOGLE_CLIENT_ID");
 
-    private static String CLIENT_SECRET = System.getenv("CLIENT_SECRET");
+    private static final String CLIENT_SECRET = System.getProperty("GOOGLE_CLIENT_SECRET");
 
     /**
      * Scopes for requesting access to Google OAuth2 API
@@ -68,17 +71,19 @@ public class Utils {
     private static final List<String> SCOPES
             = Arrays.asList(
                     "https://www.googleapis.com/auth/userinfo.profile",
-                    "https://www.googleapis.com/auth/userinfo.email");
+                    "https://www.googleapis.com/auth/userinfo.email",
+                    "https://www.googleapis.com/auth/classroom.courses",
+                    "https://www.googleapis.com/auth/classroom.courses.readonly");
 
     /**
      * Returns the redirect URI for the given HTTP servlet request.
      */
-    static String getRedirectUri(HttpServletRequest req) {            
+    static String getRedirectUri(HttpServletRequest req) {
         String requestUrl = req.getRequestURL().toString();
-        GenericUrl url = new GenericUrl(requestUrl);        
+        GenericUrl url = new GenericUrl(requestUrl);
         url.setScheme("https");
         url.setRawPath("/oauth2callback");
-        System.out.println("Utils provided callback URL " + url + " from request URL " + requestUrl);
+        LOGGER.debug("Utils provided callback URL " + url + " from request URL " + requestUrl);
         return url.build();
     }
 
@@ -89,12 +94,12 @@ public class Utils {
      */
     public static GoogleAuthorizationCodeFlow newFlow() throws IOException {
         System.out.println("newFlow called CLIENT_ID=" + CLIENT_ID);
-        GoogleAuthorizationCodeFlow flow =  new GoogleAuthorizationCodeFlow.Builder(
+        GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
                 HTTP_TRANSPORT, JSON_FACTORY, CLIENT_ID, CLIENT_SECRET, SCOPES)
                 .setDataStoreFactory(DATA_STORE_FACTORY)
                 .setAccessType("offline")
                 .build();
-        System.out.println("flow:" + flow);
+        LOGGER.debug("flow:" + flow);
         return flow;
     }
     // [END gae_java11_oauth2_code_flow]

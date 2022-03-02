@@ -1,12 +1,14 @@
 package com.pptpdx;
 
-import com.google.api.client.extensions.appengine.http.UrlFetchTransport;
+import com.google.api.client.auth.oauth2.Credential;
+import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.gson.GsonFactory;
 import com.google.api.services.classroom.Classroom;
 import com.google.api.services.classroom.model.Course;
 import com.google.api.services.classroom.model.ListCoursesResponse;
 import java.io.IOException;
 import java.util.List;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -14,28 +16,32 @@ import java.util.List;
  */
 public class ClassroomController {
 
-    public String getBasicData() {
+    private static final Logger LOGGER = Logger.getLogger(Utils.class);
+    
+    public static String getBasicData(Credential credential) {
         try {
-            UrlFetchTransport transport = new UrlFetchTransport();
+            LOGGER.debug("calling Classroom API interface");
+            NetHttpTransport transport = new NetHttpTransport();            
+            //com.google.api.client.extensions.appengine.http.HTTPMethod
             GsonFactory jsonFactory = new GsonFactory();
-            Classroom service = new Classroom.Builder(transport, jsonFactory, null).build();
+            Classroom service = new Classroom.Builder(transport, jsonFactory, credential).setApplicationName("Aprendiz Dashboard").build();
+            LOGGER.debug("got a Classroom API interface");
             ListCoursesResponse response = service.courses().list()
                     .setPageSize(10)
                     .execute();
             List<Course> courses = response.getCourses();
-            if (courses == null || courses.size() == 0) {
-                System.out.println("No courses found.");
+            if (courses == null || courses.isEmpty()) {
+                LOGGER.debug("No courses found.");
             } else {
-                System.out.println("Courses:");
+                LOGGER.debug("Courses:");
                 for (Course course : courses) {
-                    System.out.printf("%s\n", course.getName());
+                    LOGGER.debug(String.format("%s", course.getName()));
                 }
             }
-            return "test of classroom API";
         } catch (IOException ex) {
-            System.out.println("failed to exec API:" + ex.getMessage());
-            return "error:" + ex.getMessage();
+            LOGGER.error("failed to exec API:" + ex.getMessage());
         }
+        return "blah";
     }
-    
+
 }

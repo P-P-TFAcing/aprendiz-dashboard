@@ -42,9 +42,7 @@
     String username = Utils.getUserInfo(credential);
 %>
   <p> Hello, <%= username %>!</p>
-  
-  <p><% ClassroomController.getBasicData(); %></p>
-
+    
   <form action="/logout" method="post">
     <button>Log Out</button>
   </form>

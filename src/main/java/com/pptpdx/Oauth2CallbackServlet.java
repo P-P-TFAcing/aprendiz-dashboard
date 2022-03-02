@@ -23,22 +23,26 @@ import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.extensions.servlet.auth.oauth2.AbstractAuthorizationCodeCallbackServlet;
 import java.io.IOException;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.apache.log4j.Logger;
 
 /**
  * This servlet class extends AbstractAuthorizationCodeServlet which if the end-user credentials are
  * not found, will redirect the end-user to an authorization page.
  */
-@SuppressWarnings("serial")
-@WebServlet(urlPatterns = "/oauth2callback/*")
 public class Oauth2CallbackServlet extends AbstractAuthorizationCodeCallbackServlet {
 
+  private static final Logger LOGGER = Logger.getLogger(Oauth2CallbackServlet.class);
+    
   /** Handles a successfully granted authorization. */
   @Override
   protected void onSuccess(HttpServletRequest req, HttpServletResponse resp, Credential credential)
       throws ServletException, IOException {
+    LOGGER.debug("got credential type " + credential.getClass().getName());
+    LOGGER.debug("Google OAUTH authorized " + credential.getAccessToken());    
+    LOGGER.debug("getBasicData:" + ClassroomController.getBasicData(credential));
+      
     resp.sendRedirect("/");
   }
 

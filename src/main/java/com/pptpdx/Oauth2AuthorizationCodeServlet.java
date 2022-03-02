@@ -21,15 +21,15 @@ import com.google.api.client.auth.oauth2.AuthorizationCodeFlow;
 import com.google.api.client.extensions.servlet.auth.oauth2.AbstractAuthorizationCodeServlet;
 import java.io.IOException;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.apache.log4j.Logger;
 
-@SuppressWarnings("serial")
-@WebServlet(urlPatterns = "/login")
 public class Oauth2AuthorizationCodeServlet extends AbstractAuthorizationCodeServlet {
 
-  @Override
+  private static final Logger LOGGER = Logger.getLogger(Oauth2AuthorizationCodeServlet.class);
+    
+  @Override  
   protected void doGet(HttpServletRequest req, HttpServletResponse resp)
       throws IOException, ServletException {
     resp.sendRedirect("/");

@@ -17,13 +17,10 @@
 package com.pptpdx;
 
 import java.io.IOException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@SuppressWarnings("serial")
-@WebServlet(urlPatterns = "/logout")
 public class LogoutServlet extends HttpServlet {
 
   @Override
