@@ -57,7 +57,7 @@
     </dependencies>
 
     <build>
-        <plugins>
+        <plugins>            
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -75,7 +75,12 @@
                 <artifactId>maven-war-plugin</artifactId>
                 <version>3.3.2</version>
                 <configuration>
-                    <warName>aprendiz-dashboard</warName>
+                    <warName>aprendiz-dashboard</warName>                    
+                    <webResources>    
+                        <resource>
+                            <directory>src/main/resources/js</directory>
+                        </resource>                    
+                    </webResources>                    
                 </configuration>
             </plugin>
             <plugin>

@@ -46,9 +46,12 @@
     
 %>
 <!-- authorized page -->
-<div class="container">
+<div class="container" ng-app="AprendizApplication" ng-controller="MainViewController">
     <h1>Aprendiz Dashboard</h1>
-    <p>Signed in as <%= username %>!</p>    
+    <div>
+        
+    </div>
+    <p>Signed in as <%= username %></p>    
     <form action="/logout" method="post">
       <button>Log Out</button>
     </form>
@@ -57,5 +60,6 @@
   }
 %>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+<script src="app.js"></script>
 </body>
 </html>
