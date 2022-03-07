@@ -23,6 +23,7 @@ import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.extensions.servlet.auth.oauth2.AbstractAuthorizationCodeCallbackServlet;
 import java.io.IOException;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
@@ -35,28 +36,41 @@ public class Oauth2CallbackServlet extends AbstractAuthorizationCodeCallbackServ
 
   private static final Logger LOGGER = Logger.getLogger(Oauth2CallbackServlet.class);
     
-  /** Handles a successfully granted authorization. */
+  /** Handles a successfully granted authorization.
+     * @param req
+     * @param resp
+     * @param credential
+     * @throws javax.servlet.ServletException
+     * @throws java.io.IOException */
   @Override
-  protected void onSuccess(HttpServletRequest req, HttpServletResponse resp, Credential credential)
-      throws ServletException, IOException {
-    LOGGER.debug("got credential type " + credential.getClass().getName());
+  protected void onSuccess(HttpServletRequest req, HttpServletResponse resp, Credential credential) throws ServletException, IOException {
     LOGGER.debug("Google OAUTH authorized " + credential.getAccessToken());    
-    LOGGER.debug("getBasicData:" + ClassroomController.getBasicData(credential));
-      
+    ClassroomSession session = ClassroomController.createNewSession(credential);
+    Cookie cookie = new Cookie("aprendiz-auth",session.getSessionId().toString());
+    cookie.setMaxAge(60*60*24); 
+    resp.addCookie(cookie);    
     resp.sendRedirect("/");
   }
 
-  /** Handles an error to the authorization, such as when an end user denies authorization. */
+  /** Handles an error to the authorization, such as when an end user denies authorization.
+     * @param req
+     * @param resp
+     * @param errorResponse
+     * @throws javax.servlet.ServletException
+     * @throws java.io.IOException */
   @Override
   protected void onError(
-      HttpServletRequest req, HttpServletResponse resp, AuthorizationCodeResponseUrl errorResponse)
-      throws ServletException, IOException {
+      HttpServletRequest req, HttpServletResponse resp, AuthorizationCodeResponseUrl errorResponse) throws ServletException, IOException {
     resp.getWriter().print("<p>You Denied Authorization.</p>");
     resp.setStatus(200);
     resp.addHeader("Content-Type", "text/html");
   }
 
-  /** Returns the redirect URI for the given HTTP servlet request. */
+  /** Returns the redirect URI for the given HTTP servlet request.
+     * @param req
+     * @return 
+     * @throws javax.servlet.ServletException
+     * @throws java.io.IOException */
   @Override
   protected String getRedirectUri(HttpServletRequest req) throws ServletException, IOException {
     return Utils.getRedirectUri(req);
@@ -65,6 +79,8 @@ public class Oauth2CallbackServlet extends AbstractAuthorizationCodeCallbackServ
   /**
    * Loads the authorization code flow to be used across all HTTP servlet requests (only called
    * during the first HTTP servlet request with an authorization code).
+     * @return 
+     * @throws java.io.IOException
    */
   @Override
   protected AuthorizationCodeFlow initializeFlow() throws IOException {
@@ -72,8 +88,12 @@ public class Oauth2CallbackServlet extends AbstractAuthorizationCodeCallbackServ
   }
 
   /**
-   * Returns the user ID for the given HTTP servlet request. This identifies your application's user
-   * and is used to assign and persist credentials to that user.
+   * Returns the user ID for the given HTTP servlet request.This identifies your application's user
+ and is used to assign and persist credentials to that user.
+     * @param req
+     * @return 
+     * @throws javax.servlet.ServletException
+     * @throws java.io.IOException
    */
   @Override
   protected String getUserId(HttpServletRequest req) throws ServletException, IOException {

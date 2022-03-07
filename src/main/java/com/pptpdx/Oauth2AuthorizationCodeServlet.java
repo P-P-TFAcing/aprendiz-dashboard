@@ -23,12 +23,9 @@ import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.apache.log4j.Logger;
 
 public class Oauth2AuthorizationCodeServlet extends AbstractAuthorizationCodeServlet {
 
-  private static final Logger LOGGER = Logger.getLogger(Oauth2AuthorizationCodeServlet.class);
-    
   @Override  
   protected void doGet(HttpServletRequest req, HttpServletResponse resp)
       throws IOException, ServletException {

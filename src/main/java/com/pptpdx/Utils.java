@@ -39,7 +39,7 @@ public class Utils {
     /**
      * Get application name from the runtime environment variable
      */
-    static final String APP_NAME = System.getenv("APRENDIZ_DASHBOARD");
+    static final String APP_NAME = "APRENDIZ DASHBOARD";
 
     /**
      * Global instance of the {@link DataStoreFactory}. The best practice is to
@@ -90,7 +90,9 @@ public class Utils {
     // [START gae_java11_oauth2_code_flow]
     /**
      * Loads the authorization code flow to be used across all HTTP servlet
-     * requests. It is only called during the first HTTP servlet request.
+     * requests.It is only called during the first HTTP servlet request.
+     * @return 
+     * @throws java.io.IOException
      */
     public static GoogleAuthorizationCodeFlow newFlow() throws IOException {
         System.out.println("newFlow called CLIENT_ID=" + CLIENT_ID);
@@ -110,24 +112,26 @@ public class Utils {
      * that user. Most commonly, this will be a user id stored in the session or
      * even the session id itself.
      */
-    static String getUserId(HttpServletRequest req) throws ServletException, IOException {
+    static String getUserId(HttpServletRequest req) throws ServletException, IOException {        
         return req.getSession().getId();
     }
 
     // [START gae_java11_oauth2_get_user]
     /**
      * Obtain end-user authorization grant for Google APIs and return username
+     * @param credential
+     * @return 
+     * @throws java.io.IOException
      */
-    public static String getUserInfo(Credential credential) throws IOException {
+    public static Userinfo getUserInfo(Credential credential) throws IOException {
         Oauth2 oauth2Client
                 = new Oauth2.Builder(HTTP_TRANSPORT, JSON_FACTORY, credential)
                         .setApplicationName(APP_NAME)
                         .build();
 
         // Retrieve user profile
-        Userinfo userInfo = oauth2Client.userinfo().get().execute();
-        String username = userInfo.getGivenName();
-        return username;
+        Userinfo userInfo = oauth2Client.userinfo().get().execute();        
+        return userInfo;
     }
     // [END gae_java11_oauth2_get_user]
 }
