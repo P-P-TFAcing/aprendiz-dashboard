@@ -1,4 +1,4 @@
-package com.pptpdx;
+package com.pptpdx.classroom;
 
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.services.oauth2.model.Userinfo;

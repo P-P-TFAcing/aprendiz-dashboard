@@ -1,4 +1,4 @@
-package com.pptpdx;
+package com.pptpdx.classroom;
 
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.http.javanet.NetHttpTransport;
@@ -7,7 +7,10 @@ import com.google.api.services.classroom.Classroom;
 import com.google.api.services.classroom.model.Course;
 import com.google.api.services.classroom.model.ListCoursesResponse;
 import com.google.api.services.oauth2.model.Userinfo;
+import com.pptpdx.oauth.Utils;
+import com.pptpdx.resources.CourseObject;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -101,6 +104,16 @@ public class ClassroomController {
             LOGGER.error("failed to exec API:" + ex.getMessage());
         }
         return "blah";
+    }
+
+    public static List<CourseObject> getCourses(javax.ws.rs.core.Cookie cookie) {
+        ClassroomSession session = getSession(cookie.getValue());
+        if(session == null) {
+            return null;
+        }
+        List<CourseObject> result = new ArrayList<>();
+                
+        return result;
     }
 
 }

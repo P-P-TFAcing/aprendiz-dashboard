@@ -14,13 +14,15 @@
  * limitations under the License.
  */
 
-package com.pptpdx;
+package com.pptpdx.oauth;
 
 // [START gae_java11_oauth2_callback]
+import com.pptpdx.classroom.ClassroomController;
 import com.google.api.client.auth.oauth2.AuthorizationCodeFlow;
 import com.google.api.client.auth.oauth2.AuthorizationCodeResponseUrl;
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.extensions.servlet.auth.oauth2.AbstractAuthorizationCodeCallbackServlet;
+import com.pptpdx.classroom.ClassroomSession;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;

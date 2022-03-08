@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.pptpdx;
+package com.pptpdx.oauth;
 
 // [START gae_java11_oauth2_login]
 import com.google.api.client.auth.oauth2.AuthorizationCodeFlow;
