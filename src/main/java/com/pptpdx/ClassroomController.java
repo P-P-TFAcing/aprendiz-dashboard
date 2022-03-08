@@ -26,10 +26,22 @@ public class ClassroomController {
     
     private static final Map<UUID, ClassroomSession> sessions = new HashMap<>();
     
-    public static ClassroomSession getSession(HttpServletRequest request) {
-        for(Cookie cookie : request.getCookies()) {
-            if(cookie.getName().equals("aprendiz-auth")) {
-                return getSession(cookie.getValue());
+    public static void invalidateSession(HttpServletRequest request) {
+        ClassroomSession session = getSession(request);
+        if(session != null) {
+            synchronized(sessions) {
+                LOGGER.debug("invalidated session " + session.getSessionId().toString());
+                sessions.remove(session.getSessionId());
+            }
+        }
+    }
+    
+    public static ClassroomSession getSession(HttpServletRequest request) {        
+        if(request.getCookies() != null) {
+            for(Cookie cookie : request.getCookies()) {
+                if(cookie.getName().equals("aprendiz-auth")) {
+                    return getSession(cookie.getValue());
+                }
             }
         }
         return null;

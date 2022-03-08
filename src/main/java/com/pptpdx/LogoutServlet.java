@@ -25,7 +25,7 @@ public class LogoutServlet extends HttpServlet {
 
   @Override
   public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-    req.getSession().invalidate();
+    ClassroomController.invalidateSession(req);
     resp.sendRedirect("/");
   }
 }
