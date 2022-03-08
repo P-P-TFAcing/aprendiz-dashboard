@@ -1,5 +1,6 @@
 package com.pptpdx.resources;
 
+import com.google.api.services.classroom.model.Course;
 import com.pptpdx.classroom.ClassroomController;
 import java.io.IOException;
 import java.util.List;
@@ -27,7 +28,7 @@ public class ClassroomResource {
     @Produces({MediaType.APPLICATION_JSON})
     @Path("/courses")
     @GET
-    public List<CourseObject> getCourses(@CookieParam(APRENDIZ_SESSION_AUTH) Cookie cookie) {
+    public List<Course> getCourses(@CookieParam(APRENDIZ_SESSION_AUTH) Cookie cookie) {
         try {
             return ClassroomController.getCourses(cookie);
         } catch (IOException ex) {

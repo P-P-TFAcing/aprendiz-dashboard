@@ -48,6 +48,7 @@
         <!-- authorized page -->
         <div class="container" ng-app="AprendizApplication" ng-controller="MainViewController">
             <h1>Aprendiz Dashboard</h1>
+            <h2>Courses</h2>
             <div>
                 <table class="table table-bordered table-striped data-table">
                     <thead>

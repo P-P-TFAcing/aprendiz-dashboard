@@ -107,7 +107,7 @@ public class ClassroomController {
         return "blah";
     }
 
-    public static List<CourseObject> getCourses(javax.ws.rs.core.Cookie cookie) throws IOException {
+    public static List<Course> getCourses(javax.ws.rs.core.Cookie cookie) throws IOException {
         ClassroomSession session = getSession(cookie.getValue());
         if(session == null) {
             return null;
@@ -115,21 +115,14 @@ public class ClassroomController {
         NetHttpTransport transport = new NetHttpTransport();            
         GsonFactory jsonFactory = new GsonFactory();
         Classroom service = new Classroom.Builder(transport, jsonFactory, session.getGoogleCredential()).setApplicationName("Aprendiz Dashboard").build();
+        
         ListCoursesResponse response = service.courses().list()
                 .setPageSize(20)
                 .execute();
-        List<CourseObject> result = new ArrayList<>();
+        List<Course> result = new ArrayList<>();
         List<Course> courses = response.getCourses();
-        for(Course c : courses) {           
-            CourseObject course = new CourseObject();
-            course.setSection(c.getSection());
-            course.setEnrollmentCode(c.getEnrollmentCode());
-            course.setDescriptionHeading(c.getDescriptionHeading());
-            course.setId(c.getId());            
-            course.setName(c.getName());
-            course.setDescription(c.getDescription());            
-            course.setRoom(c.getRoom());
-            result.add(course);
+        for(Course c : courses) {                       
+            result.add(c);
         }
         return result;
     }
