@@ -9,6 +9,7 @@ import com.google.api.services.classroom.model.ListCoursesResponse;
 import com.google.api.services.oauth2.model.Userinfo;
 import com.pptpdx.oauth.Utils;
 import com.pptpdx.resources.CourseObject;
+import static com.sun.java.browser.dom.DOMService.getService;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -106,13 +107,30 @@ public class ClassroomController {
         return "blah";
     }
 
-    public static List<CourseObject> getCourses(javax.ws.rs.core.Cookie cookie) {
+    public static List<CourseObject> getCourses(javax.ws.rs.core.Cookie cookie) throws IOException {
         ClassroomSession session = getSession(cookie.getValue());
         if(session == null) {
             return null;
         }
+        NetHttpTransport transport = new NetHttpTransport();            
+        GsonFactory jsonFactory = new GsonFactory();
+        Classroom service = new Classroom.Builder(transport, jsonFactory, session.getGoogleCredential()).setApplicationName("Aprendiz Dashboard").build();
+        ListCoursesResponse response = service.courses().list()
+                .setPageSize(20)
+                .execute();
         List<CourseObject> result = new ArrayList<>();
-                
+        List<Course> courses = response.getCourses();
+        for(Course c : courses) {           
+            CourseObject course = new CourseObject();
+            course.setSection(c.getSection());
+            course.setEnrollmentCode(c.getEnrollmentCode());
+            course.setDescriptionHeading(c.getDescriptionHeading());
+            course.setId(c.getId());            
+            course.setName(c.getName());
+            course.setDescription(c.getDescription());            
+            course.setRoom(c.getRoom());
+            result.add(course);
+        }
         return result;
     }
 
