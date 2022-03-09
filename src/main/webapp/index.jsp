@@ -1,3 +1,4 @@
+<%@page import="com.pptpdx.classroom.ClassroomSessions"%>
 <%@page import="com.pptpdx.classroom.ClassroomSession"%>
 <!DOCTYPE html>
 <!--
@@ -31,7 +32,7 @@
     </head>
     <body>
         <%
-            ClassroomSession classroomSession = ClassroomController.getSession(request);
+            ClassroomSession classroomSession = ClassroomSessions.getSession(request);
             if (classroomSession == null) {
         %>
         <!-- sign on page -->
@@ -43,7 +44,6 @@
         } else {
             // Use the credentials to get user info from the OAuth2.0 API.
             String username = classroomSession.getUserinfo().getGivenName();
-
         %>
         <!-- authorized page -->
         <div class="container" ng-app="AprendizApplication" ng-controller="MainViewController">

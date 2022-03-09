@@ -10,8 +10,15 @@ angular.module("AprendizApplication").controller('MainViewController', function 
     }).then(
             function (response) {
                 $scope.courses = response.data;
-            },
-            function (response) {
-            }
-    );
+                angular.forEach($scope.courses, function(course) {
+                        $http({        
+                            method: 'GET',
+                            url: 'webresources/classroom/topics/' + course.id
+                        }).then(function(response) {
+                            if(response.data) {
+                                course.topics = response.data;
+                            }                                        
+                        });               
+                });
+    });            
 });

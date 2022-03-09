@@ -17,12 +17,12 @@
 package com.pptpdx.oauth;
 
 // [START gae_java11_oauth2_callback]
-import com.pptpdx.classroom.ClassroomController;
 import com.google.api.client.auth.oauth2.AuthorizationCodeFlow;
 import com.google.api.client.auth.oauth2.AuthorizationCodeResponseUrl;
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.extensions.servlet.auth.oauth2.AbstractAuthorizationCodeCallbackServlet;
 import com.pptpdx.classroom.ClassroomSession;
+import com.pptpdx.classroom.ClassroomSessions;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
@@ -36,8 +36,6 @@ import org.apache.log4j.Logger;
  */
 public class Oauth2CallbackServlet extends AbstractAuthorizationCodeCallbackServlet {
 
-  private static final Logger LOGGER = Logger.getLogger(Oauth2CallbackServlet.class);
-    
   /** Handles a successfully granted authorization.
      * @param req
      * @param resp
@@ -46,9 +44,8 @@ public class Oauth2CallbackServlet extends AbstractAuthorizationCodeCallbackServ
      * @throws java.io.IOException */
   @Override
   protected void onSuccess(HttpServletRequest req, HttpServletResponse resp, Credential credential) throws ServletException, IOException {
-    LOGGER.debug("Google OAUTH authorized " + credential.getAccessToken());    
-    ClassroomSession session = ClassroomController.createNewSession(credential);
-    Cookie cookie = new Cookie("aprendiz-auth",session.getSessionId().toString());
+    ClassroomSession session = ClassroomSessions.createNewSession(credential);
+    Cookie cookie = new Cookie(ClassroomSessions.SESSION_COOKIE_NAME, session.getSessionId().toString());
     cookie.setMaxAge(60*60*24); 
     resp.addCookie(cookie);    
     resp.sendRedirect("/");

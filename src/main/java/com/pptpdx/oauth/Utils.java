@@ -30,11 +30,8 @@ import java.util.Arrays;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import org.apache.log4j.Logger;
 
 public class Utils {
-
-    private static final Logger LOGGER = Logger.getLogger(Utils.class);
 
     /**
      * Get application name from the runtime environment variable
@@ -73,7 +70,7 @@ public class Utils {
                     "https://www.googleapis.com/auth/userinfo.profile",
                     "https://www.googleapis.com/auth/userinfo.email",
                     "https://www.googleapis.com/auth/classroom.courses",
-                    "https://www.googleapis.com/auth/classroom.courses.readonly");
+                    "https://www.googleapis.com/auth/classroom.topics");
 
     /**
      * Returns the redirect URI for the given HTTP servlet request.
@@ -83,7 +80,6 @@ public class Utils {
         GenericUrl url = new GenericUrl(requestUrl);
         url.setScheme("https");
         url.setRawPath("/oauth2callback");
-        LOGGER.debug("Utils provided callback URL " + url + " from request URL " + requestUrl);
         return url.build();
     }
 
@@ -95,13 +91,11 @@ public class Utils {
      * @throws java.io.IOException
      */
     public static GoogleAuthorizationCodeFlow newFlow() throws IOException {
-        System.out.println("newFlow called CLIENT_ID=" + CLIENT_ID);
         GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
                 HTTP_TRANSPORT, JSON_FACTORY, CLIENT_ID, CLIENT_SECRET, SCOPES)
                 .setDataStoreFactory(DATA_STORE_FACTORY)
                 .setAccessType("offline")
                 .build();
-        LOGGER.debug("flow:" + flow);
         return flow;
     }
     // [END gae_java11_oauth2_code_flow]
