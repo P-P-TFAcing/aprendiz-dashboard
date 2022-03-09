@@ -25,6 +25,7 @@ import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.store.MemoryDataStoreFactory;
 import com.google.api.services.oauth2.Oauth2;
 import com.google.api.services.oauth2.model.Userinfo;
+import com.google.api.services.classroom.ClassroomScopes;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
@@ -69,8 +70,14 @@ public class Utils {
             = Arrays.asList(
                     "https://www.googleapis.com/auth/userinfo.profile",
                     "https://www.googleapis.com/auth/userinfo.email",
-                    "https://www.googleapis.com/auth/classroom.courses",
-                    "https://www.googleapis.com/auth/classroom.topics");
+                    ClassroomScopes.CLASSROOM_COURSES,
+                    ClassroomScopes.CLASSROOM_TOPICS,
+                    ClassroomScopes.CLASSROOM_COURSEWORK_ME,
+                    ClassroomScopes.CLASSROOM_COURSEWORK_STUDENTS,
+                    ClassroomScopes.CLASSROOM_COURSEWORKMATERIALS,
+                    ClassroomScopes.CLASSROOM_ROSTERS,
+                    ClassroomScopes.CLASSROOM_STUDENT_SUBMISSIONS_ME_READONLY                    
+                    );
 
     /**
      * Returns the redirect URI for the given HTTP servlet request.

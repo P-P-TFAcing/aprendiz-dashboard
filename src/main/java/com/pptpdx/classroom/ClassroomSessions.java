@@ -51,8 +51,8 @@ public class ClassroomSessions {
             if(session != null) {
                 try {
                     Userinfo info = Utils.getUserInfo(session.getGoogleCredential());
-                    if(info != null) {
-                        LOGGER.debug("session " + sessionIdText + " resolved to " + info.getEmail());
+                    if(info == null) {
+                        return null;
                     }
                     return session;
                 } catch (IOException ex) {
