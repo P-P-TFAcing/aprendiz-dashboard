@@ -6,6 +6,8 @@ import com.google.api.services.classroom.Classroom;
 import com.google.api.services.classroom.model.Topic;
 import com.google.api.services.classroom.model.Course;
 import com.google.api.services.classroom.model.CourseWork;
+import com.google.api.services.classroom.model.CourseWorkMaterial;
+import com.google.api.services.classroom.model.ListCourseWorkMaterialResponse;
 import com.google.api.services.classroom.model.ListCourseWorkResponse;
 import com.google.api.services.classroom.model.ListCoursesResponse;
 import com.google.api.services.classroom.model.ListTopicResponse;
@@ -36,8 +38,10 @@ public class ClassroomController {
                 .execute();
         List<Topic> topics = response.getTopic();
         List<Topic> result = new ArrayList<>();
-        for(Topic t : topics) {
-            result.add(t);
+        if(topics != null) {
+            for(Topic t : topics) {
+                result.add(t);
+            }
         }
         return result;
     }
@@ -49,8 +53,10 @@ public class ClassroomController {
                 .execute();
         List<CourseWork> objects = response.getCourseWork();
         List<CourseWork> result = new ArrayList<>();
-        for(CourseWork t : objects) {
-            result.add(t);
+        if(objects != null) {
+            for(CourseWork t : objects) {
+                result.add(t);
+            }
         }
         return result;
     }
@@ -62,10 +68,27 @@ public class ClassroomController {
                 .execute();                
         List<Course> result = new ArrayList<>();
         List<Course> courses = response.getCourses();
-        for(Course c : courses) {                                               
-            result.add(c);
+        if(courses != null) {
+            for(Course c : courses) {                                               
+                result.add(c);
+            }
         }
         return result;
+    }
+
+    public static List<CourseWorkMaterial> getCourseWorkMaterials(ClassroomSession classroomSession, String courseId) throws IOException {
+        Classroom service = getService(classroomSession);
+        ListCourseWorkMaterialResponse response = service.courses().courseWorkMaterials().list(courseId)
+                .setPageSize(20)
+                .execute();
+        List<CourseWorkMaterial> objects = response.getCourseWorkMaterial();
+        List<CourseWorkMaterial> result = new ArrayList<>();
+        if(objects != null) {
+            for(CourseWorkMaterial t : objects) {
+                result.add(t);
+            }
+        }
+        return result;                
     }
 
 }

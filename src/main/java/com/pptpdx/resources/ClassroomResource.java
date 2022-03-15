@@ -2,6 +2,7 @@ package com.pptpdx.resources;
 
 import com.google.api.services.classroom.model.Course;
 import com.google.api.services.classroom.model.CourseWork;
+import com.google.api.services.classroom.model.CourseWorkMaterial;
 import com.google.api.services.classroom.model.Topic;
 import com.pptpdx.classroom.ClassroomController;
 import com.pptpdx.classroom.ClassroomSession;
@@ -56,6 +57,22 @@ public class ClassroomResource {
                 throw new WebApplicationException(Response.Status.UNAUTHORIZED);
             }            
             return ClassroomController.getCourseWork(classroomSession, courseId);
+        } catch (IOException ex) {
+            LOGGER.error("IO exception", ex);            
+            throw new WebApplicationException(Response.Status.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @Produces({MediaType.APPLICATION_JSON})
+    @Path("/courseworkmaterials/{courseId}")
+    @GET
+    public List<CourseWorkMaterial> getCourseWorkMaterials(@CookieParam(APRENDIZ_SESSION_AUTH) Cookie cookie,@PathParam("courseId") String courseId) {
+        try {
+            ClassroomSession classroomSession = ClassroomSessions.getSession(cookie.getValue());
+            if(classroomSession == null) {
+                throw new WebApplicationException(Response.Status.UNAUTHORIZED);
+            }            
+            return ClassroomController.getCourseWorkMaterials(classroomSession, courseId);
         } catch (IOException ex) {
             LOGGER.error("IO exception", ex);            
             throw new WebApplicationException(Response.Status.INTERNAL_SERVER_ERROR);
