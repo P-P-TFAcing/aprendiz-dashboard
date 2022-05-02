@@ -10,7 +10,7 @@
                 <wildfly.port>14004</wildfly.port>
                 <wildfly.username>admin</wildfly.username>
                 <wildfly.password>mWQWs2UcH3C27xYV</wildfly.password>
-                <wildfly.deployment.filename>TheHappinessTest.war</wildfly.deployment.filename>                                
+                <wildfly.deployment.filename>AprendizDashboard</wildfly.deployment.filename>                                
             </properties>
         </profile>
     </profiles>
