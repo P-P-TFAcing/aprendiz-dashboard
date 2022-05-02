@@ -6,7 +6,7 @@
         <profile>
             <id>server-deployment-webapp</id>
             <properties>
-                <wildfly.hostname>10.124.0.2</wildfly.hostname>
+                <wildfly.hostname>10.124.0.3</wildfly.hostname>
                 <wildfly.port>14004</wildfly.port>
                 <wildfly.username>admin</wildfly.username>
                 <wildfly.password>mWQWs2UcH3C27xYV</wildfly.password>
