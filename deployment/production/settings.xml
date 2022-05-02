@@ -1,0 +1,24 @@
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0
+                          https://maven.apache.org/xsd/settings-1.0.0.xsd">    
+    <profiles>
+        <profile>
+            <id>server-deployment-webapp</id>
+            <properties>
+                <wildfly.hostname>10.124.0.2</wildfly.hostname>
+                <wildfly.port>14004</wildfly.port>
+                <wildfly.username>admin</wildfly.username>
+                <wildfly.password>mWQWs2UcH3C27xYV</wildfly.password>
+                <wildfly.deployment.filename>TheHappinessTest.war</wildfly.deployment.filename>                                
+            </properties>
+        </profile>
+    </profiles>
+    <servers>
+        <server>
+            <id>lilycode</id>
+            <username>deployer</username>
+            <password>je!%5X4wxFHV7sBz</password>
+        </server>
+    </servers>
+</settings>
