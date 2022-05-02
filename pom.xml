@@ -117,7 +117,7 @@
                 <artifactId>maven-war-plugin</artifactId>
                 <version>3.3.2</version>
                 <configuration>
-                    <warName>aprendiz-dashboard</warName>                    
+                    <warName>AprendizDashboard</warName>                    
                 </configuration>
             </plugin>
             <plugin>
