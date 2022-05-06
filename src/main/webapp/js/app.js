@@ -16,7 +16,7 @@ angular.module("AprendizApplication").controller('MainViewController', function 
                         url: 'webresources/classroom/topics/' + course.id
                     }).then(function (response) {
                         if (response.data) {
-                            $scope.course.topics = response.data;
+                            course.topics = response.data;
                         }
                     });
                     $http({
@@ -24,7 +24,7 @@ angular.module("AprendizApplication").controller('MainViewController', function 
                         url: 'webresources/classroom/coursework/' + course.id
                     }).then(function (response) {
                         if (response.data) {
-                            $scope.course.courseWork = response.data;
+                            course.courseWork = response.data;
                         }
                     });
                     $http({
@@ -32,7 +32,7 @@ angular.module("AprendizApplication").controller('MainViewController', function 
                         url: 'webresources/classroom/courseworkmaterials/' + course.id
                     }).then(function (response) {
                         if (response.data) {
-                            $scope.course.courseWorkMaterials = response.data;
+                            course.courseWorkMaterials = response.data;
                         }
                     });
                 });
