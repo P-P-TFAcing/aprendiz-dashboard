@@ -55,8 +55,7 @@ class MainScene extends Phaser.Scene {
         console.log('preloaded MainScene');
     }
 
-    create(courses) {
-        this.courses = courses;
+    create() {
         console.log('created MainScene');
     }
 
@@ -88,7 +87,8 @@ angular.module("AprendizApplication").controller('MainViewController', function 
             scene: MainScene,
             courseData: courses
         };        
-        $scope.game = new Phaser.Game(config);
+        let game = new Phaser.Game(config); 
+        game.config.courses = courses;
     };
 
     ClassroomDataLoaderService.loadData($scope.dataLoaded);
