@@ -47,12 +47,8 @@
         <!-- authorized page -->
         <div class="container" ng-app="AprendizApplication" ng-controller="MainViewController">
             <h1>Aprendiz Dashboard</h1>
-            <div class="row">
-                <div class="col-md-12">                    
-                    <div id="aprendiz-block">
-                    </div>        
-                </div>                    
-            </div>
+            <div id="aprendiz-block">
+            </div>        
             <p>Signed in as <%= username%></p>    
             <form action="/logout" method="post">
                 <button>Log Out</button>
