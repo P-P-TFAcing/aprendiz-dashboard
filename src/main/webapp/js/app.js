@@ -9,11 +9,12 @@ class MainScene extends Phaser.Scene {
         console.log('preloaded MainScene');
     }
 
-    create () {
+    create() {
         console.log('created MainScene');
-    }    
+    }
 
-};
+}
+;
 
 angular.module("AprendizApplication").controller('MainViewController', function ($scope, $http) {
     console.log('started main view controller');
@@ -30,26 +31,28 @@ angular.module("AprendizApplication").controller('MainViewController', function 
                     }).then(function (response) {
                         if (response.data) {
                             course.topics = response.data;
+                            $http({
+                                method: 'GET',
+                                url: 'webresources/classroom/coursework/' + course.id
+                            }).then(function (response) {
+                                if (response.data) {
+                                    course.courseWork = response.data;
+                                    $http({
+                                        method: 'GET',
+                                        url: 'webresources/classroom/courseworkmaterials/' + course.id
+                                    }).then(function (response) {
+                                        if (response.data) {
+                                            course.courseWorkMaterials = response.data;
+                                            console.log('all class data loaded');
+                                        }
+                                    });                                    
+                                }
+                            });
                         }
                     });
-                    $http({
-                        method: 'GET',
-                        url: 'webresources/classroom/coursework/' + course.id
-                    }).then(function (response) {
-                        if (response.data) {
-                            course.courseWork = response.data;
-                        }
-                    });
-                    $http({
-                        method: 'GET',
-                        url: 'webresources/classroom/courseworkmaterials/' + course.id
-                    }).then(function (response) {
-                        if (response.data) {
-                            course.courseWorkMaterials = response.data;
-                        }
-                    });
+
                 });
-            });                       
+            });
 
     var config = {
         type: Phaser.AUTO,
