@@ -61,7 +61,15 @@ class MainScene extends Phaser.Scene {
         let courses = this.game.config.courses;
         let y = 100;
         for(const course of courses) {
-            let courseRect = this.add.rectangle(10, y, 200, y + 90, 0x808080, 1);
+            
+            graphics = this.add.graphics();
+            graphics.lineStyle(2, 0xffff00, 1);
+
+            //  32px radius on the corners
+            graphics.strokeRoundedRect(32, 32 + y, 300, 90, 32);
+
+            graphics.lineStyle(4, 0xff00ff, 1);
+
             y += 100;
         }
     }
