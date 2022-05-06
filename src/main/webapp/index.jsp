@@ -45,7 +45,7 @@
             String username = classroomSession.getUserinfo().getGivenName();
         %>
         <!-- authorized page -->
-        <div class="container" ng-app="AprendizApplication" ng-controller="MainViewController">
+        <div class="container-fluid" ng-app="AprendizApplication" ng-controller="MainViewController">
             <h1>Aprendiz Dashboard</h1>
             <div id="aprendiz-block">
             </div>        
