@@ -75,12 +75,6 @@ angular.module("AprendizApplication").controller('MainViewController', function 
         console.log('data loaded', courses);
         let config = {
             type: Phaser.AUTO,
-            physics: {
-                default: 'arcade',
-                arcade: {
-                    gravity: {y: 200}
-                }
-            },
             dom: {
                 createContainer: true
             },
@@ -91,8 +85,7 @@ angular.module("AprendizApplication").controller('MainViewController', function 
             parent: 'aprendiz-block',
             width: 1920,
             height: 1080,
-            scene: MainScene,
-            courseData: courses
+            scene: MainScene
         };        
         let game = new Phaser.Game(config); 
         game.config.courses = courses;
