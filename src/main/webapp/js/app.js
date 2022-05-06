@@ -2,15 +2,15 @@
 
 angular.module("AprendizApplication", []);
 
-angular.module("AprendizApplication").service('ClassroomDataLoaderService', function ($http, $scope) {
+angular.module("AprendizApplication").service('ClassroomDataLoaderService', function ($http) {
     this.loadData = function (completionCallback) {
         $http({
             method: 'GET',
             url: 'webresources/classroom/courses'
         }).then(
                 function (response) {
-                    $scope.courses = response.data;
-                    angular.forEach($scope.courses, function (course) {
+                    let courses = response.data;
+                    angular.forEach(courses, function (course) {
                         $http({
                             method: 'GET',
                             url: 'webresources/classroom/topics/' + course.id
