@@ -62,7 +62,7 @@ class MainScene extends Phaser.Scene {
         let y = 100;
         for(const course of courses) {
             
-            graphics = this.add.graphics();
+            let graphics = this.add.graphics();
             graphics.lineStyle(2, 0xffff00, 1);
 
             //  32px radius on the corners
