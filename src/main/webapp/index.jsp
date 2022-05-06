@@ -35,7 +35,7 @@
             if (classroomSession == null) {
         %>
         <!-- sign on page -->
-        <div class="container">
+        <div class="container-fluid">
             <h1>Aprendiz Dashboard</h1>
             <a href="/login"><img src="images/google/btn_google_signin_dark_normal_web.png" alt="Sign in with Google"></a>    
         </div>
