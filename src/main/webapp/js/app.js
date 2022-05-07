@@ -70,7 +70,7 @@ class MainScene extends Phaser.Scene {
 
             graphics.lineStyle(4, 0xff00ff, 1);
 
-            this.add.text(32, 32+y, course.name, { fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif' });
+            this.add.text(48, 48 + y, course.name, { fontSize: '32px' });
 
             y += 100;
         }
