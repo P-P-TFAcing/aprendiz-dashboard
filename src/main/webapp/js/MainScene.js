@@ -2,7 +2,7 @@ class CourseRect {
     constructor(scene, course, x, y) {
         let graphics = scene.add.graphics();
         graphics.lineStyle(2, 0xffff00, 2);
-        this.objectHeight = 50;
+        this.objectHeight = 60;
         this.objectWidth = 400;        
         //  32px radius on the corners
         graphics.strokeRoundedRect(32 + x, 32 + y, this.objectWidth, this.objectHeight, 32);
@@ -18,30 +18,35 @@ class LegendTopicRect {
         //  32px radius on the corners
         graphics.strokeRoundedRect(32 + x, 32 + y, 400, 50, 32);
         graphics.lineStyle(4, 0xff00ff, 1);
-        scene.add.text(48 + x, 48 + y, topic.name, { fontSize: '24px' });  
-        this.objectHeight = 50;
+        let text = scene.add.text(48 + x, 48 + y, topic.name, { fontSize: '24px' });  
+        this.objectHeight = text.height + 32;
         this.objectWidth = 400;
     }
 }
 
 class LegendRect {
     constructor(scene, course, x, y) {
-        let ypos = y;
-        let width = undefined;
-        let height = undefined;
+        let ypos = y + 32;
+        let width = 0;        
+        let legendText = scene.add.text(48 + x, ypos, 'Legend', { fontSize: '28px' });  
+        let height = legendText.height + 16;
+        ypos += legendText.height;
         for(const topic of course.topics) {
             let legendTopicRect = new LegendTopicRect(scene, course, topic, x, ypos);
             ypos += (legendTopicRect.objectHeight + 4);            
-            width = legendTopicRect.objectWidth;
+            if(legendTopicRect.objectWidth > width) {
+                width = legendTopicRect.objectWidth;
+            }
             height += (legendTopicRect.objectHeight + 4);
         }
-        this.objectHeight = width;
-        this.objectWidth = height;        
+        this.objectHeight = height;
+        this.objectWidth = width;        
         let graphics = scene.add.graphics();
         graphics.lineStyle(2, 0xffffff, 2);
         //  32px radius on the corners
-        graphics.strokeRoundedRect(16 + x, 16 + y, this.objectWidth, this.objectHeight, 16);
-        graphics.lineStyle(4, 0xff00ff, 1);
+        //graphics.fillStyle(0x5555555, 1);
+        graphics.strokeRoundedRect(16 + x, 16 + y, this.objectWidth + 32, this.objectHeight + 32, 16);
+        //graphics.lineStyle(4, 0xff00ff, 1);
     }
 }
 
@@ -58,8 +63,8 @@ class MainScene extends Phaser.Scene {
         let courses = this.game.config.courses;
         let course = courses[0];
         console.log('loading course',course);
-        let courseRect = new CourseRect(this, course, 32, 32);
-        new LegendRect(this, course, courseRect.objectWidth + 32, 32);
+        let courseRect = new CourseRect(this, course, 16, 16);
+        new LegendRect(this, course, courseRect.objectWidth + 48, 32);
     }
 
 };
