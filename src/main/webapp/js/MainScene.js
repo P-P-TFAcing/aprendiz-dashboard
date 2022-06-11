@@ -5,10 +5,13 @@
  * to represent the region like a parent rectable.
  * @type type
  */
-class DraggableObject {
+class DraggableContainer {
 
-    constructor(scene) {
+    constructor(scene, x, y) {
         this.scene = scene;
+        this.container = scene.add.container(x, y);
+        this.x = x;
+        this.y = y;
     }
 
     draggable(graphicsObject) {
@@ -34,11 +37,10 @@ class DraggableObject {
 }
 
 
-class CourseTitle extends DraggableObject {
+class CourseTitle extends DraggableContainer {
 
     constructor(scene, course, x, y) {
-        super(scene);
-        this.container = scene.add.container(x, y);
+        super(scene, x, y);
         let text = scene.add.text(0, 0, course.name, {fontSize: '32px'});
         text.setOrigin(0, 0);
         this.width = text.width;
@@ -51,62 +53,65 @@ class CourseTitle extends DraggableObject {
 }
 
 class LegendTopicRect {
-    constructor(scene, topic, x, y) {
-        let graphics = scene.add.graphics();
-        graphics.lineStyle(2, 0xffffff, 2);
-        //  32px radius on the corners
-        graphics.strokeRoundedRect(32 + x, 32 + y, 400, 50, 32);
-        graphics.lineStyle(4, 0xff00ff, 1);
-        let text = scene.add.text(48 + x, 48 + y, topic.name, {fontSize: '24px'});
-        this.objectHeight = text.height + 32;
-        this.objectWidth = 400;
+    constructor(scene, container, topic, x, y) {
+        let legendRoundedRect = scene.add.rectangle(x, y, 400, 50);
+        legendRoundedRect.setOrigin(0, 0);
+        legendRoundedRect.setStrokeStyle(2, 0xffffff, 2);
+        container.add(legendRoundedRect);
+        //  32px radius on the corners        
+        let legendTitleText = scene.add.text(x, y, topic.name, {fontSize: '24px'});
+        container.add(legendTitleText);
+        container.add(legendRoundedRect);
+        this.objectHeight = legendRoundedRect.height;
+        this.objectWidth = legendRoundedRect.width;
     }
 }
 
-class LegendRect extends DraggableObject {
+class LegendRect extends DraggableContainer {
     constructor(scene, course, x, y) {
-        super(scene);
-        let ypos = y + 32;
+        super(scene, x, y);
+        let ypos = 24;
         let width = 0;
-        let legendText = scene.add.text(48 + x, ypos, 'Legend', {fontSize: '28px'});
+        let legendText = scene.add.text(16, ypos, 'Legend', {fontSize: '28px'});
         let height = legendText.height + 16;
-        ypos += legendText.height;
+        ypos += legendText.height + 16;
+        this.container.add(legendText);
         for (const topic of course.topics) {
-            let legendTopicRect = new LegendTopicRect(scene, topic, x, ypos);
+            let legendTopicRect = new LegendTopicRect(scene, this.container, topic, 16, ypos);
             ypos += (legendTopicRect.objectHeight + 4);
-            if (legendTopicRect.objectWidth > width) {
-                width = legendTopicRect.objectWidth;
+            if ((legendTopicRect.objectWidth + 32) > width) {
+                width = legendTopicRect.objectWidth + 32;
             }
             height += (legendTopicRect.objectHeight + 4);
         }
+        height += 24;
         this.objectHeight = height;
         this.objectWidth = width;
-        let graphics = scene.add.graphics();
-        graphics.lineStyle(2, 0xffffff, 2);
-        //  32px radius on the corners
-        //graphics.fillStyle(0x5555555, 1);
-        graphics.strokeRoundedRect(16 + x, 16 + y, this.objectWidth + 32, this.objectHeight + 32, 16);
-        //this.draggable(graphics);        
-        //graphics.lineStyle(4, 0xff00ff, 1);
+        let legendRect = scene.add.rectangle(0, 0, this.objectWidth, this.objectHeight);
+        legendRect.setOrigin(0, 0);
+        legendRect.setStrokeStyle(2, 0xffffff, 2);
+        this.container.add(legendRect);
+        this.container.setSize(this.objectWidth, this.objectHeight);
+        this.width = width;
+        this.height = height;
+        this.draggable(legendRect);
     }
 }
 
-class CourseWorkRect extends DraggableObject {
+class CourseWorkRect extends DraggableContainer {
 
     constructor(scene, course, courseWork, x, y) {
-        super(scene);
-        let container = scene.add.container(x, y);
-        this.container = container;
+        super(scene, x, y);                
         this.courseWork = courseWork;
         let text = scene.add.text(16, 16, courseWork.title, {fontSize: '24px'});
         text.setOrigin(0, 0);
-        container.add(text);
+        this.container.add(text);
         this.width = text.width + 32;
         this.height = text.height + 32;
         let rectangle = scene.add.rectangle(0, 0, this.width, this.height);
         rectangle.setOrigin(0, 0);
         rectangle.setStrokeStyle(2, 0xffffff, 2);
-        container.add(rectangle);
+        this.container.add(rectangle);
         this.draggable(rectangle);
     }
 }
@@ -125,7 +130,7 @@ class MainScene extends Phaser.Scene {
         let course = courses[0];
         console.log('loading course', course);
         new CourseTitle(this, course, 16, 16);
-        new LegendRect(this, course,16, 64);
+        new LegendRect(this, course, 16, 64);
         let ypos = 200;
         let xpos = 100;
         for(const courseWork of course.courseWork) {
