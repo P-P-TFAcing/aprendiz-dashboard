@@ -4,9 +4,9 @@ Google Classroom API project for viewing and managing PPT Google Classroom curri
 
 ## Local Development
 
-### Installed Requirements
+### Install Requirements
 
-Requires: JDK 11
+Requires: JDK 11 and Maven
 
 Install mysql-server version 8
 
