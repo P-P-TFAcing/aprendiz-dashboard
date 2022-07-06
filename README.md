@@ -4,7 +4,7 @@ Google Classroom API project for viewing and managing PPT Google Classroom curri
 
 ## Local Development
 
-### Install Requirements
+### Requirements
 
 Requires: JDK 11 and Maven
 
