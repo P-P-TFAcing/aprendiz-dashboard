@@ -10,3 +10,6 @@ Install mysql-server version 8
 
 Install [Apache Netbeans](https://netbeans.apache.org/).
 
+Install [Wildfly Application Server](https://examples.javacodegeeks.com/enterprise-java/jboss-wildfly/jboss-wildfly-netbeans-example/).
+
+
