@@ -3,8 +3,11 @@ package com.pptpdx.resources;
 import com.pptpdx.model.ModelClasses;
 import com.pptpdx.model.Models;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
+import net.lilycode.core.configbundle.ConfigException;
 import net.lilycode.core.hibernate.HibernateSessions;
 import net.lilycode.core.hibernate.HibernateSessionsConfiguration;
 import net.lilycode.core.hibernate.MySQLInnoDbDialect;
@@ -32,10 +35,11 @@ public class ClassroomApplicationListener implements ServletContextListener {
             hibernateConfig.setAnnotatedClasses(ModelClasses.getClasses());
             hibernateConfig.setDatabaseName(ApplicationConfig.DB_DATABASE.value());
             mainModel.openSessionManager(hibernateConfig);            
-            Models.MAIN = Models.add("main", mainModel);
-            
+            Models.MAIN = Models.add("main", mainModel);            
         } catch (IOException ex) {
-            throw new RuntimeException("failed to load local resources");
+            throw new RuntimeException("failed to load local resources", ex);
+        } catch (ConfigException ex) {
+            throw new RuntimeException("Configuration exception", ex);
         }
     }
 

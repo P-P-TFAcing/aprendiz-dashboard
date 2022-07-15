@@ -44,12 +44,12 @@
         <dependency>
             <groupId>lilycode.net</groupId>
             <artifactId>lilycode-hibernate</artifactId>
-            <version>1.0.2</version>
+            <version>1.0.5</version>
         </dependency>
         <dependency>
             <groupId>lilycode.net</groupId>
             <artifactId>lilycode-configbundle</artifactId>
-            <version>1.0.2</version>
+            <version>1.0.5</version>
         </dependency>
         <dependency>
             <groupId>com.google.code.gson</groupId>
