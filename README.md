@@ -1,6 +1,6 @@
 # Aprendiz Dashboard Web Application
 
-Google Classroom API project for viewing and managing PPT Google Classroom curriculum.
+Google Classroom API project for viewing and managing PPT Google Classroom curriculum..
 
 ## Local Development
 
