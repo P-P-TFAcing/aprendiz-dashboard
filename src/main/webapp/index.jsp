@@ -15,33 +15,34 @@
     <body>
         <div class="container-fluid" ng-app="AprendizApplication">
             <ng-view/>
-        </div>                
-        <!-- googlesignon -->
-        <div id="google-signon-block" class="container-fluid">
-            <div class="panel panel-default">
-                <h1>Welcome to Aprendiz Dashboard.</h1>
-                <div class="panel-body">                                
-                    <fieldset>
-                        <legend>Please sign in with Google</legend>
+            <!-- googlesignon -->
+            <div id="google-signon-block" class="container-fluid" ng-controller="GoogleSignonController">
+                <div class="panel panel-default">
+                    <h1>Welcome to Aprendiz Dashboard.</h1>
+                    <div class="panel-body">                                
+                        <fieldset>
+                            <legend>Please sign in with Google</legend>
 
-                        <div id="g_id_onload"
-                             data-client_id="306377984914-p28n8601j01jsv6cudu632vss51idh4b.apps.googleusercontent.com"
-                             data-login_uri="https://aprendiz-dashboard.pptpdx.net/resources/classroom/credential"
-                             data-callback="handleCredentialResponse"
-                             data-auto_prompt="false">
-                        </div>
-                        <div class="g_id_signin"
-                             data-type="standard"
-                             data-size="large"
-                             data-theme="outline"
-                             data-text="sign_in_with"
-                             data-shape="rectangular"
-                             data-logo_alignment="left">
-                        </div>
-                    </fieldset>                                
+                            <div id="g_id_onload"
+                                 data-client_id="306377984914-p28n8601j01jsv6cudu632vss51idh4b.apps.googleusercontent.com"
+                                 data-login_uri="https://aprendiz-dashboard.pptpdx.net/resources/classroom/credential"
+                                 data-callback="handleCredentialResponse"
+                                 data-auto_prompt="false">
+                            </div>
+                            <div class="g_id_signin"
+                                 data-type="standard"
+                                 data-size="large"
+                                 data-theme="outline"
+                                 data-text="sign_in_with"
+                                 data-shape="rectangular"
+                                 data-logo_alignment="left">
+                            </div>
+                        </fieldset>                                
+                    </div>
                 </div>
             </div>
-        </div>
+
+        </div>                
         <script>
 
             var onGoogleSignIn;
