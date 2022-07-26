@@ -15,17 +15,8 @@
     <body>
 
         <div id="google-signon-block" class="container-fluid">
-            <nav class="navbar navbar-expand-lg navbar-dark">
-                <a class="navbar-brand" href="#">                            
-                    <div class="row">
-                        <div class="col-md-2">
-                            <img width="200" alt="logo" src="assets/HappyBrainScienceLogo.png" class="navbar-logo">
-                        </div>                     
-                    </div>            
-                </a>
-            </nav>            
             <div class="panel panel-default">
-                <p>Welcome to Aprendiz Dashboard.</p>
+                <h1>Welcome to Aprendiz Dashboard.</h1>
                 <div class="panel-body">                                
                     <fieldset>
                         <legend>Please sign in with Google</legend>
