@@ -13,33 +13,56 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     </head>
     <body>
-        <%
-            ClassroomSession classroomSession = ClassroomSessions.getSession(request);
-            if (classroomSession == null) {
-        %>
-        <!-- sign on page -->
-        <div class="container-fluid">
-            <h1>Aprendiz Dashboard</h1>
-            <a href="/login"><img src="images/google/btn_google_signin_dark_normal_web.png" alt="Sign in with Google"></a>    
+
+        <div id="google-signon-block" class="container-fluid">
+            <nav class="navbar navbar-expand-lg navbar-dark">
+                <a class="navbar-brand" href="#">                            
+                    <div class="row">
+                        <div class="col-md-2">
+                            <img width="200" alt="logo" src="assets/HappyBrainScienceLogo.png" class="navbar-logo">
+                        </div>                     
+                    </div>            
+                </a>
+            </nav>            
+            <div class="panel panel-default">
+                <p>Welcome to Aprendiz Dashboard.</p>
+                <div class="panel-body">                                
+                    <fieldset>
+                        <legend>Please sign in with Google</legend>
+
+                        <div id="g_id_onload"
+                             data-client_id="306377984914-p28n8601j01jsv6cudu632vss51idh4b.apps.googleusercontent.com"
+                             data-login_uri="https://aprendiz-dashboard.pptpdx.net/resources/classroom/credential"
+                             data-callback="handleCredentialResponse"
+                             data-auto_prompt="false">
+                        </div>
+                        <div class="g_id_signin"
+                             data-type="standard"
+                             data-size="large"
+                             data-theme="outline"
+                             data-text="sign_in_with"
+                             data-shape="rectangular"
+                             data-logo_alignment="left">
+                        </div>
+                    </fieldset>                                
+                </div>
+            </div>
         </div>
-        <%
-        } else {
-            // Use the credentials to get user info from the OAuth2.0 API.
-            String username = classroomSession.getUserinfo().getGivenName();
-        %>
-        <!-- authorized page -->
-        <div class="container-fluid" ng-app="AprendizApplication" ng-controller="MainViewController">
-            <h1>Aprendiz Dashboard</h1>
-            <div id="aprendiz-block">
-            </div>        
-            <p>Signed in as <%= username%></p>    
-            <form action="/logout" method="post">
-                <button>Log Out</button>
-            </form>
-        </div>
-        <%
+
+        <script>
+
+            var onGoogleSignIn;
+
+            function handleCredentialResponse(response) {
+                // decodeJwtResponse() is a custom function defined by you
+                // to decode the credential response.
+                console.log('google auth credential', response);
+                if (onGoogleSignIn) {
+                    onGoogleSignIn(response);
+                }
             }
-        %>
+        </script>
+        <script src="https://accounts.google.com/gsi/client" async defer></script>        
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>  
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
         <script src="//cdn.jsdelivr.net/npm/phaser@3.55.2/dist/phaser.min.js"></script>
