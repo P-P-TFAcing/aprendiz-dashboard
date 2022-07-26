@@ -77,4 +77,33 @@ angular.module("AprendizApplication").controller('MainViewController', function 
         
 });
 
+angular.module("AprendizApplication").controller('GoogleSignonController', function ($scope, $http, $rootScope, $cookies) {
+    console.log('google signon controller started');
+    let sessionToken = $cookies.get('aprendiz-dashboard');
+    if(sessionToken) {
+        $cookies.remove('aprendiz-dashboard');
+    }
+    $scope.googleSignon = function (credentials) {
+        console.log('google onSignIn', credentials);        
+        $http({
+            method: 'POST',
+            data: credentials,
+            url: 'resources/classroom/credential'
+        }).then(function (response) {            
+            console.log('posted google credentials OK', response);
+            let sessionToken = response.data.sessionToken;
+            if(sessionToken) {
+                $cookies.put('aprendiz-dashboard', sessionToken, {'path': '/'});
+                window.location.href = '/';
+            } else {
+                window.location.href = '#!/unauthorized';
+            }
+        }, function(errorResponse) {
+            window.location.href = '#!/unauthorized';
+        });        
+    };
+    onGoogleSignIn = $scope.googleSignon.bind(this);
+});
+
+
 
