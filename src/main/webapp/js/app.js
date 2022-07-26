@@ -1,6 +1,6 @@
 /* global google, angular, Phaser, MainScene */
 
-angular.module("AprendizApplication", []);
+angular.module("AprendizApplication", ['ngRoute', 'ngSanitize', 'ngCookies']);
 
 angular.module("AprendizApplication").service('ClassroomDataLoaderService', function ($http) {
     this.loadData = function (completionCallback) {
