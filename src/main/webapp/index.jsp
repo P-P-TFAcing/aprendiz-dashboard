@@ -15,8 +15,12 @@
     <body>
         <div class="container-fluid" ng-app="AprendizApplication">
             <!-- googlesignon -->
-            <div id="google-signon-block" class="container-fluid" ng-controller="GoogleSignonController">
-                <div class="panel panel-default">
+            <div class="container-fluid" ng-controller="GoogleSignonController">               
+                <div id="main-content-block" ng-controller="MainViewController">
+                    <div id="aprendiz-block">
+                    </div>                            
+                </div>
+                <div id="google-signon-block" class="panel panel-default">
                     <h1>Welcome to the Aprendiz Dashboard</h1>
                     <div class="panel-body">                                
                         <fieldset>
