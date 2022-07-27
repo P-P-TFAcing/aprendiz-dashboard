@@ -179,7 +179,8 @@ public class ClassroomResource {
                             tx.commit();
                             LOGGER.debug("created new user " + user);
                         } else {
-                            
+                            User user = qry.list().get(0);
+                            LOGGER.debug("resolved existing user " + user);
                         }                        
                     }
                     return response;
