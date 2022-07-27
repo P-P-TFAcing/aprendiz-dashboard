@@ -27,7 +27,7 @@ public class UserSession implements Serializable {
     @ManyToOne    
     private User sessionUser;
     
-    @Column
+    @Column(columnDefinition="TEXT")
     private String googleCredential;
 
     public Long getId() {
