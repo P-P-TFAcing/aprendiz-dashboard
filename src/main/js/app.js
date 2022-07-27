@@ -1,5 +1,11 @@
 /* global google, angular, Phaser, MainScene */
 
+require('angular');
+require('angular-sanitize');
+require('angular-cookies');
+require('angular-ui-router');
+require('angular-route');
+
 angular.module("AprendizApplication", ['ngRoute', 'ngSanitize', 'ngCookies']);
 
 angular.module("AprendizApplication").service('ClassroomDataLoaderService', function ($http) {
