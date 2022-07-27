@@ -97,7 +97,6 @@ angular.module("AprendizApplication").controller('MainViewController', function 
         };        
         let game = new Phaser.Game(config); 
         //game.config.courses = courses;
-
     //ClassroomDataLoaderService.loadData($scope.dataLoaded);
 
     
