@@ -25,6 +25,10 @@ public class PostCredentialRequest {
     public void setCredential(String credential) {
         this.credential = credential;
     }
-    
+
+    @Override
+    public String toString() {
+        return "PostCredentialRequest{" + "clientId=" + clientId + ", credential=" + credential + '}';
+    }
     
 }

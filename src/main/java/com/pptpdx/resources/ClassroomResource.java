@@ -136,6 +136,7 @@ public class ClassroomResource {
     @POST
     public PostCredentialResponse postCredential(PostCredentialRequest request) {
         try {
+            LOGGER.debug("post Google credentials " + request);
             if (!request.getClientId().equals(ApplicationConfig.GOOGLE_IDENTITY_CLIENT_ID.value())) {
                 LOGGER.error("client ID mismatch");
                 throw new WebApplicationException(Response.Status.INTERNAL_SERVER_ERROR);
