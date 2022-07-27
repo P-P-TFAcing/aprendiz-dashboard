@@ -277,9 +277,11 @@ angular.module("AprendizApplication").controller('GoogleSignonController', funct
             let sessionToken = response.data.sessionToken;
             if(sessionToken) {
                 $cookies.put('aprendiz-dashboard', sessionToken, {'path': '/'});
-                window.location.href = '/';
+                console.log('authorized');    
+            //window.location.href = '/';
             } else {
-                window.location.href = '#!/unauthorized';
+                console.log('unauthorized');
+                //window.location.href = '#!/unauthorized';
             }
         }, function(errorResponse) {
             window.location.href = '#!/unauthorized';
