@@ -17,7 +17,7 @@
             <!-- googlesignon -->
             <div id="google-signon-block" class="container-fluid" ng-controller="GoogleSignonController">
                 <div class="panel panel-default">
-                    <h1>Welcome to Aprendiz Dashboard</h1>
+                    <h1>Welcome to the Aprendiz Dashboard</h1>
                     <div class="panel-body">                                
                         <fieldset>
                             <legend>Please sign in with Google.</legend>
