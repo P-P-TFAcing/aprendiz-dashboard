@@ -14,7 +14,6 @@
     </head>
     <body>
         <div class="container-fluid" ng-app="AprendizApplication">
-            <ng-view/>
             <!-- googlesignon -->
             <div id="google-signon-block" class="container-fluid" ng-controller="GoogleSignonController">
                 <div class="panel panel-default">
