@@ -11,7 +11,10 @@ import java.util.List;
 public class ModelClasses {
 
     private static final Class[] CLASSES = {
-        CourseConfiguration.class
+        CourseConfiguration.class,
+        User.class,
+        UserPassword.class,
+        UserSession.class            
     };
     
     public static List<Class> getClasses() {
