@@ -6,6 +6,10 @@ require('angular-cookies');
 require('angular-ui-router');
 require('angular-route');
 
+require('phaser');
+
+require('MainScene');
+
 angular.module("AprendizApplication", ['ngRoute', 'ngSanitize', 'ngCookies']);
 
 angular.module("AprendizApplication").service('ClassroomDataLoaderService', function ($http) {
