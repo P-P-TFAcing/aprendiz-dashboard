@@ -188,7 +188,7 @@ public class ClassroomResource {
                         usession.setSessionUser(user);
                         usession.setWhenCreated(new Date());
                         usession.setSessionId(UUID.randomUUID().toString());
-                        hsession.save(user);
+                        hsession.save(usession);
                         tx.commit();
                         LOGGER.debug("created new session " + usession);                        
                         response.setSessionToken(usession.getSessionId());                        
