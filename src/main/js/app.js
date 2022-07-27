@@ -8,7 +8,7 @@ require('angular-route');
 
 require('phaser');
 
-require('MainScene');
+require('./MainScene');
 
 angular.module("AprendizApplication", ['ngRoute', 'ngSanitize', 'ngCookies']);
 
