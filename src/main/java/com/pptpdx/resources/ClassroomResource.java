@@ -11,6 +11,8 @@ import com.google.api.services.classroom.model.Topic;
 import com.pptpdx.classroom.ClassroomController;
 import com.pptpdx.classroom.ClassroomSession;
 import com.pptpdx.classroom.ClassroomSessions;
+import com.pptpdx.model.Models;
+import com.pptpdx.model.User;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
@@ -34,6 +36,9 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import net.lilycode.core.configbundle.ConfigException;
 import org.apache.log4j.Logger;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 /**
  *
@@ -161,6 +166,22 @@ public class ClassroomResource {
                     response.setEmailAddress(emailAddress);
                     response.setName(name);
                     response.setSessionToken(UUID.randomUUID().toString());
+                    try(Session hsession = Models.MAIN.openSession()) {                        
+                        Query<User> qry = hsession.getSession().createQuery("from User where emailAddress=:emailAddress");
+                        qry.setParameter("emailAddress", emailAddress);
+                        if(qry.list().isEmpty()) {
+                            Transaction tx = hsession.beginTransaction();
+                            User user = new User();
+                            user.setActive(Boolean.TRUE);
+                            user.setEmailAddress(emailAddress);
+                            user.setFullName(name);
+                            hsession.save(user);                            
+                            tx.commit();
+                            LOGGER.debug("created new user " + user);
+                        } else {
+                            
+                        }                        
+                    }
                     return response;
 //                    } else {
 //                        LOGGER.debug("contact is not a member:" + emailAddress);
