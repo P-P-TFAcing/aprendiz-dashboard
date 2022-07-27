@@ -77,7 +77,24 @@ angular.module("AprendizApplication").controller('MainViewController', function 
         game.config.courses = courses;
     };
 
-    ClassroomDataLoaderService.loadData($scope.dataLoaded);
+        let config = {
+            type: Phaser.AUTO,
+            dom: {
+                createContainer: true
+            },
+            fps: {
+                target: 16,
+                forceSetTimeOut: true
+            },
+            parent: 'aprendiz-block',
+            width: 4000,
+            height: 4000,
+            scene: MainScene
+        };        
+        let game = new Phaser.Game(config); 
+        //game.config.courses = courses;
+
+    //ClassroomDataLoaderService.loadData($scope.dataLoaded);
 
     
         
