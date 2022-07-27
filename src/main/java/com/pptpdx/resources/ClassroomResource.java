@@ -13,6 +13,7 @@ import com.pptpdx.classroom.ClassroomSession;
 import com.pptpdx.classroom.ClassroomSessions;
 import com.pptpdx.model.Models;
 import com.pptpdx.model.User;
+import com.pptpdx.model.UserSession;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
@@ -20,6 +21,7 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.security.GeneralSecurityException;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 import javax.servlet.ServletContext;
@@ -161,33 +163,37 @@ public class ClassroomResource {
                     String name = (String) googleToken.getPayload().get("name");
                     String emailAddress = googleToken.getPayload().getEmail();
                     LOGGER.debug("resolved Google account " + emailAddress);
-                    // now we need to verify the contact is in the list on SendInBlue
-//                    if(contactInList(emailAddress)) {                    
                     response.setEmailAddress(emailAddress);
-                    response.setName(name);
-                    response.setSessionToken(UUID.randomUUID().toString());
-                    try(Session hsession = Models.MAIN.openSession()) {                        
+                    response.setName(name);                    
+                    User user;
+                    try ( Session hsession = Models.MAIN.openSession()) {
+                        Transaction tx = hsession.beginTransaction();
                         Query<User> qry = hsession.getSession().createQuery("from User where emailAddress=:emailAddress");
                         qry.setParameter("emailAddress", emailAddress);
-                        if(qry.list().isEmpty()) {
-                            Transaction tx = hsession.beginTransaction();
-                            User user = new User();
+                        if (qry.list().isEmpty()) {
+                            user = new User();
                             user.setActive(Boolean.TRUE);
                             user.setEmailAddress(emailAddress);
                             user.setFullName(name);
-                            hsession.save(user);                            
+                            hsession.save(user);
                             tx.commit();
                             LOGGER.debug("created new user " + user);
                         } else {
-                            User user = qry.list().get(0);
+                            user = qry.list().get(0);
                             LOGGER.debug("resolved existing user " + user);
-                        }                        
-                    }
+                        }
+                        // create session
+                        UserSession usession = new UserSession();
+                        usession.setGoogleCredential(credential);
+                        usession.setSessionUser(user);
+                        usession.setWhenCreated(new Date());
+                        usession.setSessionId(UUID.randomUUID().toString());
+                        hsession.save(user);
+                        tx.commit();
+                        LOGGER.debug("created new session " + usession);                        
+                        response.setSessionToken(usession.getSessionId());                        
+                    }                    
                     return response;
-//                    } else {
-//                        LOGGER.debug("contact is not a member:" + emailAddress);
-//                        throw new WebApplicationException(Response.Status.UNAUTHORIZED);
-//                    }
                 } else {
                     LOGGER.error("invalid token");
                     throw new WebApplicationException(Response.Status.UNAUTHORIZED);
