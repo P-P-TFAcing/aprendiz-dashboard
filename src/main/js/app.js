@@ -94,7 +94,7 @@ angular.module("AprendizApplication").controller('GoogleSignonController', funct
         $http({
             method: 'POST',
             data: credentials,
-            url: 'resources/classroom/credential'
+            url: 'webresources/classroom/credential'
         }).then(function (response) {            
             console.log('posted google credentials OK', response);
             let sessionToken = response.data.sessionToken;
