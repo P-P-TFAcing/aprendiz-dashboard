@@ -50,14 +50,13 @@
             <groupId>lilycode.net</groupId>
             <artifactId>lilycode-configbundle</artifactId>
             <version>1.0.5</version>
-        </dependency>
-        
+        </dependency>        
         <dependency>
             <groupId>org.jboss.resteasy</groupId>
             <artifactId>resteasy-jaxrs</artifactId>
             <version>3.15.3.Final</version>
-        </dependency>
-        
+            <scope>provided</scope>
+        </dependency>        
         <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
