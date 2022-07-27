@@ -3,14 +3,13 @@ package com.pptpdx.resources;
 import com.pptpdx.model.ModelClasses;
 import com.pptpdx.model.Models;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import net.lilycode.core.configbundle.ConfigException;
 import net.lilycode.core.hibernate.HibernateSessions;
 import net.lilycode.core.hibernate.HibernateSessionsConfiguration;
 import net.lilycode.core.hibernate.MySQLInnoDbDialect;
+import org.apache.log4j.Logger;
 
 /**
  * Web application lifecycle listener.
@@ -19,11 +18,13 @@ import net.lilycode.core.hibernate.MySQLInnoDbDialect;
  */
 public class ClassroomApplicationListener implements ServletContextListener {
 
+    private static final Logger LOGGER = Logger.getLogger(ClassroomApplicationListener.class);
+    
     @Override
     public void contextInitialized(ServletContextEvent sce) {
         try {
-            ClassroomResource.loadResources(sce.getServletContext());
-            
+            LOGGER.debug("start Aprendiz Dashboard");
+            ClassroomResource.loadResources(sce.getServletContext());            
             HibernateSessions mainModel = new HibernateSessions();        
             HibernateSessionsConfiguration hibernateConfig = new HibernateSessionsConfiguration();
             hibernateConfig.setDatabaseHostAddress(ApplicationConfig.DB_HOST.value());
@@ -46,5 +47,6 @@ public class ClassroomApplicationListener implements ServletContextListener {
     @Override
     public void contextDestroyed(ServletContextEvent sce) {
         Models.MAIN.closeSessionManager();
+        LOGGER.debug("stop Aprendiz Dashboard");
     }
 }
