@@ -5,7 +5,7 @@ import net.lilycode.core.configbundle.ConfigPropertyString;
 
 /**
  *
- * @author theider
+ * @author theider..
  */
 public class ApplicationConfig {
 
