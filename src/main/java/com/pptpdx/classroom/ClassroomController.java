@@ -27,11 +27,12 @@ public class ClassroomController {
     private static Classroom getService(ClassroomSession classroomSession) {        
         NetHttpTransport transport = new NetHttpTransport();            
         GsonFactory jsonFactory = new GsonFactory();
-        Classroom service = new Classroom.Builder(transport, jsonFactory, classroomSession.getGoogleCredential()).setApplicationName("Aprendiz Dashboard").build();        
+        Classroom service = new Classroom.Builder(transport, jsonFactory, classroomSession.getGoogleCredential()).setApplicationName("Aprendiz Dashboard").build();               
         return service;
     }
     
     public static List<Topic> getTopics(ClassroomSession classroomSession, String courseId) throws IOException {        
+        LOGGER.debug("get topics");
         Classroom service = getService(classroomSession);
         ListTopicResponse response = service.courses().topics().list(courseId)
                 .setPageSize(20)
@@ -42,11 +43,13 @@ public class ClassroomController {
             for(Topic t : topics) {
                 result.add(t);
             }
-        }
+            LOGGER.debug("loaded " + result.size() + " topics");
+        }        
         return result;
     }
     
     public static List<CourseWork> getCourseWork(ClassroomSession classroomSession, String courseId) throws IOException {        
+        LOGGER.debug("get coursework " + courseId);
         Classroom service = getService(classroomSession);
         ListCourseWorkResponse response = service.courses().courseWork().list(courseId)
                 .setPageSize(20)
@@ -57,11 +60,13 @@ public class ClassroomController {
             for(CourseWork t : objects) {
                 result.add(t);
             }
+            LOGGER.debug("loaded " + result.size() + " topics");
         }
         return result;
     }
     
     public static List<Course> getCourses(ClassroomSession classroomSession) throws IOException {
+        LOGGER.debug("get courses");
         Classroom service = getService(classroomSession);
         ListCoursesResponse response = service.courses().list()
                 .setPageSize(20)
@@ -72,11 +77,13 @@ public class ClassroomController {
             for(Course c : courses) {                                               
                 result.add(c);
             }
+            LOGGER.debug("loaded " + result.size() + " courses");
         }
         return result;
     }
 
     public static List<CourseWorkMaterial> getCourseWorkMaterials(ClassroomSession classroomSession, String courseId) throws IOException {
+        LOGGER.debug("get courseworkmaterials " + courseId);         
         Classroom service = getService(classroomSession);
         ListCourseWorkMaterialResponse response = service.courses().courseWorkMaterials().list(courseId)
                 .setPageSize(20)
@@ -87,6 +94,7 @@ public class ClassroomController {
             for(CourseWorkMaterial t : objects) {
                 result.add(t);
             }
+            LOGGER.debug("loaded " + result.size() + " courseworkmaterials");
         }
         return result;                
     }
