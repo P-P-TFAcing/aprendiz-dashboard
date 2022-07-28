@@ -25,7 +25,6 @@ import javax.servlet.http.HttpServletResponse;
 import net.lilycode.core.configbundle.ConfigException;
 
 public class Oauth2AuthorizationCodeServlet extends AbstractAuthorizationCodeServlet {
-
     
   @Override  
   protected void doGet(HttpServletRequest req, HttpServletResponse resp)
