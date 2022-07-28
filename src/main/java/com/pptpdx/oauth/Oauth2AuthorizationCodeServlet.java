@@ -32,6 +32,7 @@ public class Oauth2AuthorizationCodeServlet extends AbstractAuthorizationCodeSer
     resp.sendRedirect("/");
   }
 
+  
   @Override
   protected String getRedirectUri(HttpServletRequest req) throws ServletException, IOException {
     return Utils.getRedirectUri(req);
