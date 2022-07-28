@@ -144,7 +144,7 @@ class MainScene extends Phaser.Scene {
             let y = event.worldY;
             let dragContext = this.scene.data.dragContext;
             if (dragContext) {
-                console.log('drag context', dragContext);
+                //console.log('drag context', dragContext);
                 dragContext.dragRect.setPosition(x + dragContext.deltaX, y + dragContext.deltaY);
             }
         });
@@ -156,6 +156,7 @@ class MainScene extends Phaser.Scene {
                 console.log('drag context mouse up', x, y, dragContext);
                 dragContext.container.setPosition(x + dragContext.deltaX, y + dragContext.deltaY);
                 dragContext.dragRect.destroy();
+                // update configuration
                 delete this.scene.data.dragContext;
             }
         });
