@@ -24,10 +24,12 @@ import com.google.api.client.extensions.servlet.auth.oauth2.AbstractAuthorizatio
 import com.pptpdx.classroom.ClassroomSession;
 import com.pptpdx.classroom.ClassroomSessions;
 import java.io.IOException;
+import java.util.logging.Level;
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import net.lilycode.core.configbundle.ConfigException;
 import org.apache.log4j.Logger;
 
 /**
@@ -83,7 +85,11 @@ public class Oauth2CallbackServlet extends AbstractAuthorizationCodeCallbackServ
    */
   @Override
   protected AuthorizationCodeFlow initializeFlow() throws IOException {
-    return Utils.newFlow();
+      try {
+          return Utils.newFlow();
+      } catch (ConfigException ex) {
+          throw new IOException("failed to load configuration", ex);
+      }
   }
 
   /**

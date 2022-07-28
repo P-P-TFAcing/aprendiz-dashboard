@@ -23,6 +23,7 @@ import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import net.lilycode.core.configbundle.ConfigException;
 
 public class Oauth2AuthorizationCodeServlet extends AbstractAuthorizationCodeServlet {
 
@@ -39,7 +40,11 @@ public class Oauth2AuthorizationCodeServlet extends AbstractAuthorizationCodeSer
 
   @Override
   protected AuthorizationCodeFlow initializeFlow() throws IOException {
-    return Utils.newFlow();
+      try {
+          return Utils.newFlow();
+      } catch (ConfigException ex) {
+          throw new IOException("failed to load configuration", ex);
+      }
   }
 
   @Override

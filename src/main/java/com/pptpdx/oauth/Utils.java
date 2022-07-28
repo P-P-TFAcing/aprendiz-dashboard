@@ -26,11 +26,13 @@ import com.google.api.client.util.store.MemoryDataStoreFactory;
 import com.google.api.services.oauth2.Oauth2;
 import com.google.api.services.oauth2.model.Userinfo;
 import com.google.api.services.classroom.ClassroomScopes;
+import com.pptpdx.resources.ApplicationConfig;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import net.lilycode.core.configbundle.ConfigException;
 
 public class Utils {
 
@@ -59,10 +61,6 @@ public class Utils {
     /**
      * Set your OAuth 2.0 Client Credentials
      */
-    private static final String CLIENT_ID = System.getProperty("GOOGLE_CLIENT_ID");
-
-    private static final String CLIENT_SECRET = System.getProperty("GOOGLE_CLIENT_SECRET");
-
     /**
      * Scopes for requesting access to Google OAuth2 API
      */
@@ -97,9 +95,9 @@ public class Utils {
      * @return 
      * @throws java.io.IOException
      */
-    public static GoogleAuthorizationCodeFlow newFlow() throws IOException {
+    public static GoogleAuthorizationCodeFlow newFlow() throws IOException, ConfigException {
         GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
-                HTTP_TRANSPORT, JSON_FACTORY, CLIENT_ID, CLIENT_SECRET, SCOPES)
+                HTTP_TRANSPORT, JSON_FACTORY, ApplicationConfig.GOOGLE_IDENTITY_CLIENT_ID.value(), ApplicationConfig.GOOGLE_IDENTITY_CLIENT_SECRET.value(), SCOPES)
                 .setDataStoreFactory(DATA_STORE_FACTORY)
                 .setAccessType("offline")
                 .build();
