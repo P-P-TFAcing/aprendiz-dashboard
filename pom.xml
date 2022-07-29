@@ -27,17 +27,6 @@
                 <enabled>true</enabled>
             </releases>
         </repository>        
-        <repository>
-            <id>happybrainscience</id>
-            <name>happybrainscience</name>
-            <url>https://artifactory.lilycode.net/artifactory/happybrainscience</url>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-        </repository>
     </repositories> 
     <dependencies>
         <dependency>
