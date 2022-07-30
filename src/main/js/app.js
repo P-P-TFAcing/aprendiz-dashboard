@@ -1,5 +1,7 @@
 /* global google, angular, Phaser, MainScene */
 
+import MainScene from './MainScene.js';
+
 angular.module("AprendizApplication", []);
 
 angular.module("AprendizApplication").service('ClassroomDataLoaderService', function ($http) {

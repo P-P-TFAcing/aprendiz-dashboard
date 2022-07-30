@@ -101,7 +101,7 @@ class LegendRect extends DraggableContainer {
 class CourseWorkRect extends DraggableContainer {
 
     constructor(scene, course, courseWork, x, y) {
-        super(scene, x, y);                
+        super(scene, x, y);
         this.courseWork = courseWork;
         let text = scene.add.text(16, 16, courseWork.title, {fontSize: '24px'});
         text.setOrigin(0, 0);
@@ -133,7 +133,7 @@ class MainScene extends Phaser.Scene {
         new LegendRect(this, course, 16, 64);
         let ypos = 200;
         let xpos = 100;
-        for(const courseWork of course.courseWork) {
+        for (const courseWork of course.courseWork) {
             new CourseWorkRect(this, course, courseWork, xpos, ypos);
             ypos += 100;
             xpos += 80;
@@ -163,4 +163,5 @@ class MainScene extends Phaser.Scene {
     }
 }
 ;
+
 
