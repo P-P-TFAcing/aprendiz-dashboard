@@ -6,7 +6,7 @@ require('phaser');
 require('angular');
 require('angular-cookies');
 
-console.log('starting Aprendiz app');
+console.log('starting Aprendiz app!');
 
 angular.module("AprendizApplication", ['ngCookies']);
 
