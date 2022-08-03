@@ -72,12 +72,12 @@ angular.module("AprendizApplication").controller('MainViewController', function 
             },
             parent: 'aprendiz-block',
             width: 4000,
-            height: 4000,
-            scene: MainScene
+            height: 4000
         };        
         let game = new Phaser.Game(config); 
         game.config.courses = courses;
         console.log('started new Phaser game');
+        game.scene.add('MainScene', MainScene, true, { });
     };
 
     $scope.dataLoad = false;
