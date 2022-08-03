@@ -6,6 +6,7 @@ module.exports = {
   output: {
       path: path.resolve(__dirname, 'src/main/webapp'),
       filename: 'bundle.js'
-  }  
+  },
+  devtool: 'inline-source-map'
 };
 
