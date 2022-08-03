@@ -2,6 +2,7 @@
 
 import MainScene from './MainScene.js';
 
+require('phaser');
 require('angular');
 
 console.log('starting Aprendiz app');
