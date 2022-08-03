@@ -21,16 +21,24 @@ import com.google.api.client.auth.oauth2.AuthorizationCodeFlow;
 import com.google.api.client.auth.oauth2.AuthorizationCodeResponseUrl;
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.extensions.servlet.auth.oauth2.AbstractAuthorizationCodeCallbackServlet;
+import com.google.api.services.oauth2.model.Userinfo;
 import com.pptpdx.classroom.ClassroomSession;
 import com.pptpdx.classroom.ClassroomSessions;
-import com.pptpdx.resources.ClassroomResource;
+import com.pptpdx.model.Models;
+import com.pptpdx.model.User;
+import com.pptpdx.model.UserSession;
 import java.io.IOException;
+import java.util.Date;
+import java.util.UUID;
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import net.lilycode.core.configbundle.ConfigException;
 import org.apache.log4j.Logger;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 /**
  * This servlet class extends AbstractAuthorizationCodeServlet which if the end-user credentials are
@@ -48,12 +56,41 @@ public class Oauth2CallbackServlet extends AbstractAuthorizationCodeCallbackServ
      * @throws java.io.IOException */
   @Override
   protected void onSuccess(HttpServletRequest req, HttpServletResponse resp, Credential credential) throws ServletException, IOException {
-    LOGGER.debug("OAUTH create new credential " + credential.getAccessToken());
-    ClassroomSession session = ClassroomSessions.createNewSession(credential);
-    Cookie cookie = new Cookie(ClassroomSessions.SESSION_COOKIE_NAME, session.getSessionId().toString());
-    cookie.setMaxAge(60*60*24); 
-    resp.addCookie(cookie);    
-    resp.sendRedirect("/");
+    LOGGER.debug("OAUTH create new credential " + credential.getAccessToken());    
+    Userinfo userInfo = Utils.getUserInfo(credential);
+    try(Session hsession = Models.MAIN.openSession()) {
+        LOGGER.debug("resolved Google user " + userInfo);
+        String emailAddress = userInfo.getEmail();
+        Query<User> qry = hsession.createQuery("from User where emailAddress=:emailAddress");
+        qry.setParameter("emailAddress", emailAddress);
+        User user;
+        if(qry.list().isEmpty()) {
+            Transaction tx = hsession.beginTransaction();
+            user = new User();
+            user.setActive(Boolean.TRUE);
+            user.setEmailAddress(userInfo.getEmail());
+            user.setFullName(userInfo.getName());
+            hsession.save(user);
+            tx.commit();
+            LOGGER.debug("created new user " + user);
+        } else {
+            user = qry.list().get(0);
+            LOGGER.debug("resolved existing user " + user);
+        }                
+        Transaction tx = hsession.beginTransaction();
+        UserSession usession = new UserSession();
+        usession.setSessionUser(user);
+        usession.setWhenCreated(new Date());
+        usession.setGoogleCredential(credential.getAccessToken());
+        usession.setSessionId(UUID.randomUUID().toString());
+        Cookie cookie = new Cookie(ClassroomSessions.SESSION_COOKIE_NAME, usession.getSessionId());
+        cookie.setMaxAge(60*60*24); 
+        resp.addCookie(cookie);    
+        resp.sendRedirect("/");
+        LOGGER.debug("created new session " + usession);
+        tx.commit();
+    }    
+    
   }
 
   /** Handles an error to the authorization, such as when an end user denies authorization.
