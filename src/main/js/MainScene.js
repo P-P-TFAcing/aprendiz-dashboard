@@ -1,9 +1,3 @@
-/* global Phaser */
-/**
- * This object needs to have a this.container (the thing that moves) and a graphics object
- * to represent the region like a parent rectable.
- * @type type
- */
 require('phaser');
 
 class DraggableContainer {

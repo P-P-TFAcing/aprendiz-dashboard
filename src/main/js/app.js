@@ -77,12 +77,12 @@ angular.module("AprendizApplication").controller('MainViewController', function 
         };        
         let game = new Phaser.Game(config); 
         game.config.courses = courses;
+        console.log('started new Phaser game');
     };
 
     $scope.dataLoad = false;
 
     $interval(function() {
-        console.log('cookies interval');
         let authCookie = $cookies.get('aprendiz-auth');
         if(authCookie) {
             if(!$scope.dataLoad) {
