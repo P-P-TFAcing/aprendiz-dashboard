@@ -2,6 +2,8 @@
 
 import MainScene from './MainScene.js';
 
+require('angular');
+
 console.log('starting Aprendiz app');
 
 angular.module("AprendizApplication", []);
