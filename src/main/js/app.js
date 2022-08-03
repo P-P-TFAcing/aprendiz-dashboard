@@ -125,7 +125,7 @@ class MainScene extends Phaser.Scene {
     }
 
     create() {
-        console.log('created MainScene');
+        console.log('created MainScene!');
         // now we have access to courses
         let courses = this.game.config.courses;
         let course = courses[0];
