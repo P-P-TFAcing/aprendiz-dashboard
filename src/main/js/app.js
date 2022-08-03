@@ -1,12 +1,12 @@
 /* global google, angular, Phaser, MainScene */
 
-import MainScene from './MainScene.js';
-
 require('phaser');
 require('angular');
 require('angular-cookies');
 
 console.log('starting Aprendiz app!');
+
+import MainScene from './MainScene.js';
 
 angular.module("AprendizApplication", ['ngCookies']);
 

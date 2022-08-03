@@ -68,6 +68,7 @@ public class ClassroomSessions {
     
     public static ClassroomSession createNewSession(Credential googleCredential) throws IOException {
         synchronized(sessions) {
+            LOGGER.debug("create new session from token " + googleCredential.getAccessToken());
             UUID sessionId = UUID.randomUUID();            
             ClassroomSession session = new ClassroomSession(sessionId, googleCredential, Utils.getUserInfo(googleCredential));
             sessions.put(sessionId, session);

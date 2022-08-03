@@ -48,7 +48,7 @@ public class Oauth2CallbackServlet extends AbstractAuthorizationCodeCallbackServ
      * @throws java.io.IOException */
   @Override
   protected void onSuccess(HttpServletRequest req, HttpServletResponse resp, Credential credential) throws ServletException, IOException {
-    LOGGER.debug("OAUTH create new credential " + credential);
+    LOGGER.debug("OAUTH create new credential " + credential.getAccessToken());
     ClassroomSession session = ClassroomSessions.createNewSession(credential);
     Cookie cookie = new Cookie(ClassroomSessions.SESSION_COOKIE_NAME, session.getSessionId().toString());
     cookie.setMaxAge(60*60*24); 
