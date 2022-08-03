@@ -54,6 +54,7 @@ public class ClassroomSessions {
                     if(info == null) {
                         return null;
                     }
+                    LOGGER.debug("resolved user sesssion by ID text " + sessionIdText);
                     return session;
                 } catch (IOException ex) {
                     LOGGER.error("failed to resolve Google credential");

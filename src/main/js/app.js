@@ -84,13 +84,10 @@ angular.module("AprendizApplication").controller('MainViewController', function 
         let authCookie = $cookies.get('aprendiz-auth');
         if(authCookie) {
             console.log('cookie is present', authCookie);
-        }
+            ClassroomDataLoaderService.loadData($scope.dataLoaded);
+        }        
     }, 1000);
 
-    ClassroomDataLoaderService.loadData($scope.dataLoaded);
-
-    
-        
 });
 
 

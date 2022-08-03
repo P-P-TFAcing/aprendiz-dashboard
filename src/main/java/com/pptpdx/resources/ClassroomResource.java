@@ -91,10 +91,12 @@ public class ClassroomResource {
     @GET
     public List<Course> getCourses(@CookieParam(APRENDIZ_SESSION_AUTH) Cookie cookie) {
         try {
+            LOGGER.debug("get courses");
             ClassroomSession classroomSession = ClassroomSessions.getSession(cookie.getValue());
             if (classroomSession == null) {
                 throw new WebApplicationException(Response.Status.UNAUTHORIZED);
             }
+            LOGGER.debug("resolved classroom session " + classroomSession);
             return ClassroomController.getCourses(classroomSession);
         } catch (IOException ex) {
             LOGGER.error("IO exception", ex);
