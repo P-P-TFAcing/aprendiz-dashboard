@@ -23,8 +23,8 @@ import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.extensions.servlet.auth.oauth2.AbstractAuthorizationCodeCallbackServlet;
 import com.pptpdx.classroom.ClassroomSession;
 import com.pptpdx.classroom.ClassroomSessions;
+import com.pptpdx.resources.ClassroomResource;
 import java.io.IOException;
-import java.util.logging.Level;
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -38,6 +38,8 @@ import org.apache.log4j.Logger;
  */
 public class Oauth2CallbackServlet extends AbstractAuthorizationCodeCallbackServlet {
 
+  private static final Logger LOGGER = Logger.getLogger(Oauth2CallbackServlet.class);    
+    
   /** Handles a successfully granted authorization.
      * @param req
      * @param resp
@@ -46,6 +48,7 @@ public class Oauth2CallbackServlet extends AbstractAuthorizationCodeCallbackServ
      * @throws java.io.IOException */
   @Override
   protected void onSuccess(HttpServletRequest req, HttpServletResponse resp, Credential credential) throws ServletException, IOException {
+    LOGGER.debug("OAUTH create new credential " + credential);
     ClassroomSession session = ClassroomSessions.createNewSession(credential);
     Cookie cookie = new Cookie(ClassroomSessions.SESSION_COOKIE_NAME, session.getSessionId().toString());
     cookie.setMaxAge(60*60*24); 
