@@ -4,10 +4,11 @@ import MainScene from './MainScene.js';
 
 require('phaser');
 require('angular');
+require('angular-cookies');
 
 console.log('starting Aprendiz app');
 
-angular.module("AprendizApplication", []);
+angular.module("AprendizApplication", ['ngCookies']);
 
 angular.module("AprendizApplication").service('ClassroomDataLoaderService', function ($http) {
     this.loadData = function (completionCallback) {
@@ -55,7 +56,7 @@ angular.module("AprendizApplication").service('ClassroomDataLoaderService', func
     };
 });
 
-angular.module("AprendizApplication").controller('MainViewController', function ($scope, $http, ClassroomDataLoaderService) {
+angular.module("AprendizApplication").controller('MainViewController', function ($scope, $http, $cookies, $interval, ClassroomDataLoaderService) {
     console.log('started main view controller');
     
     $scope.dataLoaded = function(courses) {
@@ -77,6 +78,14 @@ angular.module("AprendizApplication").controller('MainViewController', function 
         let game = new Phaser.Game(config); 
         game.config.courses = courses;
     };
+
+    $interval(function() {
+        console.log('cookies interval');
+        let authCookie = $cookies.get('aprendiz-auth');
+        if(authCookie) {
+            console.log('cookie is present', authCookie);
+        }
+    }, 1000);
 
     ClassroomDataLoaderService.loadData($scope.dataLoaded);
 
