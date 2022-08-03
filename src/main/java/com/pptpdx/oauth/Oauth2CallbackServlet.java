@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package com.pptpdx.oauth;
 
 // [START gae_java11_oauth2_callback]
@@ -41,108 +40,124 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 /**
- * This servlet class extends AbstractAuthorizationCodeServlet which if the end-user credentials are
- * not found, will redirect the end-user to an authorization page.
+ * This servlet class extends AbstractAuthorizationCodeServlet which if the
+ * end-user credentials are not found, will redirect the end-user to an
+ * authorization page.
  */
 public class Oauth2CallbackServlet extends AbstractAuthorizationCodeCallbackServlet {
 
-  private static final Logger LOGGER = Logger.getLogger(Oauth2CallbackServlet.class);    
-    
-  /** Handles a successfully granted authorization.
+    private static final Logger LOGGER = Logger.getLogger(Oauth2CallbackServlet.class);
+
+    /**
+     * Handles a successfully granted authorization.
+     *
      * @param req
      * @param resp
      * @param credential
      * @throws javax.servlet.ServletException
-     * @throws java.io.IOException */
-  @Override
-  protected void onSuccess(HttpServletRequest req, HttpServletResponse resp, Credential credential) throws ServletException, IOException {
-    LOGGER.debug("OAUTH create new credential " + credential.getAccessToken());    
-    Userinfo userInfo = Utils.getUserInfo(credential);
-    try(Session hsession = Models.MAIN.openSession()) {
-        LOGGER.debug("resolved Google user " + userInfo);
-        String emailAddress = userInfo.getEmail();
-        Query<User> qry = hsession.createQuery("from User where emailAddress=:emailAddress");
-        qry.setParameter("emailAddress", emailAddress);
-        User user;
-        if(qry.list().isEmpty()) {
+     * @throws java.io.IOException
+     */
+    @Override
+    protected void onSuccess(HttpServletRequest req, HttpServletResponse resp, Credential credential) throws ServletException, IOException {
+        LOGGER.debug("OAUTH create new credential " + credential.getAccessToken());
+        Userinfo userInfo = Utils.getUserInfo(credential);
+        try ( Session hsession = Models.MAIN.openSession()) {
+            LOGGER.debug("resolved Google user " + userInfo);
+            String emailAddress = userInfo.getEmail();
+            Query<User> qry = hsession.createQuery("from User where emailAddress=:emailAddress");
+            qry.setParameter("emailAddress", emailAddress);
+            User user;
+            if (qry.list().isEmpty()) {
+                Transaction tx = hsession.beginTransaction();
+                user = new User();
+                user.setActive(Boolean.TRUE);
+                user.setEmailAddress(userInfo.getEmail());
+                user.setFullName(userInfo.getName());
+                hsession.save(user);
+                tx.commit();
+                LOGGER.debug("created new user " + user);
+            } else {
+                user = qry.list().get(0);
+                LOGGER.debug("resolved existing user " + user);
+            }
             Transaction tx = hsession.beginTransaction();
-            user = new User();
-            user.setActive(Boolean.TRUE);
-            user.setEmailAddress(userInfo.getEmail());
-            user.setFullName(userInfo.getName());
-            hsession.save(user);
+            UserSession usession = new UserSession();
+            usession.setSessionUser(user);
+            usession.setWhenCreated(new Date());
+            usession.setGoogleCredential(credential.getAccessToken());
+            usession.setSessionId(UUID.randomUUID().toString());
+            hsession.save(usession);
             tx.commit();
-            LOGGER.debug("created new user " + user);
-        } else {
-            user = qry.list().get(0);
-            LOGGER.debug("resolved existing user " + user);
-        }                
-        Transaction tx = hsession.beginTransaction();
-        UserSession usession = new UserSession();
-        usession.setSessionUser(user);
-        usession.setWhenCreated(new Date());
-        usession.setGoogleCredential(credential.getAccessToken());
-        usession.setSessionId(UUID.randomUUID().toString());
-        Cookie cookie = new Cookie(ClassroomSessions.SESSION_COOKIE_NAME, usession.getSessionId());
-        cookie.setMaxAge(60*60*24); 
-        resp.addCookie(cookie);    
-        resp.sendRedirect("/");
-        LOGGER.debug("created new session " + usession);
-        tx.commit();
-    }    
-    
-  }
+            LOGGER.debug("created new session " + usession);
+            Cookie cookie = new Cookie(ClassroomSessions.SESSION_COOKIE_NAME, usession.getSessionId());
+            cookie.setMaxAge(60 * 60 * 24);
+            resp.addCookie(cookie);
+            resp.sendRedirect("/");
+        }
 
-  /** Handles an error to the authorization, such as when an end user denies authorization.
+    }
+
+    /**
+     * Handles an error to the authorization, such as when an end user denies
+     * authorization.
+     *
      * @param req
      * @param resp
      * @param errorResponse
      * @throws javax.servlet.ServletException
-     * @throws java.io.IOException */
-  @Override
-  protected void onError(
-      HttpServletRequest req, HttpServletResponse resp, AuthorizationCodeResponseUrl errorResponse) throws ServletException, IOException {
-    resp.getWriter().print("<p>You Denied Authorization.</p>");
-    resp.setStatus(200);
-    resp.addHeader("Content-Type", "text/html");
-  }
-
-  /** Returns the redirect URI for the given HTTP servlet request.
-     * @param req
-     * @return 
-     * @throws javax.servlet.ServletException
-     * @throws java.io.IOException */
-  @Override
-  protected String getRedirectUri(HttpServletRequest req) throws ServletException, IOException {
-    return Utils.getRedirectUri(req);
-  }
-
-  /**
-   * Loads the authorization code flow to be used across all HTTP servlet requests (only called
-   * during the first HTTP servlet request with an authorization code).
-     * @return 
      * @throws java.io.IOException
-   */
-  @Override
-  protected AuthorizationCodeFlow initializeFlow() throws IOException {
-      try {
-          return Utils.newFlow();
-      } catch (ConfigException ex) {
-          throw new IOException("failed to load configuration", ex);
-      }
-  }
+     */
+    @Override
+    protected void onError(
+            HttpServletRequest req, HttpServletResponse resp, AuthorizationCodeResponseUrl errorResponse) throws ServletException, IOException {
+        resp.getWriter().print("<p>You Denied Authorization.</p>");
+        resp.setStatus(200);
+        resp.addHeader("Content-Type", "text/html");
+    }
 
-  /**
-   * Returns the user ID for the given HTTP servlet request.This identifies your application's user
- and is used to assign and persist credentials to that user.
+    /**
+     * Returns the redirect URI for the given HTTP servlet request.
+     *
      * @param req
-     * @return 
+     * @return
      * @throws javax.servlet.ServletException
      * @throws java.io.IOException
-   */
-  @Override
-  protected String getUserId(HttpServletRequest req) throws ServletException, IOException {
-    return Utils.getUserId(req);
-  }
+     */
+    @Override
+    protected String getRedirectUri(HttpServletRequest req) throws ServletException, IOException {
+        return Utils.getRedirectUri(req);
+    }
+
+    /**
+     * Loads the authorization code flow to be used across all HTTP servlet
+     * requests (only called during the first HTTP servlet request with an
+     * authorization code).
+     *
+     * @return
+     * @throws java.io.IOException
+     */
+    @Override
+    protected AuthorizationCodeFlow initializeFlow() throws IOException {
+        try {
+            return Utils.newFlow();
+        } catch (ConfigException ex) {
+            throw new IOException("failed to load configuration", ex);
+        }
+    }
+
+    /**
+     * Returns the user ID for the given HTTP servlet request.This identifies
+     * your application's user and is used to assign and persist credentials to
+     * that user.
+     *
+     * @param req
+     * @return
+     * @throws javax.servlet.ServletException
+     * @throws java.io.IOException
+     */
+    @Override
+    protected String getUserId(HttpServletRequest req) throws ServletException, IOException {
+        return Utils.getUserId(req);
+    }
 }
 // [END gae_java11_oauth2_callback]
