@@ -154,7 +154,7 @@
                             <goal>npm</goal>
                         </goals>
                         <configuration>
-                            <arguments>install --omit=optional</arguments>
+                            <arguments>install</arguments>
                         </configuration>
                     </execution>
                     <execution>
