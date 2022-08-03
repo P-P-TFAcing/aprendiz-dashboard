@@ -3,3 +3,4 @@
 node
 node_modules
 src/main/webapp/bundle.js
+src/main/webapp/bundle.js.LICENSE.txt
