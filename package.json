@@ -12,7 +12,8 @@
     "author": "Timothy Heider",
     "license": "ISC",
     "devDependencies": {
-        "webpack-cli": "latest"        
+        "webpack-cli": "4.10.0",
+        "webpack": "5.74.0"
     },
     "dependencies": {
         "phaser": "3.55.2",
