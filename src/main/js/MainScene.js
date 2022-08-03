@@ -4,6 +4,7 @@
  * to represent the region like a parent rectable.
  * @type type
  */
+
 class DraggableContainer {
 
     constructor(scene, x, y) {
