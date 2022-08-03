@@ -2,6 +2,8 @@
 
 import MainScene from './MainScene.js';
 
+console.log('starting Aprendiz app');
+
 angular.module("AprendizApplication", []);
 
 angular.module("AprendizApplication").service('ClassroomDataLoaderService', function ($http) {
