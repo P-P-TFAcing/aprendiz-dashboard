@@ -55,7 +55,7 @@ angular.module("AprendizApplication").service('ClassroomDataLoaderService', func
     };
 });
 
-angular.module("AprendizApplication").controller('MainViewController', function ($scope, $http, ClassroomDataLoaderService) {
+angular.module("AprendizApplication").controller('MainViewController', function ($scope, $http) {
     console.log('started main view controller');
     
     $scope.dataLoaded = function(courses) {
@@ -78,7 +78,7 @@ angular.module("AprendizApplication").controller('MainViewController', function 
         game.config.courses = courses;
     };
 
-    ClassroomDataLoaderService.loadData($scope.dataLoaded);
+    //ClassroomDataLoaderService.loadData($scope.dataLoaded);
 
     
         
