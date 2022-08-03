@@ -79,12 +79,17 @@ angular.module("AprendizApplication").controller('MainViewController', function 
         game.config.courses = courses;
     };
 
+    $scope.dataLoad = false;
+
     $interval(function() {
         console.log('cookies interval');
         let authCookie = $cookies.get('aprendiz-auth');
         if(authCookie) {
-            console.log('cookie is present', authCookie);
-            ClassroomDataLoaderService.loadData($scope.dataLoaded);
+            if(!$scope.dataLoad) {
+                console.log('cookie is present', authCookie);            
+                $scope.dataLoad = true;
+                ClassroomDataLoaderService.loadData($scope.dataLoaded);
+            }
         }        
     }, 1000);
 
