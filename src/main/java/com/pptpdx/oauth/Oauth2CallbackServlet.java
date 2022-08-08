@@ -20,14 +20,22 @@ import com.google.api.client.auth.oauth2.AuthorizationCodeFlow;
 import com.google.api.client.auth.oauth2.AuthorizationCodeResponseUrl;
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.extensions.servlet.auth.oauth2.AbstractAuthorizationCodeCallbackServlet;
+import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
+import com.google.api.client.util.store.MemoryDataStoreFactory;
+import com.google.api.services.classroom.ClassroomScopes;
+import com.google.api.services.oauth2.Oauth2;
 import com.google.api.services.oauth2.model.Userinfo;
-import com.pptpdx.classroom.ClassroomSession;
 import com.pptpdx.classroom.ClassroomSessions;
 import com.pptpdx.model.Models;
 import com.pptpdx.model.User;
 import com.pptpdx.model.UserSession;
+import static com.pptpdx.oauth.Utils.HTTP_TRANSPORT;
+import static com.pptpdx.oauth.Utils.JSON_FACTORY;
+import com.pptpdx.resources.ApplicationConfig;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
@@ -47,7 +55,37 @@ import org.hibernate.Transaction;
 public class Oauth2CallbackServlet extends AbstractAuthorizationCodeCallbackServlet {
 
     private static final Logger LOGGER = Logger.getLogger(Oauth2CallbackServlet.class);
+    
+    private static final String APP_NAME = "APRENDIZ DASHBOARD";
 
+    private static final MemoryDataStoreFactory DATA_STORE_FACTORY = MemoryDataStoreFactory.getDefaultInstance();    
+
+    private static final List<String> SCOPES
+            = Arrays.asList(
+                    "https://www.googleapis.com/auth/userinfo.profile",
+                    "https://www.googleapis.com/auth/userinfo.email",
+                    ClassroomScopes.CLASSROOM_COURSES,
+                    ClassroomScopes.CLASSROOM_TOPICS,
+                    ClassroomScopes.CLASSROOM_COURSEWORK_ME,
+                    ClassroomScopes.CLASSROOM_COURSEWORK_STUDENTS,
+                    ClassroomScopes.CLASSROOM_COURSEWORKMATERIALS,
+                    ClassroomScopes.CLASSROOM_ROSTERS,
+                    ClassroomScopes.CLASSROOM_STUDENT_SUBMISSIONS_ME_READONLY
+            );
+    
+    public static Userinfo getUserInfo(Credential credential) throws IOException {
+        Oauth2 oauth2Client
+                = new Oauth2.Builder(HTTP_TRANSPORT, JSON_FACTORY, credential)
+                        .setApplicationName(APP_NAME)
+                        .build();
+
+        // Retrieve user profile
+        Userinfo userInfo = oauth2Client.userinfo().get().execute();        
+        return userInfo;
+    }
+    
+    
+    
     /**
      * Handles a successfully granted authorization.
      *
@@ -60,7 +98,7 @@ public class Oauth2CallbackServlet extends AbstractAuthorizationCodeCallbackServ
     @Override
     protected void onSuccess(HttpServletRequest req, HttpServletResponse resp, Credential credential) throws ServletException, IOException {
         LOGGER.debug("OAUTH create new credential " + credential.getAccessToken());
-        Userinfo userInfo = Utils.getUserInfo(credential);
+        Userinfo userInfo = getUserInfo(credential);
         try ( Session hsession = Models.MAIN.openSession()) {
             LOGGER.debug("resolved Google user " + userInfo);
             String emailAddress = userInfo.getEmail();
@@ -139,7 +177,12 @@ public class Oauth2CallbackServlet extends AbstractAuthorizationCodeCallbackServ
     @Override
     protected AuthorizationCodeFlow initializeFlow() throws IOException {
         try {
-            return Utils.newFlow();
+            GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
+                    HTTP_TRANSPORT, JSON_FACTORY, ApplicationConfig.GOOGLE_IDENTITY_CLIENT_ID.value(), ApplicationConfig.GOOGLE_IDENTITY_CLIENT_SECRET.value(), SCOPES)
+                    .setDataStoreFactory(DATA_STORE_FACTORY)
+                    .setAccessType("offline")
+                    .build();
+            return flow;
         } catch (ConfigException ex) {
             throw new IOException("failed to load configuration", ex);
         }

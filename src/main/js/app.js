@@ -240,16 +240,16 @@ angular.module("AprendizApplication").controller('MainViewController', function 
 
     $scope.dataLoad = false;
 
-    $interval(function() {
-        let authCookie = $cookies.get('aprendiz-auth');
-        if(authCookie) {
-            if(!$scope.dataLoad) {
-                console.log('cookie is present', authCookie);            
-                $scope.dataLoad = true;
-                ClassroomDataLoaderService.loadData($scope.dataLoaded);
-            }
-        }        
-    }, 1000);
+//    $interval(function() {
+//        let authCookie = $cookies.get('aprendiz-auth');
+//        if(authCookie) {
+//            if(!$scope.dataLoad) {
+//                console.log('cookie is present', authCookie);            
+//                $scope.dataLoad = true;
+//                ClassroomDataLoaderService.loadData($scope.dataLoaded);
+//            }
+//        }        
+//    }, 1000);
 
 });
 

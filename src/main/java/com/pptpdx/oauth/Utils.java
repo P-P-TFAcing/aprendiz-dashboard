@@ -15,38 +15,16 @@
  */
 package com.pptpdx.oauth;
 
-import com.google.api.client.auth.oauth2.Credential;
-import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
 import com.google.api.client.http.GenericUrl;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
-import com.google.api.client.util.store.MemoryDataStoreFactory;
-import com.google.api.services.oauth2.Oauth2;
-import com.google.api.services.oauth2.model.Userinfo;
-import com.google.api.services.classroom.ClassroomScopes;
-import com.pptpdx.resources.ApplicationConfig;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import net.lilycode.core.configbundle.ConfigException;
 
 public class Utils {
-
-    /**
-     * Get application name from the runtime environment variable
-     */
-    static final String APP_NAME = "APRENDIZ DASHBOARD";
-
-    /**
-     * Global instance of the {@link DataStoreFactory}. The best practice is to
-     * make it a single globally shared instance across your application.
-     */
-    private static final MemoryDataStoreFactory DATA_STORE_FACTORY
-            = MemoryDataStoreFactory.getDefaultInstance();
 
     /**
      * Global instance of the HTTP transport.
@@ -64,18 +42,6 @@ public class Utils {
     /**
      * Scopes for requesting access to Google OAuth2 API
      */
-    private static final List<String> SCOPES
-            = Arrays.asList(
-                    "https://www.googleapis.com/auth/userinfo.profile",
-                    "https://www.googleapis.com/auth/userinfo.email",
-                    ClassroomScopes.CLASSROOM_COURSES,
-                    ClassroomScopes.CLASSROOM_TOPICS,
-                    ClassroomScopes.CLASSROOM_COURSEWORK_ME,
-                    ClassroomScopes.CLASSROOM_COURSEWORK_STUDENTS,
-                    ClassroomScopes.CLASSROOM_COURSEWORKMATERIALS,
-                    ClassroomScopes.CLASSROOM_ROSTERS,
-                    ClassroomScopes.CLASSROOM_STUDENT_SUBMISSIONS_ME_READONLY                    
-                    );
 
     /**
      * Returns the redirect URI for the given HTTP servlet request.
@@ -86,22 +52,6 @@ public class Utils {
         url.setScheme("https");
         url.setRawPath("/oauth2callback");
         return url.build();
-    }
-
-    // [START gae_java11_oauth2_code_flow]
-    /**
-     * Loads the authorization code flow to be used across all HTTP servlet
-     * requests.It is only called during the first HTTP servlet request.
-     * @return 
-     * @throws java.io.IOException
-     */
-    public static GoogleAuthorizationCodeFlow newFlow() throws IOException, ConfigException {
-        GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
-                HTTP_TRANSPORT, JSON_FACTORY, ApplicationConfig.GOOGLE_IDENTITY_CLIENT_ID.value(), ApplicationConfig.GOOGLE_IDENTITY_CLIENT_SECRET.value(), SCOPES)
-                .setDataStoreFactory(DATA_STORE_FACTORY)
-                .setAccessType("offline")
-                .build();
-        return flow;
     }
     // [END gae_java11_oauth2_code_flow]
 
@@ -122,15 +72,5 @@ public class Utils {
      * @return 
      * @throws java.io.IOException
      */
-    public static Userinfo getUserInfo(Credential credential) throws IOException {
-        Oauth2 oauth2Client
-                = new Oauth2.Builder(HTTP_TRANSPORT, JSON_FACTORY, credential)
-                        .setApplicationName(APP_NAME)
-                        .build();
-
-        // Retrieve user profile
-        Userinfo userInfo = oauth2Client.userinfo().get().execute();        
-        return userInfo;
-    }
     // [END gae_java11_oauth2_get_user]
 }

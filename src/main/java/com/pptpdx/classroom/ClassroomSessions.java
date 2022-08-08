@@ -1,7 +1,11 @@
 package com.pptpdx.classroom;
 
 import com.google.api.client.auth.oauth2.Credential;
+import com.google.api.client.auth.oauth2.TokenResponse;
+import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
 import com.google.api.services.oauth2.model.Userinfo;
+import com.pptpdx.model.Models;
+import com.pptpdx.model.UserSession;
 import com.pptpdx.oauth.Utils;
 import java.io.IOException;
 import java.util.HashMap;
@@ -10,6 +14,9 @@ import java.util.UUID;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.log4j.Logger;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 /**
  *
@@ -17,19 +24,25 @@ import org.apache.log4j.Logger;
  */
 public class ClassroomSessions {
 
-    private static final Logger LOGGER = Logger.getLogger(ClassroomSessions.class);
-    
-    private static final Map<UUID, ClassroomSession> sessions = new HashMap<>();
+    private static final Logger LOGGER = Logger.getLogger(ClassroomSessions.class);        
     
     public static final String SESSION_COOKIE_NAME = "aprendiz-auth";
     
     public static void invalidateSession(HttpServletRequest request) {
         ClassroomSession session = getSession(request);
         if(session != null) {
-            synchronized(sessions) {
-                LOGGER.debug("invalidated session " + session.getSessionId().toString());
-                sessions.remove(session.getSessionId());
-            }
+            LOGGER.debug("invalidated session " + session.getSessionId().toString());
+            try(Session hsession = Models.MAIN.openSession()) {
+                Query<UserSession> qry = hsession.createQuery("from UserSession where sessionId=:sessionId");
+                qry.setParameter("sessionId", session.getSessionId().toString());
+                if(!qry.list().isEmpty()) {
+                    Transaction tx = hsession.beginTransaction();
+                    UserSession usession = qry.list().get(0);
+                    hsession.delete(usession);
+                    tx.commit();
+                    LOGGER.debug("removed session " + usession);
+                }
+            }            
         }
     }
     
@@ -44,36 +57,22 @@ public class ClassroomSessions {
         return null;
     }
     
-    public static ClassroomSession getSession(String sessionIdText) {
-        synchronized(sessions) {
-            UUID sessionId = UUID.fromString(sessionIdText);
-            ClassroomSession session = sessions.get(sessionId);
-            if(session != null) {
-                try {
-                    Userinfo info = Utils.getUserInfo(session.getGoogleCredential());
-                    if(info == null) {
-                        return null;
-                    }
-                    LOGGER.debug("resolved user sesssion by ID text " + sessionIdText);
-                    return session;
-                } catch (IOException ex) {
-                    LOGGER.error("failed to resolve Google credential");
-                    sessions.remove(sessionId);
-                    return null;
-                }
+    public static ClassroomSession getSession(String sessionIdText) {        
+        try(Session hsession = Models.MAIN.openSession()) {
+            Query<UserSession> qry = hsession.createQuery("from UserSession where sessionId=:sessionId");
+            qry.setParameter("sessionId", sessionIdText);
+            if(!qry.list().isEmpty()) {
+                UserSession usession = qry.list().get(0);
+                LOGGER.debug("resolved session " + usession);
+                TokenResponse tr = new TokenResponse();
+                tr.setAccessToken(usession.getGoogleCredential());
+                
+                //new GoogleCredential().
+                
+                
             }
-            return null;
-        }        
-    }
-    
-    public static ClassroomSession createNewSession(Credential googleCredential) throws IOException {
-        synchronized(sessions) {
-            LOGGER.debug("create new session from token " + googleCredential.getAccessToken());
-            UUID sessionId = UUID.randomUUID();            
-            ClassroomSession session = new ClassroomSession(sessionId, googleCredential, Utils.getUserInfo(googleCredential));
-            sessions.put(sessionId, session);
-            return session;
         }
+        return null;
     }
-        
+            
 }
