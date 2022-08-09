@@ -1,4 +1,4 @@
-class DraggableContainer {
+export class DraggableContainer {
 
     constructor(scene, x, y) {
         this.scene = scene;
@@ -28,4 +28,5 @@ class DraggableContainer {
     }
 
 }
+
 
