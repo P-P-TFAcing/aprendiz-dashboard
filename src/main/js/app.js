@@ -50,15 +50,23 @@ class LoaderScene extends Phaser.Scene {
 
 import CourseWorkRect from './CourseWorkRect.js';
 
+import WebSocketContext from './WebSocketContext.js';
+
 class MainScene extends Phaser.Scene {
 
     preload() {
         this.load.setBaseURL('https://aprendiz-dashboard.pptpdx.com');
         console.log('preloaded MainScene');
     }
+    
+    onWebSocketOpen() {
+        console.log('host websocket opened');        
+    }
 
     create(courses) {
         console.log('created MainScene', courses);
+        // open websocket
+        this.websocket = new WebSocketContext(this.sys.game.scene, this.onWebSocketOpen.bind(this));
         // now we have access to courses
         let course = courses[0];
         console.log('loading course', course);
