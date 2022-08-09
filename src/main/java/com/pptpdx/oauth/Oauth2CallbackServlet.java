@@ -122,19 +122,11 @@ public class Oauth2CallbackServlet extends AbstractAuthorizationCodeCallbackServ
             } else {
                 user = qry.list().get(0);
                 LOGGER.debug("resolved existing user " + user);
-            }
-            Transaction tx = hsession.beginTransaction();
-            UserSession usession = new UserSession();
-            usession.setSessionUser(user);
-            usession.setWhenCreated(new Date());
-            usession.setGoogleCredential(credential.getAccessToken());
-            usession.setSessionId(UUID.randomUUID().toString());
-            hsession.save(usession);
-            tx.commit();
-            LOGGER.debug("created new session " + usession);
-            Cookie cookie = new Cookie(ClassroomSessions.SESSION_COOKIE_NAME, usession.getSessionId());
-            cookie.setMaxAge(60 * 60 * 24);
-            resp.addCookie(cookie);            
+            }            
+//            LOGGER.debug("created new session " + usession);
+//            Cookie cookie = new Cookie(ClassroomSessions.SESSION_COOKIE_NAME, usession.getSessionId());
+//            cookie.setMaxAge(60 * 60 * 24);
+//            resp.addCookie(cookie);            
             //resp.sendRedirect("/");            
         }
 

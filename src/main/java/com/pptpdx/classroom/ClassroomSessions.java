@@ -64,7 +64,7 @@ public class ClassroomSessions {
                 UserSession usession = qry.list().get(0);
                 LOGGER.debug("resolved session " + usession);
                 TokenResponse tr = new TokenResponse();
-                tr.setAccessToken(usession.getGoogleCredential());
+                //tr.setAccessToken(usession.getGoogleCredential());
                 
                 //new GoogleCredential().
                 

@@ -80,7 +80,6 @@ public class Oauth2AuthorizationCodeServlet extends AbstractAuthorizationCodeSer
                     .setDataStoreFactory(new AppDataStoreFactory())
                     .setAccessType("offline")
                     .build();
-
             return flow;
         } catch (ConfigException ex) {
             throw new IOException("failed to load configuration", ex);
