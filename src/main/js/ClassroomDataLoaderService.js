@@ -11,6 +11,7 @@ angular.module("AprendizApplication").service('ClassroomDataLoaderService', func
                 function (response) {
                     let courses = response.data;
                     let courseCount = courses.length;
+                    let totalCourses = courseCount;
                     console.log('load courses got ' + courseCount + ' courses');
                     console.table(courses);
                     let p = 0;
@@ -40,9 +41,8 @@ angular.module("AprendizApplication").service('ClassroomDataLoaderService', func
                                                 p++;
                                                 if (gameObject) {
                                                     let loaderScene = gameObject.scene.getScene('LoaderScene');
-                                                    if (loaderScene) {
-                                                        console.log('load progress ' + p + ' ' + courseCount);                                                                 
-                                                        loaderScene.loadProgress(p, courseCount);
+                                                    if (loaderScene) {                                                        
+                                                        loaderScene.loadProgress(p, totalCourses);
                                                     }
                                                 }
                                                 if (courseCount === 0) {
