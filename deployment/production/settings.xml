@@ -14,11 +14,4 @@
             </properties>
         </profile>
     </profiles>
-    <servers>
-        <server>
-            <id>lilycode</id>
-            <username>deployer</username>
-            <password>je!%5X4wxFHV7sBz</password>
-        </server>
-    </servers>
 </settings>

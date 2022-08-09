@@ -13,7 +13,9 @@ public class WebApplicationExceptionMapper implements ExceptionMapper<WebApplica
     private static final Logger LOGGER = Logger.getLogger(WebApplicationExceptionMapper.class);
 
     public WebApplicationExceptionMapper() {
-        LOGGER.debug("registered WebApplicationExceptionMapper");
+        if(LOGGER.isTraceEnabled()) {
+            LOGGER.trace("registered WebApplicationExceptionMapper");
+        }
     }
 
     @Override

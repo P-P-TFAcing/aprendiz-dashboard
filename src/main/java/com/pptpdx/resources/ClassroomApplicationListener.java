@@ -19,7 +19,6 @@ import org.apache.log4j.Logger;
 public class ClassroomApplicationListener implements ServletContextListener {
 
     private static final Logger LOGGER = Logger.getLogger(ClassroomApplicationListener.class);
-
     @Override
     public void contextInitialized(ServletContextEvent sce) {
         try {
