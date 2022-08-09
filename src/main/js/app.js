@@ -34,7 +34,7 @@ class LoaderScene extends Phaser.Scene {
 }
 ;
 
-import CourseworkRect from './CourseworkRect.js';
+import CourseWorkRect from './CourseWorkRect.js';
 
 class MainScene extends Phaser.Scene {
 
