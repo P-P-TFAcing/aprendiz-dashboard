@@ -23,7 +23,6 @@ public class ClassroomApplicationListener implements ServletContextListener {
     public void contextInitialized(ServletContextEvent sce) {
         try {
             LOGGER.debug("start Aprendiz Dashboard");
-            ClassroomResource.loadResources(sce.getServletContext());
             HibernateSessions mainModel = new HibernateSessions();
             HibernateSessionsConfiguration hibernateConfig = new HibernateSessionsConfiguration();
             hibernateConfig.setDatabaseHostAddress(ApplicationConfig.DB_HOST.value());
