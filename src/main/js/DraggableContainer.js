@@ -1,4 +1,4 @@
-export class DraggableContainer {
+export default class DraggableContainer {
 
     constructor(scene, x, y) {
         this.scene = scene;
