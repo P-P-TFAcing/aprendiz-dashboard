@@ -27,6 +27,9 @@ class LoaderScene extends Phaser.Scene {
         console.log('load progress ' + position + ' of ' + count);
         this.progressValue = position;
         this.progressTotalCount = count;
+        this.progressBar.clear();
+        this.progressBar.fillStyle(0xffffff, 1);
+        this.progressBar.fillRect(250, 280, 100 * position, 30);        
     }
     
     update(time, delta) {
@@ -37,6 +40,10 @@ class LoaderScene extends Phaser.Scene {
         console.log('created LoaderScene');
         let text = this.add.text(50, 50, 'Welcome to Aprendiz Dashboard. Loading Classroom data...', {fontSize: '24px'});        
         text.setOrigin(0, 0);
+        this.progressBar = this.add.graphics();
+        this.progressBox = this.add.graphics();
+        this.progressBox.fillStyle(0x222222, 0.8);
+        this.progressBox.fillRect(240, 270, 320, 50);
     }
 }
 ;
