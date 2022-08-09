@@ -1,3 +1,5 @@
+import DraggableContainer from './DraggableContainer.js';
+
 export default class CourseTitle extends DraggableContainer {
 
     constructor(scene, course, x, y) {
