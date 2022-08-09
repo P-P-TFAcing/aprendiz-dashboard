@@ -2,7 +2,7 @@
 
 console.log('starting Aprendiz app');
 
-require('./DraggableContainer.js');
+import DraggableContainer from './DraggableContainer.js';
 
 class CourseTitle extends DraggableContainer {
 
