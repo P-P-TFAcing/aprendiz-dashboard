@@ -2,7 +2,7 @@
 
 angular.module("AprendizApplication").service('ClassroomDataLoaderService', function ($http) {
     // progressCallback declaration = function(position, count);
-    this.loadData = function (completionCallback, gameObject) {
+    this.loadData = function (gameObject) {
         console.log('load courses');
         $http({
             method: 'GET',
