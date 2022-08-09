@@ -16,10 +16,11 @@ class LoaderScene extends Phaser.Scene {
 
     loadCompleted(courses) {
         console.log('load completed so start main scene');
-        this.scene.add('MainScene', MainScene, true, courses);
+        this.scene.add('MainScene', MainScene, true, courses);        
         this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, (cam, effect) => {
             this.scene.start('MainScene');
 	});
+        this.cameras.main.fadeOut(1000, 0, 0, 0);
     }
 
     loadProgress(position, count) {
