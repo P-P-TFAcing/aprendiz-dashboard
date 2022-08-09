@@ -2,10 +2,12 @@ package com.pptpdx.oauth;
 
 import com.google.api.client.util.store.DataStore;
 import com.google.api.client.util.store.DataStoreFactory;
+import com.pptpdx.classroom.ClassroomSessions;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Set;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -13,6 +15,8 @@ import java.util.Set;
  */
 public class AppDataStore implements DataStore {
 
+    private static final Logger LOGGER = Logger.getLogger(ClassroomSessions.class);        
+    
     @Override
     public DataStoreFactory getDataStoreFactory() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
@@ -54,8 +58,9 @@ public class AppDataStore implements DataStore {
     }
 
     @Override
-    public Serializable get(String string) throws IOException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public Serializable get(String key) throws IOException {
+        LOGGER.debug("get called key=" + key);
+        return null;        
     }
 
     @Override
