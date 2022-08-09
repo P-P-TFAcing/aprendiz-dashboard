@@ -1,7 +1,8 @@
 /* global angular */
 
 angular.module("AprendizApplication").service('ClassroomDataLoaderService', function ($http) {
-    this.loadData = function (completionCallback) {
+    // progressCallback declaration = function(position, count);
+    this.loadData = function (completionCallback, progressCallback) {
         console.log('load courses');
         $http({
             method: 'GET',
@@ -12,6 +13,7 @@ angular.module("AprendizApplication").service('ClassroomDataLoaderService', func
                 let courseCount = courses.length;
                 console.log('load courses got ' + courseCount + ' courses');
                 console.table(courses);
+                let p = 0;
                 angular.forEach(courses, function (course) {
                     console.log('load course topic', course.id);
                     $http({
@@ -35,6 +37,8 @@ angular.module("AprendizApplication").service('ClassroomDataLoaderService', func
                                         if (response.data) {
                                             course.courseWorkMaterials = response.data;
                                             courseCount--;
+                                            p++;
+                                            progressCallback(p, courseCount);
                                             if(courseCount === 0) {
                                                 console.log('all courses loaded');
                                                 completionCallback(courses);
@@ -45,7 +49,7 @@ angular.module("AprendizApplication").service('ClassroomDataLoaderService', func
                             });
                         }
                     });
-
+                    
                 });
             });
     };
