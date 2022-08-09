@@ -109,7 +109,7 @@ angular.module("AprendizApplication").controller('MainViewController', function 
     console.log('started new Phaser game');
     game.scene.add('LoaderScene', LoaderScene, true);
     console.log('started Loader Scene');
-    
+    // load data
     ClassroomDataLoaderService.loadData(game);
 
 });
