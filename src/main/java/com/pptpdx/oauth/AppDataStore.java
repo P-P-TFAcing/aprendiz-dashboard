@@ -71,12 +71,14 @@ public class AppDataStore implements DataStore {
 
     @Override
     public DataStore clear() throws IOException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        LOGGER.debug("clear");
+        return this;
     }
 
     @Override
-    public DataStore delete(String string) throws IOException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public DataStore delete(String key) throws IOException {
+        LOGGER.debug("delete " + key);
+        return this;
     }
     
 }
