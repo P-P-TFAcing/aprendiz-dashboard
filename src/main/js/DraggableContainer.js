@@ -1,3 +1,6 @@
+/**
+ * draggable container
+ */
 export default class DraggableContainer {
 
     constructor(scene, x, y) {
