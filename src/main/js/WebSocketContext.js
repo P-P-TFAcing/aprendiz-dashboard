@@ -13,6 +13,7 @@ export default class WebSocketContext {
             console.log('send message',messageType, message);
         }
         this.webSocket.send(JSON.stringify(message));
+        
     }
 
     pingPeriodic() {
