@@ -34,6 +34,8 @@ public class AppDataStore extends AbstractDataStore<StoredCredential> {
     @Override
     public StoredCredential get(String key) throws IOException {
         LOGGER.debug("get called key=" + key);
+        StoredCredential credential = new StoredCredential();
+        
         return null;
     }
 

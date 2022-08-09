@@ -102,7 +102,7 @@ public class Oauth2CallbackServlet extends AbstractAuthorizationCodeCallbackServ
      */
     @Override
     protected void onSuccess(HttpServletRequest req, HttpServletResponse resp, Credential credential) throws ServletException, IOException {
-        LOGGER.debug("OAUTH callback servlet");
+        LOGGER.debug("OAUTH callback servlet " + credential + " type=" + credential.getClass());
         Userinfo userInfo = getUserInfo(credential);
         try ( Session hsession = Models.MAIN.openSession()) {
             LOGGER.debug("resolved Google user " + userInfo);
