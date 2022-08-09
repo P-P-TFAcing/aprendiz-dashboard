@@ -1,9 +1,5 @@
 /* global google, angular, Phaser, MainScene */
 
-require('phaser');
-require('angular');
-require('angular-cookies');
-
 console.log('starting Aprendiz app!');
 
 class DraggableContainer {
