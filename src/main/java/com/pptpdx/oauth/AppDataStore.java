@@ -64,8 +64,9 @@ public class AppDataStore implements DataStore {
     }
 
     @Override
-    public DataStore set(String string, Serializable v) throws IOException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public DataStore set(String text, Serializable v) throws IOException {
+        LOGGER.debug("set called with key=" + text + " object is " + v.getClass() + " " + v);
+        return this;
     }
 
     @Override
