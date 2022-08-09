@@ -84,16 +84,16 @@ public class Oauth2CallbackServlet extends AbstractAuthorizationCodeCallbackServ
                 user.setEmailAddress(userInfo.getEmail());
                 user.setFullName(userInfo.getName());
                 hsession.save(user);
-                tx.commit();                
+                tx.commit();
                 LOGGER.debug("created new user " + user);
             } else {
                 user = qry.list().get(0);
                 LOGGER.debug("resolved existing user " + user);
             }
-            resp.sendRedirect("/main.html");            
             Cookie cookie = new Cookie(ClassroomSessions.SESSION_COOKIE_NAME, credential.getAccessToken());
             cookie.setMaxAge(60 * 60 * 24);
-            resp.addCookie(cookie);            
+            resp.addCookie(cookie);
+            resp.sendRedirect("/main.html");
         }
 
     }
