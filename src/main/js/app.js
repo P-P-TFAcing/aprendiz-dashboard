@@ -86,6 +86,7 @@ class MainScene extends Phaser.Scene {
 
 angular.module("AprendizApplication", ['ngCookies']);
 
+
 require('./ClassroomDataLoaderService.js');
 
 angular.module("AprendizApplication").controller('MainViewController', function ($scope, $http, $cookies, $interval, ClassroomDataLoaderService) {
