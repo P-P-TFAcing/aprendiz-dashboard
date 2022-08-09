@@ -21,25 +21,13 @@ import com.google.api.client.auth.oauth2.AuthorizationCodeResponseUrl;
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.extensions.servlet.auth.oauth2.AbstractAuthorizationCodeCallbackServlet;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
-import com.google.api.client.http.GenericUrl;
-import com.google.api.client.http.HttpTransport;
-import com.google.api.client.http.javanet.NetHttpTransport;
-import com.google.api.client.json.JsonFactory;
-import com.google.api.client.json.jackson2.JacksonFactory;
-import com.google.api.client.util.store.MemoryDataStoreFactory;
-import com.google.api.services.classroom.ClassroomScopes;
 import com.google.api.services.oauth2.Oauth2;
 import com.google.api.services.oauth2.model.Userinfo;
 import com.pptpdx.classroom.ClassroomSessions;
 import com.pptpdx.model.Models;
 import com.pptpdx.model.User;
-import com.pptpdx.model.UserSession;
 import com.pptpdx.resources.ApplicationConfig;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -58,39 +46,18 @@ import org.hibernate.Transaction;
 public class Oauth2CallbackServlet extends AbstractAuthorizationCodeCallbackServlet {
 
     private static final Logger LOGGER = Logger.getLogger(Oauth2CallbackServlet.class);
-    
-    private static final String APP_NAME = "APRENDIZ DASHBOARD";
-
-    private static final List<String> SCOPES
-            = Arrays.asList(
-                    "https://www.googleapis.com/auth/userinfo.profile",
-                    "https://www.googleapis.com/auth/userinfo.email",
-                    ClassroomScopes.CLASSROOM_COURSES,
-                    ClassroomScopes.CLASSROOM_TOPICS,
-                    ClassroomScopes.CLASSROOM_COURSEWORK_ME,
-                    ClassroomScopes.CLASSROOM_COURSEWORK_STUDENTS,
-                    ClassroomScopes.CLASSROOM_COURSEWORKMATERIALS,
-                    ClassroomScopes.CLASSROOM_ROSTERS,
-                    ClassroomScopes.CLASSROOM_STUDENT_SUBMISSIONS_ME_READONLY
-            );
-    
-    static final HttpTransport HTTP_TRANSPORT = new NetHttpTransport();    
-    
-    static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();    
 
     public static Userinfo getUserInfo(Credential credential) throws IOException {
         Oauth2 oauth2Client
-                = new Oauth2.Builder(HTTP_TRANSPORT, JSON_FACTORY, credential)
-                        .setApplicationName(APP_NAME)
+                = new Oauth2.Builder(OauthConfiguration.HTTP_TRANSPORT, OauthConfiguration.JSON_FACTORY, credential)
+                        .setApplicationName(OauthConfiguration.APP_NAME)
                         .build();
 
         // Retrieve user profile
-        Userinfo userInfo = oauth2Client.userinfo().get().execute();        
+        Userinfo userInfo = oauth2Client.userinfo().get().execute();
         return userInfo;
     }
-    
-    
-    
+
     /**
      * Handles a successfully granted authorization.
      *
@@ -117,17 +84,16 @@ public class Oauth2CallbackServlet extends AbstractAuthorizationCodeCallbackServ
                 user.setEmailAddress(userInfo.getEmail());
                 user.setFullName(userInfo.getName());
                 hsession.save(user);
-                tx.commit();
+                tx.commit();                
                 LOGGER.debug("created new user " + user);
             } else {
                 user = qry.list().get(0);
                 LOGGER.debug("resolved existing user " + user);
-            }            
-//            LOGGER.debug("created new session " + usession);
-//            Cookie cookie = new Cookie(ClassroomSessions.SESSION_COOKIE_NAME, usession.getSessionId());
-//            cookie.setMaxAge(60 * 60 * 24);
-//            resp.addCookie(cookie);            
-            //resp.sendRedirect("/");            
+            }
+            resp.sendRedirect("/main.html");            
+            Cookie cookie = new Cookie(ClassroomSessions.SESSION_COOKIE_NAME, credential.getAccessToken());
+            cookie.setMaxAge(60 * 60 * 24);
+            resp.addCookie(cookie);            
         }
 
     }
@@ -160,11 +126,7 @@ public class Oauth2CallbackServlet extends AbstractAuthorizationCodeCallbackServ
      */
     @Override
     protected String getRedirectUri(HttpServletRequest req) throws ServletException, IOException {
-        String requestUrl = req.getRequestURL().toString();
-        GenericUrl url = new GenericUrl(requestUrl);
-        url.setScheme("https");
-        url.setRawPath("/oauth2callback");
-        return url.build();
+        return OauthConfiguration.getRedirectUri(req);
     }
 
     /**
@@ -179,7 +141,7 @@ public class Oauth2CallbackServlet extends AbstractAuthorizationCodeCallbackServ
     protected AuthorizationCodeFlow initializeFlow() throws IOException {
         try {
             GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
-                    HTTP_TRANSPORT, JSON_FACTORY, ApplicationConfig.GOOGLE_IDENTITY_CLIENT_ID.value(), ApplicationConfig.GOOGLE_IDENTITY_CLIENT_SECRET.value(), SCOPES)
+                    OauthConfiguration.HTTP_TRANSPORT, OauthConfiguration.JSON_FACTORY, ApplicationConfig.GOOGLE_IDENTITY_CLIENT_ID.value(), ApplicationConfig.GOOGLE_IDENTITY_CLIENT_SECRET.value(), OauthConfiguration.SCOPES)
                     .setDataStoreFactory(new AppDataStoreFactory())
                     .setAccessType("offline")
                     .build();

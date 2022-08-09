@@ -8,6 +8,7 @@ import com.pptpdx.model.Models;
 import com.pptpdx.model.UserSession;
 import java.io.IOException;
 import java.util.Collection;
+import java.util.Date;
 import java.util.Set;
 import org.apache.log4j.Logger;
 import org.hibernate.Query;
@@ -68,6 +69,7 @@ public class AppDataStore extends AbstractDataStore<StoredCredential> {
                 LOGGER.debug("resolved session " + userSession);
                 userSession.setGoogleAccessToken(credential.getAccessToken());
                 userSession.setGoogleExpirationTimeMilliseconds(credential.getExpirationTimeMilliseconds());
+                userSession.setWhenCreated(new Date());
                 hsession.update(userSession);
                 tx.commit();
             } else {
@@ -77,6 +79,7 @@ public class AppDataStore extends AbstractDataStore<StoredCredential> {
                 userSession.setSessionKey(key);
                 userSession.setGoogleAccessToken(credential.getAccessToken());
                 userSession.setGoogleExpirationTimeMilliseconds(credential.getExpirationTimeMilliseconds());
+                userSession.setWhenCreated(new Date());
                 hsession.save(userSession);
                 tx.commit();                
                 LOGGER.debug("saved new session " + userSession);
