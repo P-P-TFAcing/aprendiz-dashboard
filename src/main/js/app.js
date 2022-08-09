@@ -29,7 +29,7 @@ class LoaderScene extends Phaser.Scene {
         this.progressTotalCount = count;
         this.progressBar.clear();
         this.progressBar.fillStyle(0xffffff, 1);
-        this.progressBar.fillRect(250, 280, 100 * position, 30);        
+        this.progressBar.fillRect(50, 100, 100 * position, 50);        
     }
     
     update(time, delta) {
@@ -42,8 +42,8 @@ class LoaderScene extends Phaser.Scene {
         text.setOrigin(0, 0);
         this.progressBar = this.add.graphics();
         this.progressBox = this.add.graphics();
-        this.progressBox.fillStyle(0x222222, 0.8);
-        this.progressBox.fillRect(240, 270, 320, 50);
+        this.progressBox.fillStyle(0x888888, 0.8);
+        this.progressBox.fillRect(50, 100, 500, 50);
     }
 }
 ;
