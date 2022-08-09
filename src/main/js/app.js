@@ -83,7 +83,6 @@ class MainScene extends Phaser.Scene {
 }
 ;
 
-
 angular.module("AprendizApplication", ['ngCookies']);
 
 require('./ClassroomDataLoaderService.js');
