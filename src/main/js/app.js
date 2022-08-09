@@ -119,11 +119,10 @@ class MainScene extends Phaser.Scene {
         this.load.setBaseURL('https://aprendiz-dashboard.pptpdx.com');
         console.log('preloaded MainScene');
     }
-
-    create() {
-        console.log('created MainScene!');
+    
+    create(courses) {
+        console.log('created MainScene', courses);
         // now we have access to courses
-        let courses = this.game.config.courses;
         let course = courses[0];
         console.log('loading course', course);
         new CourseTitle(this, course, 16, 16);
@@ -164,56 +163,7 @@ class MainScene extends Phaser.Scene {
 
 angular.module("AprendizApplication", ['ngCookies']);
 
-angular.module("AprendizApplication").service('ClassroomDataLoaderService', function ($http) {
-    this.loadData = function (completionCallback) {
-        console.log('load courses');
-        $http({
-            method: 'GET',
-            url: 'webresources/classroom/courses'
-        }).then(
-            function (response) {
-                let courses = response.data;
-                let courseCount = courses.length;
-                console.log('load courses got ' + courseCount + ' courses');
-                console.table(courses);
-                angular.forEach(courses, function (course) {
-                    console.log('load course topic', course.id);
-                    $http({
-                        method: 'GET',
-                        url: 'webresources/classroom/topics/' + course.id
-                    }).then(function (response) {
-                        if (response.data) {
-                            course.topics = response.data;
-                            console.log('load topic coursework', course.id);
-                            $http({
-                                method: 'GET',
-                                url: 'webresources/classroom/coursework/' + course.id
-                            }).then(function (response) {
-                                if (response.data) {
-                                    course.courseWork = response.data;
-                                    console.log('load topic courseworkmaterials', course.id);
-                                    $http({
-                                        method: 'GET',
-                                        url: 'webresources/classroom/courseworkmaterials/' + course.id
-                                    }).then(function (response) {
-                                        if (response.data) {
-                                            course.courseWorkMaterials = response.data;
-                                            courseCount--;
-                                            if(courseCount === 0) {
-                                                console.log('all courses loaded');
-                                                completionCallback(courses);
-                                            }
-                                        }
-                                    });
-                                }
-                            });
-                        }
-                    });
-
-                });
-            });
-    };
-});
+import './ClassroomDataLoaderService.js';
 
 angular.module("AprendizApplication").controller('MainViewController', function ($scope, $http, $cookies, $interval, ClassroomDataLoaderService) {
     console.log('started main view controller');
@@ -234,9 +184,8 @@ angular.module("AprendizApplication").controller('MainViewController', function 
             height: 4000
         };        
         let game = new Phaser.Game(config); 
-        game.config.courses = courses;
         console.log('started new Phaser game');
-        game.scene.add('MainScene', MainScene, true, { });
+        game.scene.add('MainScene', MainScene, true, { courses: courses });
     };
 
     ClassroomDataLoaderService.loadData($scope.dataLoaded);
