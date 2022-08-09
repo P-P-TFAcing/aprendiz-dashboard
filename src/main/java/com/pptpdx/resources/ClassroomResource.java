@@ -6,7 +6,7 @@ import com.google.api.services.classroom.model.CourseWork;
 import com.google.api.services.classroom.model.CourseWorkMaterial;
 import com.google.api.services.classroom.model.Topic;
 import com.pptpdx.classroom.ClassroomController;
-import com.pptpdx.classroom.ClassroomSessions;
+import com.pptpdx.oauth.OauthConfiguration;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
@@ -41,10 +41,7 @@ public class ClassroomResource {
     @GET
     public List<Topic> getTopics(@CookieParam(APRENDIZ_SESSION_AUTH) Cookie cookie, @PathParam("courseId") String courseId) {
         try {
-            GoogleCredential credential = ClassroomSessions.getCredential(cookie.getValue());
-            if (credential == null) {
-                throw new WebApplicationException(Response.Status.UNAUTHORIZED);
-            }
+            GoogleCredential credential = OauthConfiguration.getGoogleCredential(cookie.getValue());
             return ClassroomController.getTopics(credential, courseId);
         } catch (IOException ex) {
             LOGGER.error("IO exception", ex);
@@ -57,10 +54,7 @@ public class ClassroomResource {
     @GET
     public List<CourseWork> getCourseWork(@CookieParam(APRENDIZ_SESSION_AUTH) Cookie cookie, @PathParam("courseId") String courseId) {
         try {
-            GoogleCredential credential = ClassroomSessions.getCredential(cookie.getValue());
-            if (credential == null) {
-                throw new WebApplicationException(Response.Status.UNAUTHORIZED);
-            }
+            GoogleCredential credential = OauthConfiguration.getGoogleCredential(cookie.getValue());
             return ClassroomController.getCourseWork(credential, courseId);
         } catch (IOException ex) {
             LOGGER.error("IO exception", ex);
@@ -73,10 +67,7 @@ public class ClassroomResource {
     @GET
     public List<CourseWorkMaterial> getCourseWorkMaterials(@CookieParam(APRENDIZ_SESSION_AUTH) Cookie cookie, @PathParam("courseId") String courseId) {
         try {            
-            GoogleCredential credential = ClassroomSessions.getCredential(cookie.getValue());
-            if (credential == null) {
-                throw new WebApplicationException(Response.Status.UNAUTHORIZED);
-            }
+            GoogleCredential credential = OauthConfiguration.getGoogleCredential(cookie.getValue());
             return ClassroomController.getCourseWorkMaterials(credential, courseId);
         } catch (IOException ex) {
             LOGGER.error("IO exception", ex);
@@ -90,10 +81,7 @@ public class ClassroomResource {
     public List<Course> getCourses(@CookieParam(APRENDIZ_SESSION_AUTH) Cookie cookie) {
         try {
             LOGGER.debug("get courses");
-            GoogleCredential credential = ClassroomSessions.getCredential(cookie.getValue());
-            if (credential == null) {
-                throw new WebApplicationException(Response.Status.UNAUTHORIZED);
-            }
+            GoogleCredential credential = OauthConfiguration.getGoogleCredential(cookie.getValue());
             LOGGER.debug("resolved classroom session " + credential);
             return ClassroomController.getCourses(credential);
         } catch (IOException ex) {

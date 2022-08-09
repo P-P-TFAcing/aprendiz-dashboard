@@ -39,7 +39,6 @@ public class AppDataStore extends AbstractDataStore<StoredCredential> {
 
     @Override
     public StoredCredential get(String key) throws IOException {
-        LOGGER.debug("get called key=" + key);        
         try(Session hsession = Models.MAIN.openSession()) {
             Query<UserSession> qry = hsession.createQuery("from UserSession where sessionKey=:sessionKey");
             qry.setParameter("sessionKey", key);
@@ -58,7 +57,6 @@ public class AppDataStore extends AbstractDataStore<StoredCredential> {
 
     @Override
     public DataStore<StoredCredential> set(String key, StoredCredential credential) throws IOException {
-        LOGGER.debug("set called with key=" + key);        
         try(Session hsession = Models.MAIN.openSession()) {
             Query<UserSession> qry = hsession.createQuery("from UserSession where sessionKey=:sessionKey");
             qry.setParameter("sessionKey", key);

@@ -22,7 +22,6 @@ import com.google.api.client.extensions.servlet.auth.oauth2.AbstractAuthorizatio
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
 import com.google.api.services.oauth2.Oauth2;
 import com.google.api.services.oauth2.model.Userinfo;
-import com.pptpdx.classroom.ClassroomSessions;
 import com.pptpdx.model.Models;
 import com.pptpdx.model.User;
 import com.pptpdx.resources.ApplicationConfig;
@@ -89,7 +88,7 @@ public class Oauth2CallbackServlet extends AbstractAuthorizationCodeCallbackServ
                 user = qry.list().get(0);
                 LOGGER.debug("resolved existing user " + user);
             }
-            Cookie cookie = new Cookie(ClassroomSessions.SESSION_COOKIE_NAME, credential.getAccessToken());
+            Cookie cookie = new Cookie(OauthConfiguration.SESSION_COOKIE_NAME, credential.getAccessToken());
             cookie.setMaxAge(60 * 60 * 24);
             resp.addCookie(cookie);
             resp.sendRedirect("/main.html");

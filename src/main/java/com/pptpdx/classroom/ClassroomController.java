@@ -23,7 +23,7 @@ import org.apache.log4j.Logger;
 public class ClassroomController {
 
     private static final Logger LOGGER = Logger.getLogger(ClassroomController.class);
-        
+            
     private static Classroom getService(GoogleCredential credential) {        
         NetHttpTransport transport = new NetHttpTransport();            
         GsonFactory jsonFactory = new GsonFactory();

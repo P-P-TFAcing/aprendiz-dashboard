@@ -1,5 +1,6 @@
 package com.pptpdx.oauth;
 
+import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
 import com.google.api.client.http.GenericUrl;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
@@ -17,6 +18,8 @@ import javax.servlet.http.HttpServletRequest;
 public class OauthConfiguration {
 
     public static final String APP_NAME = "APRENDIZ DASHBOARD";
+    
+    public static final String SESSION_COOKIE_NAME = "aprendiz-auth";
 
     public static final List<String> SCOPES
             = Arrays.asList(
@@ -34,6 +37,11 @@ public class OauthConfiguration {
     public static final HttpTransport HTTP_TRANSPORT = new NetHttpTransport();
 
     public static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
+    
+    public static GoogleCredential getGoogleCredential(String accessToken) {
+        GoogleCredential credential = new GoogleCredential().setAccessToken(accessToken);
+        return credential;
+    }    
     
     public static String getRedirectUri(HttpServletRequest req) {
         String requestUrl = req.getRequestURL().toString();
