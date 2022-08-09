@@ -25,6 +25,12 @@ class LoaderScene extends Phaser.Scene {
 
     loadProgress(position, count) {
         console.log('load progress ' + position + ' of ' + count);
+        this.progressValue = position;
+        this.progressTotalCount = count;
+    }
+    
+    update(time, delta) {
+        console.log('progress update ' + time + ' ' + this.progressValue + ' of ' + this.progressTotalCount);
     }
 
     create() {
