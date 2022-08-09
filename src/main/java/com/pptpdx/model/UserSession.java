@@ -9,8 +9,8 @@ import javax.persistence.*;
  */
 @Entity
 @Table(indexes = {
-    @Index(columnList = "sessionKey", name = "sessionKey_idx"),
-    @Index(columnList = "googleAccessToken", name = "googleAccessToken_idx")})
+    @Index(columnList = "sessionKey", name = "sessionKey_idx")
+})
 public class UserSession implements Serializable {
 
     @Id
@@ -28,7 +28,7 @@ public class UserSession implements Serializable {
     @ManyToOne
     private User sessionUser;
 
-    @Column(length = 1024)
+    @Column(length = 2048)
     private String googleAccessToken;
 
     @Column
