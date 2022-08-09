@@ -1,123 +1,41 @@
 /* global google, angular, Phaser, MainScene */
 
-require('angular');
-require('angular-sanitize');
-require('angular-cookies');
-require('angular-ui-router');
-require('angular-route');
+console.log('starting Aprendiz app');
 
-require('phaser');
+import DraggableContainer from './DraggableContainer.js';
+import CourseTitle from './CourseTitle.js';
+import LegendTopicRect from './LegendTopicRect.js';
+import LegendRect from './LegendRect.js';
 
-class DraggableContainer {
+class LoaderScene extends Phaser.Scene {
 
-    constructor(scene, x, y) {
-        this.scene = scene;
-        this.container = scene.add.container(x, y);
-        this.x = x;
-        this.y = y;
+    preload() {
+        this.load.setBaseURL('https://aprendiz-dashboard.pptpdx.com');
+        console.log('preloaded LoaderScene');
     }
 
-    draggable(graphicsObject) {
-        graphicsObject.setInteractive({useHandCursor: true}).on('pointerdown', this.mouseDownHandler.bind(this));
+    loadCompleted(courses) {
+        console.log('load completed so start main scene');
+        this.scene.add('MainScene', MainScene, true, courses);        
+        this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, (cam, effect) => {
+            this.scene.start('MainScene');
+	});
+        this.cameras.main.fadeOut(1000, 0, 0, 0);
     }
 
-    mouseDownHandler(event) {
-        // start dragging
-        let deltaX = this.container.x - event.downX;
-        let deltaY = this.container.y - event.downY;
-        let dragRect = this.scene.add.rectangle(this.container.x, this.container.y, this.width, this.height);
-        dragRect.setStrokeStyle(2, 0x00ffff, 2);
-        dragRect.setOrigin(0, 0);
-        let dragContext = {
-            dragRect: dragRect,
-            deltaX: deltaX,
-            deltaY: deltaY,
-            container: this.container
-        };
-        this.scene.data.dragContext = dragContext;
+    loadProgress(position, count) {
+        console.log('load progress ' + position + ' of ' + count);
     }
 
-}
-
-
-class CourseTitle extends DraggableContainer {
-
-    constructor(scene, course, x, y) {
-        super(scene, x, y);
-        let text = scene.add.text(0, 0, course.name, {fontSize: '32px'});
+    create() {
+        console.log('created LoaderScene');
+        let text = this.add.text(50, 50, 'Welcome to Aprendiz Dashboard. Loading Classroom data...', {fontSize: '24px'});        
         text.setOrigin(0, 0);
-        this.width = text.width;
-        this.height = text.height;
-        this.titleText = text;
-        this.container.add(text);
-        this.draggable(text);
-    }
-
-}
-
-class LegendTopicRect {
-    constructor(scene, container, topic, x, y) {
-        let legendRoundedRect = scene.add.rectangle(x, y, 400, 50);
-        legendRoundedRect.setOrigin(0, 0);
-        legendRoundedRect.setStrokeStyle(2, 0xffffff, 2);
-        container.add(legendRoundedRect);
-        //  32px radius on the corners        
-        let legendTitleText = scene.add.text(x + 16, y + 16, topic.name, {fontSize: '24px'});
-        container.add(legendTitleText);
-        container.add(legendRoundedRect);
-        this.objectHeight = legendRoundedRect.height;
-        this.objectWidth = legendRoundedRect.width;
     }
 }
+;
 
-class LegendRect extends DraggableContainer {
-    constructor(scene, course, x, y) {
-        super(scene, x, y);
-        let ypos = 24;
-        let width = 0;
-        let legendText = scene.add.text(16, ypos, 'Legend', {fontSize: '28px'});
-        let height = legendText.height + 16;
-        ypos += legendText.height + 16;
-        this.container.add(legendText);
-        for (const topic of course.topics) {
-            let legendTopicRect = new LegendTopicRect(scene, this.container, topic, 16, ypos);
-            ypos += (legendTopicRect.objectHeight + 4);
-            if ((legendTopicRect.objectWidth + 32) > width) {
-                width = legendTopicRect.objectWidth + 32;
-            }
-            height += (legendTopicRect.objectHeight + 4);
-        }
-        height += 24;
-        this.objectHeight = height;
-        this.objectWidth = width;
-        let legendRect = scene.add.rectangle(0, 0, this.objectWidth, this.objectHeight);
-        legendRect.setOrigin(0, 0);
-        legendRect.setStrokeStyle(2, 0xffffff, 2);
-        this.container.add(legendRect);
-        this.container.setSize(this.objectWidth, this.objectHeight);
-        this.width = width;
-        this.height = height;
-        this.draggable(legendRect);
-    }
-}
-
-class CourseWorkRect extends DraggableContainer {
-
-    constructor(scene, course, courseWork, x, y) {
-        super(scene, x, y);                
-        this.courseWork = courseWork;
-        let text = scene.add.text(16, 16, courseWork.title, {fontSize: '24px'});
-        text.setOrigin(0, 0);
-        this.container.add(text);
-        this.width = text.width + 32;
-        this.height = text.height + 32;
-        let rectangle = scene.add.rectangle(0, 0, this.width, this.height);
-        rectangle.setOrigin(0, 0);
-        rectangle.setStrokeStyle(2, 0xffffff, 2);
-        this.container.add(rectangle);
-        this.draggable(rectangle);
-    }
-}
+import CourseWorkRect from './CourseWorkRect.js';
 
 class MainScene extends Phaser.Scene {
 
@@ -126,17 +44,16 @@ class MainScene extends Phaser.Scene {
         console.log('preloaded MainScene');
     }
 
-    create() {
-        console.log('created MainScene');
+    create(courses) {
+        console.log('created MainScene', courses);
         // now we have access to courses
-        let courses = this.game.config.courses;
         let course = courses[0];
         console.log('loading course', course);
         new CourseTitle(this, course, 16, 16);
         new LegendRect(this, course, 16, 64);
         let ypos = 200;
         let xpos = 100;
-        for(const courseWork of course.courseWork) {
+        for (const courseWork of course.courseWork) {
             new CourseWorkRect(this, course, courseWork, xpos, ypos);
             ypos += 100;
             xpos += 80;
@@ -147,7 +64,7 @@ class MainScene extends Phaser.Scene {
             let y = event.worldY;
             let dragContext = this.scene.data.dragContext;
             if (dragContext) {
-                console.log('drag context', dragContext);
+                //console.log('drag context', dragContext);
                 dragContext.dragRect.setPosition(x + dragContext.deltaX, y + dragContext.deltaY);
             }
         });
@@ -159,6 +76,7 @@ class MainScene extends Phaser.Scene {
                 console.log('drag context mouse up', x, y, dragContext);
                 dragContext.container.setPosition(x + dragContext.deltaX, y + dragContext.deltaY);
                 dragContext.dragRect.destroy();
+                // update configuration
                 delete this.scene.data.dragContext;
             }
         });
@@ -166,129 +84,34 @@ class MainScene extends Phaser.Scene {
 }
 ;
 
+angular.module("AprendizApplication", ['ngCookies']);
 
-angular.module("AprendizApplication", ['ngRoute', 'ngSanitize', 'ngCookies']);
+require('./ClassroomDataLoaderService.js');
 
-angular.module("AprendizApplication").service('ClassroomDataLoaderService', function ($http) {
-    this.loadData = function (completionCallback) {
-        $http({
-            method: 'GET',
-            url: 'webresources/classroom/courses'
-        }).then(
-            function (response) {
-                let courses = response.data;
-                let courseCount = courses.length;
-                console.log('load ' + courseCount + ' courses');
-                angular.forEach(courses, function (course) {
-                    $http({
-                        method: 'GET',
-                        url: 'webresources/classroom/topics/' + course.id
-                    }).then(function (response) {
-                        if (response.data) {
-                            course.topics = response.data;
-                            $http({
-                                method: 'GET',
-                                url: 'webresources/classroom/coursework/' + course.id
-                            }).then(function (response) {
-                                if (response.data) {
-                                    course.courseWork = response.data;
-                                    $http({
-                                        method: 'GET',
-                                        url: 'webresources/classroom/courseworkmaterials/' + course.id
-                                    }).then(function (response) {
-                                        if (response.data) {
-                                            course.courseWorkMaterials = response.data;
-                                            courseCount--;
-                                            if(courseCount === 0) {
-                                                console.log('all courses loaded');
-                                                completionCallback(courses);
-                                            }
-                                        }
-                                    });
-                                }
-                            });
-                        }
-                    });
-
-                });
-            });
-    };
-});
-
-angular.module("AprendizApplication").controller('MainViewController', function ($scope, $http, ClassroomDataLoaderService) {
+angular.module("AprendizApplication").controller('MainViewController', function ($scope, $http, $cookies, $interval, ClassroomDataLoaderService) {
     console.log('started main view controller');
     
-    $scope.dataLoaded = function(courses) {
-        console.log('data loaded', courses);
-        let config = {
-            type: Phaser.AUTO,
-            dom: {
-                createContainer: true
-            },
-            fps: {
-                target: 16,
-                forceSetTimeOut: true
-            },
-            parent: 'aprendiz-block',
-            width: 4000,
-            height: 4000,
-            scene: MainScene
-        };        
-        let game = new Phaser.Game(config); 
-        game.config.courses = courses;
+    let config = {
+        type: Phaser.AUTO,
+        dom: {
+            createContainer: true
+        },
+        fps: {
+            target: 18,
+            forceSetTimeOut: true
+        },
+        parent: 'aprendiz-block',
+        width: 4000,
+        height: 4000
     };
-
-        let config = {
-            type: Phaser.AUTO,
-            dom: {
-                createContainer: true
-            },
-            fps: {
-                target: 16,
-                forceSetTimeOut: true
-            },
-            parent: 'aprendiz-block',
-            width: 4000,
-            height: 4000,
-            scene: MainScene
-        };        
-        let game = new Phaser.Game(config); 
-        //game.config.courses = courses;
-    //ClassroomDataLoaderService.loadData($scope.dataLoaded);
-
     
-        
-});
+    let game = new Phaser.Game(config);
+    console.log('started new Phaser game');
+    game.scene.add('LoaderScene', LoaderScene, true);
+    console.log('started Loader Scene');
+    // load data
+    ClassroomDataLoaderService.loadData(game);
 
-angular.module("AprendizApplication").controller('GoogleSignonController', function ($scope, $http, $rootScope, $cookies) {
-    console.log('google signon controller started');
-    let sessionToken = $cookies.get('aprendiz-dashboard');
-    if(sessionToken) {
-        $cookies.remove('aprendiz-dashboard');
-    }
-    $scope.googleSignon = function (credentials) {
-        console.log('google onSignIn', credentials);        
-        $http({
-            method: 'POST',
-            data: credentials,
-            url: 'webresources/classroom/credential'
-        }).then(function (response) {            
-            console.log('posted google credentials OK', response);
-            let sessionToken = response.data.sessionToken;
-            if(sessionToken) {
-                $cookies.put('aprendiz-dashboard', sessionToken, {'path': '/'});
-                console.log('authorized');    
-            //window.location.href = '/';
-            } else {
-                console.log('unauthorized');
-                //window.location.href = '#!/unauthorized';
-            }
-        }, function(errorResponse) {
-            window.location.href = '#!/unauthorized';
-        });        
-    };
-    onGoogleSignIn = $scope.googleSignon.bind(this);
 });
-
 
 

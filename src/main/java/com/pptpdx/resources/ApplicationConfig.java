@@ -5,7 +5,7 @@ import net.lilycode.core.configbundle.ConfigPropertyString;
 
 /**
  *
- * @author theider
+ * @author theider....
  */
 public class ApplicationConfig {
 
@@ -15,6 +15,8 @@ public class ApplicationConfig {
     public static ConfigPropertyString DB_HOST = new ConfigPropertyString("com.pptpdx.db.host");
 
     public static ConfigPropertyString GOOGLE_IDENTITY_CLIENT_ID = new ConfigPropertyString("com.pptpdx.google_client_id");
+    
+    public static ConfigPropertyString GOOGLE_IDENTITY_CLIENT_SECRET = new ConfigPropertyString("com.pptpdx.google_client_secret");
 
     public static ConfigPropertyInt DB_PORT = new ConfigPropertyInt("com.pptpdx.db.port");
 

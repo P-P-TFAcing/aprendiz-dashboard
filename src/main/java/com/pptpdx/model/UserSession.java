@@ -5,11 +5,12 @@ import java.util.Date;
 import javax.persistence.*;
 
 /**
- *
  * @author theider
  */
 @Entity
-@Table
+@Table(indexes = {
+    @Index(columnList = "sessionKey", name = "sessionKey_idx")
+})
 public class UserSession implements Serializable {
 
     @Id
@@ -18,17 +19,20 @@ public class UserSession implements Serializable {
     private Long id;
 
     @Column
-    private String sessionId;
-    
+    private String sessionKey;
+
     @Column
     @Temporal(TemporalType.TIMESTAMP)
     private Date whenCreated;
-    
-    @ManyToOne    
+
+    @ManyToOne
     private User sessionUser;
-    
-    @Column(columnDefinition="TEXT")
-    private String googleCredential;
+
+    @Column(length = 2048)
+    private String googleAccessToken;
+
+    @Column
+    private Long googleExpirationTimeMilliseconds;
 
     public Long getId() {
         return id;
@@ -38,12 +42,12 @@ public class UserSession implements Serializable {
         this.id = id;
     }
 
-    public String getSessionId() {
-        return sessionId;
+    public String getSessionKey() {
+        return sessionKey;
     }
 
-    public void setSessionId(String sessionId) {
-        this.sessionId = sessionId;
+    public void setSessionKey(String sessionKey) {
+        this.sessionKey = sessionKey;
     }
 
     public Date getWhenCreated() {
@@ -62,17 +66,25 @@ public class UserSession implements Serializable {
         this.sessionUser = sessionUser;
     }
 
-    public String getGoogleCredential() {
-        return googleCredential;
+    public String getGoogleAccessToken() {
+        return googleAccessToken;
     }
 
-    public void setGoogleCredential(String googleCredential) {
-        this.googleCredential = googleCredential;
+    public void setGoogleAccessToken(String googleAccessToken) {
+        this.googleAccessToken = googleAccessToken;
+    }
+
+    public Long getGoogleExpirationTimeMilliseconds() {
+        return googleExpirationTimeMilliseconds;
+    }
+
+    public void setGoogleExpirationTimeMilliseconds(Long googleExpirationTimeMilliseconds) {
+        this.googleExpirationTimeMilliseconds = googleExpirationTimeMilliseconds;
     }
 
     @Override
     public String toString() {
-        return "UserSession{" + "id=" + id + ", sessionId=" + sessionId + ", whenCreated=" + whenCreated + ", sessionUser=" + sessionUser + ", googleCredential=" + googleCredential + '}';
+        return "UserSession{" + "id=" + id + ", sessionKey=" + sessionKey + ", whenCreated=" + whenCreated + '}';
     }
-        
+
 }

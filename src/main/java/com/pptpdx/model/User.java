@@ -1,8 +1,6 @@
 package com.pptpdx.model;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 import javax.persistence.*;
 
 /**
@@ -25,9 +23,6 @@ public class User implements Serializable {
     private String fullName;
 
     @Column
-    private String password;
-
-    @Column
     private Boolean active;
     
     public Long getId() {
@@ -44,14 +39,6 @@ public class User implements Serializable {
 
     public void setEmailAddress(String emailAddress) {
         this.emailAddress = emailAddress;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public Boolean getActive() {

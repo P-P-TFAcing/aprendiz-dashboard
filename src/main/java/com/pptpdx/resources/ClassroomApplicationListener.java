@@ -19,13 +19,12 @@ import org.apache.log4j.Logger;
 public class ClassroomApplicationListener implements ServletContextListener {
 
     private static final Logger LOGGER = Logger.getLogger(ClassroomApplicationListener.class);
-    
     @Override
     public void contextInitialized(ServletContextEvent sce) {
         try {
             LOGGER.debug("start Aprendiz Dashboard");
-            ClassroomResource.loadResources(sce.getServletContext());            
-            HibernateSessions mainModel = new HibernateSessions();        
+            ClassroomResource.loadResources(sce.getServletContext());
+            HibernateSessions mainModel = new HibernateSessions();
             HibernateSessionsConfiguration hibernateConfig = new HibernateSessionsConfiguration();
             hibernateConfig.setDatabaseHostAddress(ApplicationConfig.DB_HOST.value());
             hibernateConfig.setDatabasePort(ApplicationConfig.DB_PORT.value());
@@ -35,8 +34,8 @@ public class ClassroomApplicationListener implements ServletContextListener {
             hibernateConfig.setDatabaseDialect(MySQLInnoDbDialect.class);
             hibernateConfig.setAnnotatedClasses(ModelClasses.getClasses());
             hibernateConfig.setDatabaseName(ApplicationConfig.DB_DATABASE.value());
-            mainModel.openSessionManager(hibernateConfig);            
-            Models.MAIN = Models.add("main", mainModel);            
+            mainModel.openSessionManager(hibernateConfig);
+            Models.MAIN = Models.add("main", mainModel);
         } catch (IOException ex) {
             throw new RuntimeException("failed to load local resources", ex);
         } catch (ConfigException ex) {
@@ -49,4 +48,5 @@ public class ClassroomApplicationListener implements ServletContextListener {
         Models.MAIN.closeSessionManager();
         LOGGER.debug("stop Aprendiz Dashboard");
     }
+
 }

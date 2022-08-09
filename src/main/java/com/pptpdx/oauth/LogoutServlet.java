@@ -16,7 +16,6 @@
 
 package com.pptpdx.oauth;
 
-import com.pptpdx.classroom.ClassroomSessions;
 import java.io.IOException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -26,7 +25,7 @@ public class LogoutServlet extends HttpServlet {
 
   @Override
   public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-    ClassroomSessions.invalidateSession(req);
+    //ClassroomSessions.invalidateSession(req);
     resp.sendRedirect("/");
   }
 }

@@ -13,39 +13,52 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package com.pptpdx.oauth;
 
-// [START gae_java11_oauth2_login]
 import com.google.api.client.auth.oauth2.AuthorizationCodeFlow;
 import com.google.api.client.extensions.servlet.auth.oauth2.AbstractAuthorizationCodeServlet;
+import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
+import com.pptpdx.resources.ApplicationConfig;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import net.lilycode.core.configbundle.ConfigException;
+import org.apache.log4j.Logger;
 
 public class Oauth2AuthorizationCodeServlet extends AbstractAuthorizationCodeServlet {
+    
+    private static final Logger LOGGER = Logger.getLogger(Oauth2CallbackServlet.class);
+               
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+            throws IOException, ServletException {
+        LOGGER.debug("Oauth2AuthorizationCodeServlet get page data");
+        // page data?
+        
+    }
 
-  @Override  
-  protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-      throws IOException, ServletException {
-    resp.sendRedirect("/");
-  }
+    @Override
+    protected String getRedirectUri(HttpServletRequest req) throws ServletException, IOException {
+        return OauthConfiguration.getRedirectUri(req);
+    }
 
-  
-  @Override
-  protected String getRedirectUri(HttpServletRequest req) throws ServletException, IOException {
-    return Utils.getRedirectUri(req);
-  }
+    @Override
+    protected AuthorizationCodeFlow initializeFlow() throws IOException {
+        try {
+            GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
+                    OauthConfiguration.HTTP_TRANSPORT, OauthConfiguration.JSON_FACTORY, ApplicationConfig.GOOGLE_IDENTITY_CLIENT_ID.value(), ApplicationConfig.GOOGLE_IDENTITY_CLIENT_SECRET.value(), OauthConfiguration.SCOPES)
+                    .setDataStoreFactory(new AppDataStoreFactory())
+                    .setAccessType("offline")
+                    .build();
+            return flow;
+        } catch (ConfigException ex) {
+            throw new IOException("failed to load configuration", ex);
+        }
+    }
 
-  @Override
-  protected AuthorizationCodeFlow initializeFlow() throws IOException {
-    return Utils.newFlow();
-  }
-
-  @Override
-  protected String getUserId(HttpServletRequest req) throws ServletException, IOException {
-    return Utils.getUserId(req);
-  }
+    @Override
+    protected String getUserId(HttpServletRequest req) throws ServletException, IOException {
+        return req.getSession().getId();
+    }
 }
-// [END gae_java11_oauth2_login]
