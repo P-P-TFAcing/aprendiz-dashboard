@@ -1,7 +1,6 @@
 /* global google, angular, Phaser, MainScene */
 
 console.log('starting Aprendiz app!');
-
 class DraggableContainer {
 
     constructor(scene, x, y) {
@@ -113,13 +112,26 @@ class CourseWorkRect extends DraggableContainer {
     }
 }
 
+class LoaderScene extends Phaser.Scene {
+
+    preload() {
+        this.load.setBaseURL('https://aprendiz-dashboard.pptpdx.com');
+        console.log('preloaded LoaderScene');
+    }
+
+    create() {
+        console.log('created LoaderScene');
+    }
+}
+;
+
 class MainScene extends Phaser.Scene {
 
     preload() {
         this.load.setBaseURL('https://aprendiz-dashboard.pptpdx.com');
         console.log('preloaded MainScene');
     }
-    
+
     create(courses) {
         console.log('created MainScene', courses);
         // now we have access to courses
@@ -168,24 +180,29 @@ require('./ClassroomDataLoaderService.js');
 angular.module("AprendizApplication").controller('MainViewController', function ($scope, $http, $cookies, $interval, ClassroomDataLoaderService) {
     console.log('started main view controller');
     
-    $scope.dataLoaded = function(courses) {
-        console.log('data loaded', courses);
-        let config = {
-            type: Phaser.AUTO,
-            dom: {
-                createContainer: true
-            },
-            fps: {
-                target: 16,
-                forceSetTimeOut: true
-            },
-            parent: 'aprendiz-block',
-            width: 4000,
-            height: 4000
-        };        
-        let game = new Phaser.Game(config); 
-        console.log('started new Phaser game');
-        game.scene.add('MainScene', MainScene, true, { courses: courses });
+    let config = {
+        type: Phaser.AUTO,
+        dom: {
+            createContainer: true
+        },
+        fps: {
+            target: 16,
+            forceSetTimeOut: true
+        },
+        parent: 'aprendiz-block',
+        width: 4000,
+        height: 4000
+    };
+    
+    let game = new Phaser.Game(config);
+    console.log('started new Phaser game');
+    game.scene.add('LoaderScene', LoaderScene, true);
+    console.log('started Loader Scene');
+    
+    $scope.dataLoaded = function (courses) {
+        console.log('data loaded', courses);        
+        // start main scene
+        game.scene.add('MainScene', MainScene, true, courses);
     };
 
     ClassroomDataLoaderService.loadData($scope.dataLoaded);
