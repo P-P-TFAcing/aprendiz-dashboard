@@ -1,4 +1,5 @@
 import DraggableContainer from './DraggableContainer.js';
+import LegendTopicRect from './LegendTopicRect.js';
 
 export default class LegendRect extends DraggableContainer {
     constructor(scene, course, x, y) {
