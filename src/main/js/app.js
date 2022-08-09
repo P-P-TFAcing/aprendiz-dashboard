@@ -14,6 +14,14 @@ class LoaderScene extends Phaser.Scene {
         console.log('preloaded LoaderScene');
     }
 
+    loadCompleted(courses) {
+        console.log('load completed so start main scene');
+        this.scene.add('MainScene', MainScene, true, courses);
+        this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, (cam, effect) => {
+            this.scene.start('MainScene');
+	});
+    }
+
     loadProgress(position, count) {
         console.log('load progress ' + position + ' of ' + count);
     }
@@ -25,6 +33,8 @@ class LoaderScene extends Phaser.Scene {
     }
 }
 ;
+
+import CourseworkRect from './CourseworkRect.js';
 
 class MainScene extends Phaser.Scene {
 
@@ -100,13 +110,7 @@ angular.module("AprendizApplication").controller('MainViewController', function 
     game.scene.add('LoaderScene', LoaderScene, true);
     console.log('started Loader Scene');
     
-    $scope.dataLoaded = function (courses) {
-        console.log('data loaded', courses);        
-        // start main scene
-        game.scene.add('MainScene', MainScene, true, courses);
-    };
-
-    ClassroomDataLoaderService.loadData($scope.dataLoaded, game);
+    ClassroomDataLoaderService.loadData(game);
 
 });
 

@@ -47,7 +47,11 @@ angular.module("AprendizApplication").service('ClassroomDataLoaderService', func
                                                 }
                                                 if (courseCount === 0) {
                                                     console.log('all courses loaded');
-                                                    completionCallback(courses);
+                                                    let loaderScene = gameObject.scene.getScene('LoaderScene');
+                                                    if (loaderScene) {
+                                                        console.log('load completed');
+                                                        loaderScene.loadCompleted(courses);
+                                                    }                                                    
                                                 }
                                             }
                                         });
