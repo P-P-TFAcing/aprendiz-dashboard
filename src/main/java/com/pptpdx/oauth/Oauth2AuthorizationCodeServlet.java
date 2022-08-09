@@ -18,10 +18,12 @@ package com.pptpdx.oauth;
 import com.google.api.client.auth.oauth2.AuthorizationCodeFlow;
 import com.google.api.client.extensions.servlet.auth.oauth2.AbstractAuthorizationCodeServlet;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
-import com.google.api.client.util.store.MemoryDataStoreFactory;
+import com.google.api.client.http.GenericUrl;
+import com.google.api.client.http.HttpTransport;
+import com.google.api.client.http.javanet.NetHttpTransport;
+import com.google.api.client.json.JsonFactory;
+import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.services.classroom.ClassroomScopes;
-import static com.pptpdx.oauth.Utils.HTTP_TRANSPORT;
-import static com.pptpdx.oauth.Utils.JSON_FACTORY;
 import com.pptpdx.resources.ApplicationConfig;
 import java.io.IOException;
 import java.util.Arrays;
@@ -30,13 +32,12 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import net.lilycode.core.configbundle.ConfigException;
+import org.apache.log4j.Logger;
 
 public class Oauth2AuthorizationCodeServlet extends AbstractAuthorizationCodeServlet {
     
-    private static final String APP_NAME = "APRENDIZ DASHBOARD";
-    
-    private static final MemoryDataStoreFactory DATA_STORE_FACTORY = MemoryDataStoreFactory.getDefaultInstance();    
-
+    private static final Logger LOGGER = Logger.getLogger(Oauth2CallbackServlet.class);
+               
     private static final List<String> SCOPES
             = Arrays.asList(
                     "https://www.googleapis.com/auth/userinfo.profile",
@@ -53,20 +54,30 @@ public class Oauth2AuthorizationCodeServlet extends AbstractAuthorizationCodeSer
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws IOException, ServletException {
-        resp.sendRedirect("/");
+        LOGGER.debug("Oauth2AuthorizationCodeServlet get page data");
+        // page data?
+        
     }
 
     @Override
     protected String getRedirectUri(HttpServletRequest req) throws ServletException, IOException {
-        return Utils.getRedirectUri(req);
+        String requestUrl = req.getRequestURL().toString();
+        GenericUrl url = new GenericUrl(requestUrl);
+        url.setScheme("https");
+        url.setRawPath("/oauth2callback");
+        return url.build();
     }
 
+    static final HttpTransport HTTP_TRANSPORT = new NetHttpTransport();    
+    
+    static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();    
+    
     @Override
     protected AuthorizationCodeFlow initializeFlow() throws IOException {
         try {
             GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
                     HTTP_TRANSPORT, JSON_FACTORY, ApplicationConfig.GOOGLE_IDENTITY_CLIENT_ID.value(), ApplicationConfig.GOOGLE_IDENTITY_CLIENT_SECRET.value(), SCOPES)
-                    .setDataStoreFactory(DATA_STORE_FACTORY)
+                    .setDataStoreFactory(new AppDataStoreFactory())
                     .setAccessType("offline")
                     .build();
 
@@ -78,6 +89,6 @@ public class Oauth2AuthorizationCodeServlet extends AbstractAuthorizationCodeSer
 
     @Override
     protected String getUserId(HttpServletRequest req) throws ServletException, IOException {
-        return Utils.getUserId(req);
+        return req.getSession().getId();
     }
 }
