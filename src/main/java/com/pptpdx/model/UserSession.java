@@ -29,7 +29,7 @@ public class UserSession implements Serializable {
     @ManyToOne
     private User sessionUser;
 
-    @Column(columnDefinition = "TEXT")
+    @Column(length = 1024)
     private String googleAccessToken;
 
     @Column
