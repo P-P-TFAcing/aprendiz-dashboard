@@ -1,10 +1,10 @@
 package com.pptpdx.oauth;
 
+import com.google.api.client.auth.oauth2.StoredCredential;
+import com.google.api.client.util.store.AbstractDataStore;
 import com.google.api.client.util.store.DataStore;
 import com.google.api.client.util.store.DataStoreFactory;
-import com.pptpdx.classroom.ClassroomSessions;
 import java.io.IOException;
-import java.io.Serializable;
 import java.util.Collection;
 import java.util.Set;
 import org.apache.log4j.Logger;
@@ -13,72 +13,46 @@ import org.apache.log4j.Logger;
  *
  * @author timothyheider
  */
-public class AppDataStore implements DataStore {
+public class AppDataStore extends AbstractDataStore<StoredCredential> {
 
-    private static final Logger LOGGER = Logger.getLogger(ClassroomSessions.class);        
+    public AppDataStore(DataStoreFactory dataStoreFactory, String id) {
+        super(dataStoreFactory, id);
+    }
+
+    private static final Logger LOGGER = Logger.getLogger(AppDataStore.class);        
     
     @Override
-    public DataStoreFactory getDataStoreFactory() {
+    public Set<String> keySet() throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public String getId() {
+    public Collection<StoredCredential> values() throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public int size() throws IOException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public boolean isEmpty() throws IOException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public boolean containsKey(String string) throws IOException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public boolean containsValue(Serializable v) throws IOException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public Set keySet() throws IOException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public Collection values() throws IOException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public Serializable get(String key) throws IOException {
+    public StoredCredential get(String key) throws IOException {
         LOGGER.debug("get called key=" + key);
-        return null;        
+        return null;
     }
 
     @Override
-    public DataStore set(String text, Serializable v) throws IOException {
-        LOGGER.debug("set called with key=" + text + " object is " + v.getClass() + " " + v);
+    public DataStore<StoredCredential> set(String key, StoredCredential v) throws IOException {
+        LOGGER.debug("set called with key=" + key + " object is " + v.getClass() + " " + v);        
         return this;
     }
 
     @Override
-    public DataStore clear() throws IOException {
-        LOGGER.debug("clear");
+    public DataStore<StoredCredential> clear() throws IOException {
+        LOGGER.debug("clear called");
         return this;
     }
 
     @Override
-    public DataStore delete(String key) throws IOException {
-        LOGGER.debug("delete " + key);
-        return this;
+    public DataStore<StoredCredential> delete(String string) throws IOException {
+        LOGGER.debug("delete called");
+        return this;        
     }
-    
+
 }

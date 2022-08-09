@@ -9,15 +9,16 @@ import org.apache.log4j.Logger;
 /**
  *
  * @author timothyheider
+ * @param <StoredCredential>
  */
-public class AppDataStoreFactory extends AbstractDataStoreFactory {
+public class AppDataStoreFactory<StoredCredential> extends AbstractDataStoreFactory {
 
     private static final Logger LOGGER = Logger.getLogger(AppDataStoreFactory.class);
     
     @Override
     protected <V extends Serializable> DataStore<V> createDataStore(String text) throws IOException {
         LOGGER.debug("called AppDataStoreFactory create " + text);
-        return new AppDataStore();        
+        return (DataStore<V>) new AppDataStore(this, text);        
     }
     
 }
