@@ -99,7 +99,7 @@ angular.module("AprendizApplication").controller('MainViewController', function 
     console.log('started new Phaser game');
     game.scene.add('LoaderScene', LoaderScene, true);
     console.log('started Loader Scene');
-    let loaderScene = game.scene.get('LoaderScene');
+    let loaderScene = game.scene.getScene('LoaderScene');
     $scope.dataLoaded = function (courses) {
         console.log('data loaded', courses);        
         // start main scene
