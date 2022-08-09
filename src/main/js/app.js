@@ -3,21 +3,7 @@
 console.log('starting Aprendiz app');
 
 import DraggableContainer from './DraggableContainer.js';
-
-class CourseTitle extends DraggableContainer {
-
-    constructor(scene, course, x, y) {
-        super(scene, x, y);
-        let text = scene.add.text(0, 0, course.name, {fontSize: '32px'});
-        text.setOrigin(0, 0);
-        this.width = text.width;
-        this.height = text.height;
-        this.titleText = text;
-        this.container.add(text);
-        this.draggable(text);
-    }
-
-}
+import CourseTitle from './CourseTitle.js';
 
 class LegendTopicRect {
     constructor(scene, container, topic, x, y) {
@@ -92,6 +78,8 @@ class LoaderScene extends Phaser.Scene {
 
     create() {
         console.log('created LoaderScene');
+        let text = this.add.text(0, 0, 'Welcome to Aprendiz Dashboard. Loading Classroom data...', {fontSize: '24px'});
+        text.setOrigin(0, 0);
     }
 }
 ;
