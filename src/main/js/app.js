@@ -50,6 +50,14 @@ import Button from './Button.js';
 
 import WebSocketContext from './WebSocketContext.js';
 
+class SaveButton extends Button {
+            
+    onButtonClick() {
+        console.log('save configuration', this.scene.courseConfiguration);
+        this.websocket.sendMessage('SAVE_COURSE_CONFIGURATION', this.scene.courseConfiguration);
+    }
+};
+
 class MainScene extends Phaser.Scene {
 
     preload() {
@@ -74,7 +82,7 @@ class MainScene extends Phaser.Scene {
         new CourseTitle(this, course, 16, 16);
         new LegendRect(this, course, 16, 64);
         
-        new Button(this, 500, 20, 'Save Changes');
+        new SaveButton(this, 1000, 20, 'Save Changes');
         
         let ypos = 200;
         let xpos = 100;

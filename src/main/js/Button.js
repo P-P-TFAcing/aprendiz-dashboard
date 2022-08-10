@@ -20,8 +20,15 @@ export default class Button {
         rectangle.setInteractive({useHandCursor: true}).on('pointerdown', this.mouseDownHandler.bind(this));
     }
 
+    onButtonClick() {
+        // possible override
+    }
+
     mouseDownHandler(event) {
         console.log('button click');
+        if(this.onButtonClick) {
+            this.onButtonClick();
+        }
     }
 
 }
