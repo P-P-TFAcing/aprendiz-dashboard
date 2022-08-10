@@ -16,6 +16,14 @@ angular.module("AprendizApplication").service('ClassroomDataLoaderService', func
                     console.table(courses);
                     let p = 0;
                     angular.forEach(courses, function (course) {
+                        $http({
+                            method: 'GET',
+                            url: 'webresources/classroom/metadata/' + course.id
+                        }).then(function (response) {
+                            if(response.data) {
+                                course.metadata = response.data;
+                            }
+                        });
                         console.log('load course topic', course.id);
                         $http({
                             method: 'GET',
@@ -59,7 +67,6 @@ angular.module("AprendizApplication").service('ClassroomDataLoaderService', func
                                 });
                             }
                         });
-
                     });
                 }, function(error) {
                     console.log('courses service error', error);

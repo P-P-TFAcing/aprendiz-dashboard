@@ -11,7 +11,7 @@ import java.util.List;
 public class ModelClasses {
 
     private static final Class[] CLASSES = {
-        CourseConfiguration.class,
+        CourseMetadata.class,
         User.class
     };
     
