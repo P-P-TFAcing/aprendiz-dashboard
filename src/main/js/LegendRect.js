@@ -9,9 +9,10 @@ export default class LegendRect extends DraggableContainer {
             if(containerMetadata) {
                 this.x = containerMetadata.x;
                 this.y = containerMetadata.y;
+                this.container.setPosition(this.x, this.y);
             }
         }
-        let ypos = this.y;
+        let ypos = 24;
         let width = 0;
         let legendText = scene.add.text(16, ypos, 'Legend', {fontSize: '28px'});
         let height = legendText.height + 16;
