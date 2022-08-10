@@ -1,27 +1,17 @@
 package com.pptpdx.resources;
 
-import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
+import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.services.classroom.model.Course;
 import com.google.api.services.classroom.model.CourseWork;
 import com.google.api.services.classroom.model.CourseWorkMaterial;
 import com.google.api.services.classroom.model.Topic;
+import com.google.api.services.oauth2.model.Userinfo;
 import com.pptpdx.classroom.ClassroomController;
 import com.pptpdx.oauth.OauthConfiguration;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
-import java.security.GeneralSecurityException;
-import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
-import java.util.UUID;
-import javax.servlet.ServletContext;
-import javax.ws.rs.Consumes;
 import javax.ws.rs.CookieParam;
 import javax.ws.rs.GET;
-import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -29,11 +19,7 @@ import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Cookie;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import net.lilycode.core.configbundle.ConfigException;
 import org.apache.log4j.Logger;
-import org.hibernate.Query;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
 
 /**
  *
@@ -51,7 +37,7 @@ public class ClassroomResource {
     @GET
     public List<Topic> getTopics(@CookieParam(APRENDIZ_SESSION_AUTH) Cookie cookie, @PathParam("courseId") String courseId) {
         try {
-            GoogleCredential credential = OauthConfiguration.getGoogleCredential(cookie.getValue());
+            Credential credential = OauthConfiguration.getCredential(cookie.getValue());            
             return ClassroomController.getTopics(credential, courseId);
         } catch (IOException ex) {
             LOGGER.error("IO exception", ex);
@@ -64,7 +50,7 @@ public class ClassroomResource {
     @GET
     public List<CourseWork> getCourseWork(@CookieParam(APRENDIZ_SESSION_AUTH) Cookie cookie, @PathParam("courseId") String courseId) {
         try {
-            GoogleCredential credential = OauthConfiguration.getGoogleCredential(cookie.getValue());
+            Credential credential = OauthConfiguration.getCredential(cookie.getValue());
             return ClassroomController.getCourseWork(credential, courseId);
         } catch (IOException ex) {
             LOGGER.error("IO exception", ex);
@@ -77,7 +63,7 @@ public class ClassroomResource {
     @GET
     public List<CourseWorkMaterial> getCourseWorkMaterials(@CookieParam(APRENDIZ_SESSION_AUTH) Cookie cookie, @PathParam("courseId") String courseId) {
         try {            
-            GoogleCredential credential = OauthConfiguration.getGoogleCredential(cookie.getValue());
+            Credential credential = OauthConfiguration.getCredential(cookie.getValue());
             return ClassroomController.getCourseWorkMaterials(credential, courseId);
         } catch (IOException ex) {
             LOGGER.error("IO exception", ex);
@@ -91,8 +77,9 @@ public class ClassroomResource {
     public List<Course> getCourses(@CookieParam(APRENDIZ_SESSION_AUTH) Cookie cookie) {
         try {
             LOGGER.debug("get courses");
-            GoogleCredential credential = OauthConfiguration.getGoogleCredential(cookie.getValue());
-            LOGGER.debug("resolved classroom session " + credential);
+            Credential credential = OauthConfiguration.getCredential(cookie.getValue());
+            Userinfo info = OauthConfiguration.getUserInfo(credential);            
+            LOGGER.debug("resolved classroom session " + credential + " " + info);
             return ClassroomController.getCourses(credential);
         } catch (IOException ex) {
             LOGGER.error("IO exception", ex);

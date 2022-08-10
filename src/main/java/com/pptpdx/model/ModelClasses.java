@@ -12,9 +12,7 @@ public class ModelClasses {
 
     private static final Class[] CLASSES = {
         CourseConfiguration.class,
-        User.class,
-        UserPassword.class,
-        UserSession.class            
+        User.class
     };
     
     public static List<Class> getClasses() {

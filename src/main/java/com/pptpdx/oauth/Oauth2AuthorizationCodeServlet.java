@@ -18,6 +18,7 @@ package com.pptpdx.oauth;
 import com.google.api.client.auth.oauth2.AuthorizationCodeFlow;
 import com.google.api.client.extensions.servlet.auth.oauth2.AbstractAuthorizationCodeServlet;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
+import com.google.api.client.util.store.MemoryDataStoreFactory;
 import com.pptpdx.resources.ApplicationConfig;
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -48,7 +49,7 @@ public class Oauth2AuthorizationCodeServlet extends AbstractAuthorizationCodeSer
         try {
             GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
                     OauthConfiguration.HTTP_TRANSPORT, OauthConfiguration.JSON_FACTORY, ApplicationConfig.GOOGLE_IDENTITY_CLIENT_ID.value(), ApplicationConfig.GOOGLE_IDENTITY_CLIENT_SECRET.value(), OauthConfiguration.SCOPES)
-                    .setDataStoreFactory(new AppDataStoreFactory())
+                    .setDataStoreFactory(MemoryDataStoreFactory.getDefaultInstance())
                     .setAccessType("offline")
                     .build();
             return flow;

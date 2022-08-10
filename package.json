@@ -3,7 +3,7 @@
     "version": "1.0.0",
     "main": "webpack.config.js",
     "scripts": {
-        "build": "webpack --progress"
+        "build": "webpack"
     },
     "repository": {
         "type": "git",

@@ -20,6 +20,7 @@ import com.google.api.client.auth.oauth2.AuthorizationCodeResponseUrl;
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.extensions.servlet.auth.oauth2.AbstractAuthorizationCodeCallbackServlet;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
+import com.google.api.client.util.store.MemoryDataStoreFactory;
 import com.google.api.services.oauth2.Oauth2;
 import com.google.api.services.oauth2.model.Userinfo;
 import com.pptpdx.model.Models;
@@ -140,7 +141,7 @@ public class Oauth2CallbackServlet extends AbstractAuthorizationCodeCallbackServ
         try {
             GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
                     OauthConfiguration.HTTP_TRANSPORT, OauthConfiguration.JSON_FACTORY, ApplicationConfig.GOOGLE_IDENTITY_CLIENT_ID.value(), ApplicationConfig.GOOGLE_IDENTITY_CLIENT_SECRET.value(), OauthConfiguration.SCOPES)
-                    .setDataStoreFactory(new AppDataStoreFactory())
+                    .setDataStoreFactory(MemoryDataStoreFactory.getDefaultInstance())
                     .setAccessType("offline")
                     .build();
             return flow;
