@@ -63,6 +63,12 @@ angular.module("AprendizApplication").service('ClassroomDataLoaderService', func
                     });
                 }, function(error) {
                     console.log('courses service error', error);
+                    if(error) {
+                        if(error.status === 401) {
+                            // back to home
+                            window.location.href = '/';
+                        }
+                    }
                 });
     };
 });
