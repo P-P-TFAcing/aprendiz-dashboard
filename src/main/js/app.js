@@ -62,6 +62,7 @@ class MainScene extends Phaser.Scene {
     create(courses) {
         console.log('created MainScene', courses);
         this.courses = courses;
+        this.courseConfiguration = { containerPositions: { } };
         // open websocket
         this.websocket = new WebSocketContext(this.sys.game.scene, this.onWebSocketOpen.bind(this));
         // now we have access to courses
@@ -93,7 +94,21 @@ class MainScene extends Phaser.Scene {
             let dragContext = this.scene.data.dragContext;
             if (dragContext) {
                 console.log('drag context mouse up', x, y, dragContext);
-                dragContext.container.setPosition(x + dragContext.deltaX, y + dragContext.deltaY);
+                let newX = x + dragContext.deltaX;
+                let newY = y + dragContext.deltaY;
+                dragContext.container.setPosition(newX, newY);
+                dragContext.parentObject.x = newX;
+                dragContext.parentObject.y = newY;
+                // update metadata (to save on server if save button is pushed)
+                let containerId = dragContext.parentObject.containerId;
+                let containerPosition = this.courseConfiguration[containerId];
+                if(!containerPosition) {
+                    this.courseConfiguration[containerId] = { x: newX, y: newY };                    
+                } else {
+                    containerPosition.x = newX;
+                    containerPosition.y = newY;
+                }
+                console.table(this.courseConfiguration);
                 dragContext.dragRect.destroy();
                 // update configuration
                 delete this.scene.data.dragContext;
