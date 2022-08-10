@@ -61,6 +61,8 @@ angular.module("AprendizApplication").service('ClassroomDataLoaderService', func
                         });
 
                     });
+                }, function(error) {
+                    console.log('courses service error', error);
                 });
     };
 });
