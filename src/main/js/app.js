@@ -1,7 +1,6 @@
 /* global google, angular, Phaser, MainScene */
 
 console.log('starting Aprendiz app');
-
 import DraggableContainer from './DraggableContainer.js';
 import CourseTitle from './CourseTitle.js';
 import LegendTopicRect from './LegendTopicRect.js';
@@ -16,10 +15,10 @@ class LoaderScene extends Phaser.Scene {
 
     loadCompleted(courses) {
         console.log('load completed so start main scene');
-        this.scene.add('MainScene', MainScene, true, courses);        
+        this.scene.add('MainScene', MainScene, true, courses);
         this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, (cam, effect) => {
             this.scene.start('MainScene');
-	});
+        });
         this.cameras.main.fadeOut(1000, 0, 0, 0);
     }
 
@@ -29,12 +28,12 @@ class LoaderScene extends Phaser.Scene {
         this.progressTotalCount = count;
         this.progressBar.clear();
         this.progressBar.fillStyle(0xffffff, 1);
-        this.progressBar.fillRect(50, 100, 100 * position, 50);        
+        this.progressBar.fillRect(50, 100, 100 * position, 50);
     }
-    
+
     create() {
         console.log('created LoaderScene');
-        let text = this.add.text(50, 50, 'Welcome to Aprendiz Dashboard. Loading Classroom data...', {fontSize: '24px'});        
+        let text = this.add.text(50, 50, 'Welcome to Aprendiz Dashboard. Loading Classroom data...', {fontSize: '24px'});
         text.setOrigin(0, 0);
         this.progressBar = this.add.graphics();
         this.progressBox = this.add.graphics();
@@ -51,12 +50,13 @@ import Button from './Button.js';
 import WebSocketContext from './WebSocketContext.js';
 
 class SaveButton extends Button {
-            
+
     onButtonClick() {
         console.log('save configuration', this.scene.courseConfiguration);
         this.scene.websocket.sendMessage('SAVE_COURSE_CONFIGURATION', this.scene.courseConfiguration);
     }
-};
+}
+;
 
 class MainScene extends Phaser.Scene {
 
@@ -64,26 +64,30 @@ class MainScene extends Phaser.Scene {
         this.load.setBaseURL('https://aprendiz-dashboard.pptpdx.com');
         console.log('preloaded MainScene');
     }
-    
+
     onWebSocketOpen() {
-        console.log('host websocket opened');        
+        console.log('host websocket opened');
     }
 
     create(courses) {
         console.log('created MainScene', courses);
         this.courses = courses;
-        this.courseConfiguration = { containerPositions: { } };
+        this.courseConfiguration = {containerPositions: {}};
         // open websocket
         this.websocket = new WebSocketContext(this.sys.game.scene, this.onWebSocketOpen.bind(this));
         // now we have access to courses
         let course = courses[0];
         this.course = course;
+        let metadata = this.course.metadata;
+
         console.log('loading course', course);
         new CourseTitle(this, course, 16, 16);
-        new LegendRect(this, course, 16, 64);
-        
+
+        // legend rect
+        new LegendRect(this, course, 16, 64, metadata);
+
         new SaveButton(this, 1000, 20, 'Save Changes');
-        
+
         let ypos = 200;
         let xpos = 100;
         for (const courseWork of course.courseWork) {
@@ -116,9 +120,9 @@ class MainScene extends Phaser.Scene {
                 let courseConfiguration = dragContext.parentObject.scene.courseConfiguration;
                 let containerId = dragContext.parentObject.containerId;
                 let containerPosition = courseConfiguration.containerPositions[containerId];
-                if(!containerPosition) {
+                if (!containerPosition) {
                     courseConfiguration.courseId = dragContext.parentObject.scene.course.id;
-                    courseConfiguration.containerPositions[containerId] = { x: newX, y: newY };                    
+                    courseConfiguration.containerPositions[containerId] = {x: newX, y: newY};
                 } else {
                     containerPosition.x = newX;
                     containerPosition.y = newY;
@@ -139,7 +143,7 @@ require('./ClassroomDataLoaderService.js');
 
 angular.module("AprendizApplication").controller('MainViewController', function (ClassroomDataLoaderService) {
     console.log('started main view controller');
-    
+
     let config = {
         type: Phaser.AUTO,
         dom: {
@@ -153,7 +157,7 @@ angular.module("AprendizApplication").controller('MainViewController', function 
         width: 4000,
         height: 4000
     };
-    
+
     let game = new Phaser.Game(config);
     console.log('started new Phaser game');
     game.scene.add('LoaderScene', LoaderScene, true);

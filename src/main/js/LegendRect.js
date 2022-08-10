@@ -2,9 +2,16 @@ import DraggableContainer from './DraggableContainer.js';
 import LegendTopicRect from './LegendTopicRect.js';
 
 export default class LegendRect extends DraggableContainer {
-    constructor(scene, course, x, y) {
+    constructor(scene, course, x, y, metadata) {
         super(scene, x, y, 'LegendRect');
-        let ypos = 24;
+        if(metadata) {
+            let containerMetadata = metadata.containerPositions[this.containerId];
+            if(containerMetadata) {
+                this.x = containerMetadata.x;
+                this.y = containerMetadata.y;
+            }
+        }
+        let ypos = this.y;
         let width = 0;
         let legendText = scene.add.text(16, ypos, 'Legend', {fontSize: '28px'});
         let height = legendText.height + 16;
@@ -28,7 +35,7 @@ export default class LegendRect extends DraggableContainer {
         this.container.setSize(this.objectWidth, this.objectHeight);
         this.width = width;
         this.height = height;
-        this.draggable(legendRect);
+        this.draggable(legendRect);        
     }
 }
 

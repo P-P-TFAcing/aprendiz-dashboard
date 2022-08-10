@@ -3,6 +3,10 @@
  */
 export default class DraggableContainer {
 
+    setPosition(x, y) {
+        this.container.setPosition(x, y);
+    }
+
     constructor(scene, x, y, containerId) {
         this.scene = scene;
         this.container = scene.add.container(x, y);
