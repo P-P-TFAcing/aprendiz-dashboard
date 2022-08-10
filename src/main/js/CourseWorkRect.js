@@ -3,7 +3,7 @@ import DraggableContainer from './DraggableContainer.js';
 export default class CourseWorkRect extends DraggableContainer {
 
     constructor(scene, course, courseWork, x, y) {
-        super(scene, x, y, 'CourseWorkRect');
+        super(scene, x, y, 'CourseWorkRect_' + courseWork.id);
         this.courseWork = courseWork;
         let text = scene.add.text(16, 16, courseWork.title, {fontSize: '24px'});
         text.setOrigin(0, 0);
