@@ -100,15 +100,16 @@ class MainScene extends Phaser.Scene {
                 dragContext.parentObject.x = newX;
                 dragContext.parentObject.y = newY;
                 // update metadata (to save on server if save button is pushed)
+                let courseConfiguration = dragContext.parentObject.scene.courseConfiguration;
                 let containerId = dragContext.parentObject.containerId;
-                let containerPosition = this.courseConfiguration[containerId];
+                let containerPosition = courseConfiguration.containerPositions[containerId];
                 if(!containerPosition) {
-                    this.courseConfiguration[containerId] = { x: newX, y: newY };                    
+                    courseConfiguration.containerPositions[containerId] = { x: newX, y: newY };                    
                 } else {
                     containerPosition.x = newX;
                     containerPosition.y = newY;
                 }
-                console.table(this.courseConfiguration);
+                console.table(courseConfiguration);
                 dragContext.dragRect.destroy();
                 // update configuration
                 delete this.scene.data.dragContext;
