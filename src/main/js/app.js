@@ -46,6 +46,8 @@ class LoaderScene extends Phaser.Scene {
 
 import CourseWorkRect from './CourseWorkRect.js';
 
+import Button from './Button.js';
+
 import WebSocketContext from './WebSocketContext.js';
 
 class MainScene extends Phaser.Scene {
@@ -71,6 +73,9 @@ class MainScene extends Phaser.Scene {
         console.log('loading course', course);
         new CourseTitle(this, course, 16, 16);
         new LegendRect(this, course, 16, 64);
+        
+        new Button(this, 'Save Changes', 500, 20);
+        
         let ypos = 200;
         let xpos = 100;
         for (const courseWork of course.courseWork) {
