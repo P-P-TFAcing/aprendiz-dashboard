@@ -32,10 +32,6 @@ class LoaderScene extends Phaser.Scene {
         this.progressBar.fillRect(50, 100, 100 * position, 50);        
     }
     
-    update(time, delta) {
-        console.log('progress update ' + time + ' ' + this.progressValue + ' of ' + this.progressTotalCount);
-    }
-
     create() {
         console.log('created LoaderScene');
         let text = this.add.text(50, 50, 'Welcome to Aprendiz Dashboard. Loading Classroom data...', {fontSize: '24px'});        
@@ -109,10 +105,9 @@ class MainScene extends Phaser.Scene {
 
 angular.module("AprendizApplication", ['ngCookies']);
 
-
 require('./ClassroomDataLoaderService.js');
 
-angular.module("AprendizApplication").controller('MainViewController', function ($scope, $http, $cookies, $interval, ClassroomDataLoaderService) {
+angular.module("AprendizApplication").controller('MainViewController', function (ClassroomDataLoaderService) {
     console.log('started main view controller');
     
     let config = {

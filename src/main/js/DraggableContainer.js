@@ -3,11 +3,12 @@
  */
 export default class DraggableContainer {
 
-    constructor(scene, x, y) {
+    constructor(scene, x, y, containerId) {
         this.scene = scene;
         this.container = scene.add.container(x, y);
         this.x = x;
         this.y = y;
+        this.containerId = containerId;
     }
 
     draggable(graphicsObject) {

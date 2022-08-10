@@ -3,7 +3,7 @@ import LegendTopicRect from './LegendTopicRect.js';
 
 export default class LegendRect extends DraggableContainer {
     constructor(scene, course, x, y) {
-        super(scene, x, y);
+        super(scene, x, y, 'LegendRect');
         let ypos = 24;
         let width = 0;
         let legendText = scene.add.text(16, ypos, 'Legend', {fontSize: '28px'});
