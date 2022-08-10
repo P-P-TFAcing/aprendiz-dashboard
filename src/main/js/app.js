@@ -53,7 +53,10 @@ class SaveButton extends Button {
 
     onButtonClick() {
         console.log('save configuration', this.scene.courseConfiguration);
-        this.scene.websocket.sendMessage('SAVE_COURSE_CONFIGURATION', this.scene.courseConfiguration);
+        let metadata = this.scene.course.metadata;
+        if(metadata) {
+            this.scene.websocket.sendMessage('SAVE_COURSE_CONFIGURATION', metadata);
+        }
     }
 }
 ;
@@ -72,7 +75,6 @@ class MainScene extends Phaser.Scene {
     create(courses) {
         console.log('created MainScene', courses);
         this.courses = courses;
-        this.courseConfiguration = {containerPositions: {}};
         // open websocket
         this.websocket = new WebSocketContext(this.sys.game.scene, this.onWebSocketOpen.bind(this));
         // now we have access to courses
@@ -117,17 +119,21 @@ class MainScene extends Phaser.Scene {
                 dragContext.parentObject.x = newX;
                 dragContext.parentObject.y = newY;
                 // update metadata (to save on server if save button is pushed)
-                let courseConfiguration = dragContext.parentObject.scene.courseConfiguration;
+                let metadata = dragContext.parentObject.scene.course.metadata;
+                if(!metadata) {
+                    metadata = {containerPositions: {} };
+                    dragContext.parentObject.scene.course.metadata = metadata;
+                }
                 let containerId = dragContext.parentObject.containerId;
-                let containerPosition = courseConfiguration.containerPositions[containerId];
+                let containerPosition = metadata.containerPositions[containerId];
                 if (!containerPosition) {
-                    courseConfiguration.courseId = dragContext.parentObject.scene.course.id;
-                    courseConfiguration.containerPositions[containerId] = {x: newX, y: newY};
+                    metadata.courseId = dragContext.parentObject.scene.course.id;
+                    metadata.containerPositions[containerId] = {x: newX, y: newY};
                 } else {
                     containerPosition.x = newX;
                     containerPosition.y = newY;
                 }
-                console.log('update course configuration', courseConfiguration);
+                console.log('update course configuration', metadata);
                 dragContext.dragRect.destroy();
                 // update configuration
                 delete this.scene.data.dragContext;
