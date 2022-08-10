@@ -109,7 +109,7 @@ class MainScene extends Phaser.Scene {
                     containerPosition.x = newX;
                     containerPosition.y = newY;
                 }
-                console.table(courseConfiguration);
+                console.log('update course configuration', courseConfiguration);
                 dragContext.dragRect.destroy();
                 // update configuration
                 delete this.scene.data.dragContext;
