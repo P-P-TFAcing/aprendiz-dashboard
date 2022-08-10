@@ -12,10 +12,17 @@ import com.google.api.services.classroom.model.ListCourseWorkMaterialResponse;
 import com.google.api.services.classroom.model.ListCourseWorkResponse;
 import com.google.api.services.classroom.model.ListCoursesResponse;
 import com.google.api.services.classroom.model.ListTopicResponse;
+import com.google.gson.Gson;
+import com.pptpdx.model.CourseConfiguration;
+import com.pptpdx.model.Models;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import org.apache.log4j.Logger;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 /**
  * @author timothyheider
@@ -97,6 +104,29 @@ public class ClassroomController {
             LOGGER.debug("loaded " + result.size() + " courseworkmaterials");
         }
         return result;                
+    }
+    
+    public static void saveConfigurationData(Map<String, Object> configData) {
+        LOGGER.debug("save configuration data " + configData);
+        try ( Session hsession = Models.MAIN.openSession()) {
+            CourseConfiguration config;
+            Gson gson = new Gson();
+            String configText = gson.toJson(configData);            
+            Query<CourseConfiguration> qry = hsession.createQuery("from CourseConfiguration");
+            if(!qry.list().isEmpty()) {
+                config = qry.list().get(0);
+                Transaction tx = hsession.beginTransaction();
+                config.setConfigurationText(configText);
+                hsession.update(config);
+                tx.commit();                
+            } else {
+                config = new CourseConfiguration();
+                Transaction tx = hsession.beginTransaction();
+                config.setConfigurationText(configText);
+                hsession.save(config);
+                tx.commit();
+            }
+        }
     }
 
 }

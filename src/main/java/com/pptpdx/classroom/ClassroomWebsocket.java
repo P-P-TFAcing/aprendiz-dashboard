@@ -39,6 +39,7 @@ public class ClassroomWebsocket {
         if (data.get("messageType").equals("SAVE_COURSE_CONFIGURATION")) {
             data.remove("messageType");
             LOGGER.debug("save configuration data " + data);
+            ClassroomController.saveConfigurationData(data);
         }
     }
 
