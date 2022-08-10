@@ -108,26 +108,32 @@ public class ClassroomController {
     
     public static void saveConfigurationData(Map<String, Object> configData) {
         LOGGER.debug("save configuration data " + configData);
-        Long courseId = (Long) configData.get("courseId");
-        try ( Session hsession = Models.MAIN.openSession()) {
-            CourseConfiguration config;
-            Gson gson = new Gson();
-            String configText = gson.toJson(configData);            
-            Query<CourseConfiguration> qry = hsession.createQuery("from CourseConfiguration where courseId=:courseId");
-            qry.setParameter("courseId", courseId);
-            if(!qry.list().isEmpty()) {
-                config = qry.list().get(0);
-                Transaction tx = hsession.beginTransaction();
-                config.setConfigurationText(configText);
-                hsession.update(config);
-                tx.commit();                
-            } else {
-                config = new CourseConfiguration();
-                Transaction tx = hsession.beginTransaction();
-                config.setConfigurationText(configText);
-                config.setCourseId(courseId);
-                hsession.save(config);
-                tx.commit();
+        String courseIdText = (String) configData.get("courseId");
+        Long courseId = null;
+        if(courseIdText != null) {
+            courseId = Long.parseLong(courseIdText);
+        }
+        if(courseId != null) {
+            try ( Session hsession = Models.MAIN.openSession()) {
+                CourseConfiguration config;
+                Gson gson = new Gson();
+                String configText = gson.toJson(configData);            
+                Query<CourseConfiguration> qry = hsession.createQuery("from CourseConfiguration where courseId=:courseId");
+                qry.setParameter("courseId", courseId);
+                if(!qry.list().isEmpty()) {
+                    config = qry.list().get(0);
+                    Transaction tx = hsession.beginTransaction();
+                    config.setConfigurationText(configText);
+                    hsession.update(config);
+                    tx.commit();                
+                } else {
+                    config = new CourseConfiguration();
+                    Transaction tx = hsession.beginTransaction();
+                    config.setConfigurationText(configText);
+                    config.setCourseId(courseId);
+                    hsession.save(config);
+                    tx.commit();
+                }
             }
         }
     }
