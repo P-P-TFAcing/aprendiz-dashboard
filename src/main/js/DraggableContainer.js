@@ -26,7 +26,8 @@ export default class DraggableContainer {
             dragRect: dragRect,
             deltaX: deltaX,
             deltaY: deltaY,
-            container: this.container
+            container: this.container,
+            parentObject: this
         };
         this.scene.data.dragContext = dragContext;
     }
