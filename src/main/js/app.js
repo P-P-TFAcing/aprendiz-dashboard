@@ -81,7 +81,7 @@ class MainScene extends Phaser.Scene {
         let metadata = this.course.metadata;
 
         console.log('loading course', course);
-        new CourseTitle(this, course, 16, 16);
+        new CourseTitle(this, course, 16, 16, metadata);
 
         // legend rect
         new LegendRect(this, course, 16, 64, metadata);
@@ -91,7 +91,7 @@ class MainScene extends Phaser.Scene {
         let ypos = 200;
         let xpos = 100;
         for (const courseWork of course.courseWork) {
-            new CourseWorkRect(this, course, courseWork, xpos, ypos);
+            new CourseWorkRect(this, course, courseWork, xpos, ypos, metadata);
             ypos += 100;
             xpos += 80;
         }
