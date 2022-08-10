@@ -117,6 +117,7 @@ class MainScene extends Phaser.Scene {
                 let containerId = dragContext.parentObject.containerId;
                 let containerPosition = courseConfiguration.containerPositions[containerId];
                 if(!containerPosition) {
+                    courseConfiguration.courseId = dragContext.parentObject.scene.course.id;
                     courseConfiguration.containerPositions[containerId] = { x: newX, y: newY };                    
                 } else {
                     containerPosition.x = newX;
