@@ -6,12 +6,14 @@ import com.google.api.services.classroom.model.CourseWork;
 import com.google.api.services.classroom.model.CourseWorkMaterial;
 import com.google.api.services.classroom.model.Topic;
 import com.google.api.services.oauth2.model.Userinfo;
+import com.google.gson.Gson;
 import com.pptpdx.classroom.ClassroomController;
 import com.pptpdx.model.CourseMetadata;
 import com.pptpdx.oauth.OauthConfiguration;
 import com.pptpdx.oauth.UnauthorizedException;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 import javax.ws.rs.CookieParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -63,12 +65,13 @@ public class ClassroomResource {
     @Produces({MediaType.APPLICATION_JSON})
     @Path("/metadata/{courseId}")
     @GET
-    public CourseMetadata getCourseMetadata(@CookieParam(APRENDIZ_SESSION_AUTH) Cookie cookie, @PathParam("courseId") Long courseId) {
+    public Map<String, Object> getCourseMetadata(@CookieParam(APRENDIZ_SESSION_AUTH) Cookie cookie, @PathParam("courseId") Long courseId) {
         CourseMetadata metadata = ClassroomController.getCourseMetadata(courseId);
         if(metadata == null) {
             throw new WebApplicationException(Response.Status.NOT_FOUND);
         }
-        return metadata;
+        Gson gson = new Gson();
+        return gson.fromJson(metadata.getMetadataText(), Map.class);        
     }
 
     @Produces({MediaType.APPLICATION_JSON})

@@ -23,6 +23,8 @@ angular.module("AprendizApplication").service('ClassroomDataLoaderService', func
                             if(response.data) {
                                 course.metadata = response.data;
                             }
+                        }, function() {
+                            // not found
                         });
                         console.log('load course topic', course.id);
                         $http({
