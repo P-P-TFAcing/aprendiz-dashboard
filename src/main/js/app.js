@@ -65,10 +65,12 @@ class MainScene extends Phaser.Scene {
 
     create(courses) {
         console.log('created MainScene', courses);
+        this.courses = courses;
         // open websocket
         this.websocket = new WebSocketContext(this.sys.game.scene, this.onWebSocketOpen.bind(this));
         // now we have access to courses
         let course = courses[0];
+        this.course = course;
         console.log('loading course', course);
         new CourseTitle(this, course, 16, 16);
         new LegendRect(this, course, 16, 64);
