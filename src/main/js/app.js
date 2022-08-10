@@ -74,7 +74,7 @@ class MainScene extends Phaser.Scene {
         new CourseTitle(this, course, 16, 16);
         new LegendRect(this, course, 16, 64);
         
-        new Button(this, 'Save Changes', 500, 20);
+        new Button(this, 500, 20, 'Save Changes');
         
         let ypos = 200;
         let xpos = 100;
