@@ -8,8 +8,10 @@ import com.google.api.services.classroom.model.Topic;
 import com.google.api.services.oauth2.model.Userinfo;
 import com.pptpdx.classroom.ClassroomController;
 import com.pptpdx.oauth.OauthConfiguration;
+import com.pptpdx.oauth.UnauthorizedException;
 import java.io.IOException;
 import java.util.List;
+import java.util.logging.Level;
 import javax.ws.rs.CookieParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -84,6 +86,8 @@ public class ClassroomResource {
         } catch (IOException ex) {
             LOGGER.error("IO exception", ex);
             throw new WebApplicationException(Response.Status.INTERNAL_SERVER_ERROR);
+        } catch (UnauthorizedException ex) {
+            throw new WebApplicationException(Response.Status.UNAUTHORIZED);
         }
     }
     

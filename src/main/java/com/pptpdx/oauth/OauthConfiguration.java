@@ -2,6 +2,7 @@ package com.pptpdx.oauth;
 
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
+import com.google.api.client.googleapis.json.GoogleJsonResponseException;
 import com.google.api.client.http.GenericUrl;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
@@ -55,15 +56,23 @@ public class OauthConfiguration {
         return url.build();        
     }
     
-    public static Userinfo getUserInfo(Credential credential) throws IOException {
-        Oauth2 oauth2Client
-                = new Oauth2.Builder(OauthConfiguration.HTTP_TRANSPORT, OauthConfiguration.JSON_FACTORY, credential)
-                        .setApplicationName(OauthConfiguration.APP_NAME)
-                        .build();
+    public static Userinfo getUserInfo(Credential credential) throws IOException, UnauthorizedException {
+        try {
+            Oauth2 oauth2Client
+                    = new Oauth2.Builder(OauthConfiguration.HTTP_TRANSPORT, OauthConfiguration.JSON_FACTORY, credential)
+                            .setApplicationName(OauthConfiguration.APP_NAME)
+                            .build();
 
-        // Retrieve user profile
-        Userinfo userInfo = oauth2Client.userinfo().get().execute();
-        return userInfo;
+            // Retrieve user profile        
+            Userinfo userInfo = oauth2Client.userinfo().get().execute();
+            return userInfo;
+        } catch(GoogleJsonResponseException ex) {
+            if(ex.getStatusCode() == 401) {
+                throw new UnauthorizedException();
+            } else {
+                throw new IOException("OAUTH failure", ex);
+            }
+        }
     }    
     
 }
