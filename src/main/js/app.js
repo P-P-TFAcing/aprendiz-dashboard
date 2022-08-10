@@ -54,7 +54,7 @@ class SaveButton extends Button {
             
     onButtonClick() {
         console.log('save configuration', this.scene.courseConfiguration);
-        this.websocket.sendMessage('SAVE_COURSE_CONFIGURATION', this.scene.courseConfiguration);
+        this.scene.websocket.sendMessage('SAVE_COURSE_CONFIGURATION', this.scene.courseConfiguration);
     }
 };
 
