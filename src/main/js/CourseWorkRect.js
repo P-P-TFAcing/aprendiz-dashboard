@@ -25,6 +25,12 @@ export default class CourseWorkRect extends DraggableContainer {
         let rectColor = 0xffffff;
         if(course.id === "487896080001") {
             rectColor = 0xff0000;
+        } else if(course.id === '532515737233') {
+            rectColor = 0xFF5733;
+        } else if(course.id === '105946048990') {
+            rectColor = 0x7CFC00;
+        } else if(course.id === '105946048998') {
+            rectColor = 0xEE82EE;
         }
         rectangle.setStrokeStyle(2, rectColor, 2);
         this.container.add(rectangle);
