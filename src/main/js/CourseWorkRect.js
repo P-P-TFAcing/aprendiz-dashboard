@@ -22,7 +22,11 @@ export default class CourseWorkRect extends DraggableContainer {
         this.height = text.height + 32;
         let rectangle = scene.add.rectangle(0, 0, this.width, this.height);
         rectangle.setOrigin(0, 0);
-        rectangle.setStrokeStyle(2, 0xffffff, 2);
+        let rectColor = 0xffffff;
+        if(course.id === "487896080001") {
+            rectColor = 0xff0000;
+        }
+        rectangle.setStrokeStyle(2, rectColor, 2);
         this.container.add(rectangle);
         this.draggable(rectangle);
     }
