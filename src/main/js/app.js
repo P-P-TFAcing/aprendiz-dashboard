@@ -72,7 +72,7 @@ class MainScene extends Phaser.Scene {
         console.log('host websocket opened');
     }
 
-    loadCourseIntoScene(courses, course) {
+    loadCourseIntoScene(course) {
         let metadata = course.metadata;
 
         console.log('loading course', course);
@@ -140,10 +140,9 @@ class MainScene extends Phaser.Scene {
         // open websocket
         this.websocket = new WebSocketContext(this.sys.game.scene, this.onWebSocketOpen.bind(this));
         // now we have access to courses
-        angular.forEach(courses, function(course) {
-            this.loadCourseIntoScene(courses, course);
-        });
-
+        for (const course of courses) {        
+            this.loadCourseIntoScene(course);
+        }
     }
 }
 ;
