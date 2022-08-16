@@ -72,15 +72,8 @@ class MainScene extends Phaser.Scene {
         console.log('host websocket opened');
     }
 
-    create(courses) {
-        console.log('created MainScene', courses);
-        this.courses = courses;
-        // open websocket
-        this.websocket = new WebSocketContext(this.sys.game.scene, this.onWebSocketOpen.bind(this));
-        // now we have access to courses
-        let course = courses[0];
-        this.course = course;
-        let metadata = this.course.metadata;
+    loadCourseIntoScene(courses, course) {
+        let metadata = course.metadata;
 
         console.log('loading course', course);
         new CourseTitle(this, course, 16, 16, metadata);
@@ -138,7 +131,19 @@ class MainScene extends Phaser.Scene {
                 // update configuration
                 delete this.scene.data.dragContext;
             }
+        });        
+    }
+
+    create(courses) {
+        console.log('created MainScene', courses);
+        this.courses = courses;
+        // open websocket
+        this.websocket = new WebSocketContext(this.sys.game.scene, this.onWebSocketOpen.bind(this));
+        // now we have access to courses
+        angular.forEach(courses, function(course) {
+            loadCourseIntoScene(courses, course);
         });
+
     }
 }
 ;
