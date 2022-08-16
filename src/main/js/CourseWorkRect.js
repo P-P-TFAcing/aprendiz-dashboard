@@ -2,8 +2,10 @@ import DraggableContainer from './DraggableContainer.js';
 
 export default class CourseWorkRect extends DraggableContainer {
 
-    constructor(scene, course, courseWork, x, y, metadata) {
+    constructor(scene, course, courseWork, x, y) {
         super(scene, x, y, 'CourseWorkRect_' + courseWork.id);
+        this.course = course;
+        let metadata = course.metadata;
         if(metadata) {
             let containerMetadata = metadata.containerPositions[this.containerId];
             if(containerMetadata) {

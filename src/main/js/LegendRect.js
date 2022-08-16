@@ -2,8 +2,10 @@ import DraggableContainer from './DraggableContainer.js';
 import LegendTopicRect from './LegendTopicRect.js';
 
 export default class LegendRect extends DraggableContainer {
-    constructor(scene, course, x, y, metadata) {
+    constructor(scene, course, x, y) {
         super(scene, x, y, 'LegendRect');
+        this.course = course;
+        let metadata = course.metadata;
         if(metadata) {
             let containerMetadata = metadata.containerPositions[this.containerId];
             if(containerMetadata) {

@@ -53,9 +53,11 @@ class SaveButton extends Button {
 
     onButtonClick() {
         console.log('save configuration', this.scene.courseConfiguration);
-        let metadata = this.scene.course.metadata;
-        if(metadata) {
-            this.scene.websocket.sendMessage('SAVE_COURSE_CONFIGURATION', metadata);
+        for (const course of this.courses) {        
+            let metadata = this.course.metadata;
+            if(metadata) {
+                this.scene.websocket.sendMessage('SAVE_COURSE_CONFIGURATION', metadata);
+            }
         }
     }
 }
@@ -72,21 +74,20 @@ class MainScene extends Phaser.Scene {
         console.log('host websocket opened');
     }
 
-    loadCourseIntoScene(course) {
-        let metadata = course.metadata;
+    loadCourseIntoScene(course) {        
 
         console.log('loading course', course);
-        new CourseTitle(this, course, 16, 16, metadata);
+        new CourseTitle(this, course, 16, 16);
 
         // legend rect
-        new LegendRect(this, course, 16, 64, metadata);
+        new LegendRect(this, course, 16, 64);
 
         new SaveButton(this, 1000, 20, 'Save Changes');
 
         let ypos = 200;
         let xpos = 100;
         for (const courseWork of course.courseWork) {
-            new CourseWorkRect(this, course, courseWork, xpos, ypos, metadata);
+            new CourseWorkRect(this, course, courseWork, xpos, ypos);
             ypos += 100;
             xpos += 80;
         }
@@ -112,15 +113,15 @@ class MainScene extends Phaser.Scene {
                 dragContext.parentObject.x = newX;
                 dragContext.parentObject.y = newY;
                 // update metadata (to save on server if save button is pushed)
-                let metadata = dragContext.parentObject.scene.course.metadata;
+                let metadata = dragContext.parentObject.course.metadata;
                 if(!metadata) {
                     metadata = {containerPositions: {} };
-                    dragContext.parentObject.scene.course.metadata = metadata;
+                    dragContext.parentObject.course.metadata = metadata;
                 }
                 let containerId = dragContext.parentObject.containerId;
                 let containerPosition = metadata.containerPositions[containerId];
                 if (!containerPosition) {
-                    metadata.courseId = dragContext.parentObject.scene.course.id;
+                    metadata.courseId = dragContext.parentObject.course.id;
                     metadata.containerPositions[containerId] = {x: newX, y: newY};
                 } else {
                     containerPosition.x = newX;
