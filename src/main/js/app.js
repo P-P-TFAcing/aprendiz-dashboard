@@ -52,7 +52,7 @@ import WebSocketContext from './WebSocketContext.js';
 class SaveButton extends Button {
 
     onButtonClick() {
-        console.log('save configuration', this.scene.courseConfiguration);
+        console.log('save configuration', this.scene.globalMetadata);
         for (const course of this.scene.courses) {        
             let metadata = course.metadata;
             if(metadata) {
@@ -138,8 +138,13 @@ class MainScene extends Phaser.Scene {
     create(courses) {
         console.log('created MainScene', courses);
         this.courses = courses;
+        this.globalMetadata = { courses: { } };
+        for(const course of courses) {
+            this.globalMetadata.courses[course.id] = { id: course.id };
+        }
         // open websocket
         this.websocket = new WebSocketContext(this.sys.game.scene, this.onWebSocketOpen.bind(this));
+        
         // now we have access to courses
         for (const course of courses) {        
             this.loadCourseIntoScene(course);

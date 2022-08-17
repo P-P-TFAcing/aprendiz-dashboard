@@ -12,6 +12,7 @@ public class ModelClasses {
 
     private static final Class[] CLASSES = {
         CourseMetadata.class,
+        GlobalMetadata.class,
         User.class
     };
     
