@@ -156,7 +156,9 @@ class MainScene extends Phaser.Scene {
     create(courses) {
         console.log('created MainScene', courses);
         this.courses = courses;
-        this.globalMetadata = { containerPositions: { } };
+        if(!this.globalMetadata) {
+            this.globalMetadata = { containerPositions: { } };
+        }
         // open websocket
         this.websocket = new WebSocketContext(this.sys.game.scene, this.onWebSocketOpen.bind(this));
         
