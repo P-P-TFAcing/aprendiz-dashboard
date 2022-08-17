@@ -164,11 +164,11 @@ class MainScene extends Phaser.Scene {
         this.websocket = new WebSocketContext(this.sys.game.scene, this.onWebSocketOpen.bind(this));
 
         // now we have access to courses
-        for (const course of courses) {
+        for (const course of this.courses) {
             this.loadCourseIntoScene(course);
         }
         // legend rect
-        new LegendRect(this, courses, 16, 64);
+        new LegendRect(this, this.courses, 16, 64);
     }
 }
 ;
