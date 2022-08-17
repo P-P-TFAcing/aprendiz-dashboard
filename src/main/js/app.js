@@ -122,13 +122,25 @@ class MainScene extends Phaser.Scene {
                     dragContext.parentObject.course.metadata = metadata;
                 }
                 let containerId = dragContext.parentObject.containerId;
-                let containerPosition = metadata.containerPositions[containerId];
-                if (!containerPosition) {
-                    metadata.courseId = dragContext.parentObject.course.id;
-                    metadata.containerPositions[containerId] = {x: newX, y: newY};
+                if(dragContext.parentObject.course) {
+                    // course metadata                    
+                    let containerPosition = metadata.containerPositions[containerId];
+                    if (!containerPosition) {
+                        metadata.courseId = dragContext.parentObject.course.id;
+                        metadata.containerPositions[containerId] = {x: newX, y: newY};
+                    } else {
+                        containerPosition.x = newX;
+                        containerPosition.y = newY;
+                    }
                 } else {
-                    containerPosition.x = newX;
-                    containerPosition.y = newY;
+                    // global metadata                    
+                    let containerPosition = metadata.containerPositions[containerId];
+                    if (!containerPosition) {
+                        metadata.containerPositions[containerId] = {x: newX, y: newY};
+                    } else {
+                        containerPosition.x = newX;
+                        containerPosition.y = newY;                        
+                    }
                 }
                 console.log('update course configuration', metadata);
                 dragContext.dragRect.destroy();
