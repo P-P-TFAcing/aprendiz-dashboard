@@ -31,11 +31,15 @@ public class ClassroomWebsocket {
 
     @OnMessage
     public void onMessage(Session session, String message) {
-        LOGGER.debug("websocket message received " + message);
+        if(LOGGER.isTraceEnabled()) {
+            LOGGER.trace("websocket message received " + message);
+        }
         Gson gson = new Gson();
         //{"containerPositions":{"CourseWorkRect_487896080085":{"x":685,"y":269},"CourseWorkRect_487896080137":{"x":641,"y":146},"LegendRect":{"x":1091,"y":33}},"messageType":"SAVE_COURSE_CONFIGURATION"}
         Map<String, Object> data = gson.fromJson(message, Map.class);
-        LOGGER.debug("received websocket data " + data);
+        if(LOGGER.isTraceEnabled()) {
+            LOGGER.trace("received websocket data " + data);
+        }
         if (data.get("messageType").equals("SAVE_COURSE_CONFIGURATION")) {
             data.remove("messageType");
             LOGGER.debug("save configuration data " + data);
