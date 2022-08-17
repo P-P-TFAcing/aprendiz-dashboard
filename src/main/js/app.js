@@ -111,7 +111,12 @@ class MainScene extends Phaser.Scene {
                 dragContext.parentObject.y = newY;
                                 
                 // update metadata (to save on server if save button is pushed)
-                let metadata = dragContext.parentObject.course.metadata;
+                let metadata;
+                if(dragContext.parentObject.course) {
+                    metadata = dragContext.parentObject.course.metadata;
+                } else {
+                    metadata = dragContext.parentObject.scene.globalMetadata;
+                }
                 if(!metadata) {
                     metadata = {containerPositions: {} };
                     dragContext.parentObject.course.metadata = metadata;

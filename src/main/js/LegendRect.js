@@ -6,7 +6,7 @@ export default class LegendRect extends DraggableContainer {
         super(scene, x, y, 'LegendRect');
         this.courses = courses;
         // global metadata object
-        let metadata = courses.metadata;
+        let metadata = scene.globalMetadata;
         if(metadata) {
             let containerMetadata = metadata.containerPositions[this.containerId];
             if(containerMetadata) {
