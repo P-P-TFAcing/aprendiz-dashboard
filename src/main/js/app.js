@@ -13,9 +13,9 @@ class LoaderScene extends Phaser.Scene {
         console.log('preloaded LoaderScene');
     }
 
-    loadCompleted(courses) {
+    loadCompleted(global, courses) {
         console.log('load completed so start main scene');
-        this.scene.add('MainScene', MainScene, true, courses);
+        this.scene.add('MainScene', MainScene, true, {courses: courses, global: global});
         this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, (cam, effect) => {
             this.scene.start('MainScene');
         });
@@ -53,12 +53,12 @@ class SaveButton extends Button {
 
     onButtonClick() {
         console.log('save configuration', this.scene.globalMetadata);
-        if(this.scene.globalMetadata) {
+        if (this.scene.globalMetadata) {
             this.scene.websocket.sendMessage('SAVE_GLOBAL_CONFIGURATION', this.scene.globalMetadata);
         }
-        for (const course of this.scene.courses) {        
+        for (const course of this.scene.courses) {
             let metadata = course.metadata;
-            if(metadata) {
+            if (metadata) {
                 this.scene.websocket.sendMessage('SAVE_COURSE_CONFIGURATION', metadata);
             }
         }
@@ -77,7 +77,7 @@ class MainScene extends Phaser.Scene {
         console.log('host websocket opened');
     }
 
-    loadCourseIntoScene(course) {        
+    loadCourseIntoScene(course) {
 
         console.log('loading course', course);
         new CourseTitle(this, course, 16, 16);
@@ -112,20 +112,20 @@ class MainScene extends Phaser.Scene {
                 dragContext.container.setPosition(newX, newY);
                 dragContext.parentObject.x = newX;
                 dragContext.parentObject.y = newY;
-                                
+
                 // update metadata (to save on server if save button is pushed)
                 let metadata;
-                if(dragContext.parentObject.course) {
+                if (dragContext.parentObject.course) {
                     metadata = dragContext.parentObject.course.metadata;
                 } else {
                     metadata = dragContext.parentObject.scene.globalMetadata;
                 }
-                if(!metadata) {
-                    metadata = {containerPositions: {} };
+                if (!metadata) {
+                    metadata = {containerPositions: {}};
                     dragContext.parentObject.course.metadata = metadata;
                 }
                 let containerId = dragContext.parentObject.containerId;
-                if(dragContext.parentObject.course) {
+                if (dragContext.parentObject.course) {
                     // course metadata                    
                     let containerPosition = metadata.containerPositions[containerId];
                     if (!containerPosition) {
@@ -142,7 +142,7 @@ class MainScene extends Phaser.Scene {
                         metadata.containerPositions[containerId] = {x: newX, y: newY};
                     } else {
                         containerPosition.x = newX;
-                        containerPosition.y = newY;                        
+                        containerPosition.y = newY;
                     }
                 }
                 console.log('update course configuration', metadata);
@@ -150,24 +150,25 @@ class MainScene extends Phaser.Scene {
                 // update configuration
                 delete this.scene.data.dragContext;
             }
-        });        
+        });
     }
 
-    create(courses) {
-        console.log('created MainScene', courses);
-        this.courses = courses;
-        if(!this.globalMetadata) {
-            this.globalMetadata = { containerPositions: { } };
+    create(config) {
+        console.log('created MainScene', config);
+        this.globalMetadata = config.global;
+        this.courses = config.courses;
+        if (!this.globalMetadata) {
+            this.globalMetadata = {containerPositions: {}};
         }
         // open websocket
         this.websocket = new WebSocketContext(this.sys.game.scene, this.onWebSocketOpen.bind(this));
-        
+
         // now we have access to courses
-        for (const course of courses) {        
+        for (const course of courses) {
             this.loadCourseIntoScene(course);
         }
         // legend rect
-        new LegendRect(this, courses, 16, 64);        
+        new LegendRect(this, courses, 16, 64);
     }
 }
 ;
