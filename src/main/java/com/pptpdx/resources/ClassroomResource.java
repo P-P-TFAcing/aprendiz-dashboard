@@ -9,6 +9,7 @@ import com.google.api.services.oauth2.model.Userinfo;
 import com.google.gson.Gson;
 import com.pptpdx.classroom.ClassroomController;
 import com.pptpdx.model.CourseMetadata;
+import com.pptpdx.model.GlobalMetadata;
 import com.pptpdx.oauth.OauthConfiguration;
 import com.pptpdx.oauth.UnauthorizedException;
 import java.io.IOException;
@@ -74,6 +75,18 @@ public class ClassroomResource {
         return gson.fromJson(metadata.getMetadataText(), Map.class);        
     }
 
+    @Produces({MediaType.APPLICATION_JSON})
+    @Path("/globalmetadata")
+    @GET
+    public Object getGlobalMetadata(@CookieParam(APRENDIZ_SESSION_AUTH) Cookie cookie) {
+        GlobalMetadata metadata = ClassroomController.getGlobalMetadata();
+        if(metadata == null) {
+            throw new WebApplicationException(Response.Status.NOT_FOUND);
+        }
+        Gson gson = new Gson();
+        return gson.fromJson(metadata.getMetadataText(), Map.class);        
+    }
+    
     @Produces({MediaType.APPLICATION_JSON})
     @Path("/courseworkmaterials/{courseId}")
     @GET

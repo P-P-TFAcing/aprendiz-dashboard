@@ -6,6 +6,17 @@ angular.module("AprendizApplication").service('ClassroomDataLoaderService', func
         console.log('load courses');
         $http({
             method: 'GET',
+            url: 'webresources/classroom/globalmetadata'
+        }).then(function (response) {
+            if(response.data) {
+                gameObject.scene.globalMetadata = response.data;
+            }
+        }, function() {
+            // not found
+        });
+
+        $http({
+            method: 'GET',
             url: 'webresources/classroom/courses'
         }).then(
                 function (response) {
