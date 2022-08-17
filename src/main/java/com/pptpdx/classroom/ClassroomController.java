@@ -176,6 +176,19 @@ public class ClassroomController {
         }
     }
 
+    public static GlobalMetadata getGlobalMetadata() {
+        LOGGER.debug("get global metadata");
+        try ( Session hsession = Models.MAIN.openSession()) {
+            GlobalMetadata metadata;
+            Query<GlobalMetadata> qry = hsession.createQuery("from GlobalMetadata");            
+            if (!qry.list().isEmpty()) {
+                metadata = qry.list().get(0);
+                return metadata;
+            }
+            return null;
+        }
+    }
+
     public static CourseMetadata getCourseMetadata(Credential credential, String courseId) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }

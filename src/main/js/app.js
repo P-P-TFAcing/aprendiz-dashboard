@@ -53,6 +53,9 @@ class SaveButton extends Button {
 
     onButtonClick() {
         console.log('save configuration', this.scene.globalMetadata);
+        if(this.scene.globalMetadata) {
+            this.scene.websocket.sendMessage('SAVE_GLOBAL_CONFIGURATION', this.scene.globalMetadata);
+        }
         for (const course of this.scene.courses) {        
             let metadata = course.metadata;
             if(metadata) {
