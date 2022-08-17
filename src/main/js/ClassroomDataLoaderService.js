@@ -10,6 +10,7 @@ angular.module("AprendizApplication").service('ClassroomDataLoaderService', func
         }).then(function (response) {
             if(response.data) {
                 gameObject.scene.globalMetadata = response.data;
+                console.log('loaded global metadata', gameObject.scene.globalMetadata);
             }
         }, function() {
             // not found
