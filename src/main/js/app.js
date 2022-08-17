@@ -79,9 +79,6 @@ class MainScene extends Phaser.Scene {
         console.log('loading course', course);
         new CourseTitle(this, course, 16, 16);
 
-        // legend rect
-        new LegendRect(this, course, 16, 64);
-
         new SaveButton(this, 1000, 20, 'Save Changes');
 
         let ypos = 200;
@@ -112,6 +109,7 @@ class MainScene extends Phaser.Scene {
                 dragContext.container.setPosition(newX, newY);
                 dragContext.parentObject.x = newX;
                 dragContext.parentObject.y = newY;
+                                
                 // update metadata (to save on server if save button is pushed)
                 let metadata = dragContext.parentObject.course.metadata;
                 if(!metadata) {
@@ -138,10 +136,7 @@ class MainScene extends Phaser.Scene {
     create(courses) {
         console.log('created MainScene', courses);
         this.courses = courses;
-        this.globalMetadata = { courses: { } };
-        for(const course of courses) {
-            this.globalMetadata.courses[course.id] = { id: course.id };
-        }
+        this.globalMetadata = { containerPositions: { } };
         // open websocket
         this.websocket = new WebSocketContext(this.sys.game.scene, this.onWebSocketOpen.bind(this));
         
@@ -149,6 +144,8 @@ class MainScene extends Phaser.Scene {
         for (const course of courses) {        
             this.loadCourseIntoScene(course);
         }
+        // legend rect
+        new LegendRect(this, courses, 16, 64);        
     }
 }
 ;

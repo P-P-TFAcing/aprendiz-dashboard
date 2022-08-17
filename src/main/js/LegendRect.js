@@ -2,10 +2,11 @@ import DraggableContainer from './DraggableContainer.js';
 import LegendTopicRect from './LegendTopicRect.js';
 
 export default class LegendRect extends DraggableContainer {
-    constructor(scene, course, x, y) {
+    constructor(scene, courses, x, y) {
         super(scene, x, y, 'LegendRect');
-        this.course = course;
-        let metadata = course.metadata;
+        this.courses = courses;
+        // global metadata object
+        let metadata = courses.metadata;
         if(metadata) {
             let containerMetadata = metadata.containerPositions[this.containerId];
             if(containerMetadata) {
@@ -20,13 +21,20 @@ export default class LegendRect extends DraggableContainer {
         let height = legendText.height + 16;
         ypos += legendText.height + 16;
         this.container.add(legendText);
-        for (const topic of course.topics) {
-            let legendTopicRect = new LegendTopicRect(scene, this.container, topic, 16, ypos);
-            ypos += (legendTopicRect.objectHeight + 4);
-            if ((legendTopicRect.objectWidth + 32) > width) {
-                width = legendTopicRect.objectWidth + 32;
-            }
-            height += (legendTopicRect.objectHeight + 4);
+        let courseTopicMap = { };
+        for(const course of courses) {
+            for (const topic of course.topics) {
+                let legendTopic = courseTopicMap[topic.name];
+                if(!legendTopic) {
+                    let legendTopicRect = new LegendTopicRect(scene, this.container, topic, 16, ypos);
+                    ypos += (legendTopicRect.objectHeight + 4);
+                    if ((legendTopicRect.objectWidth + 32) > width) {
+                        width = legendTopicRect.objectWidth + 32;
+                    }
+                    height += (legendTopicRect.objectHeight + 4);
+                    courseTopicMap[topic.name] = topic;
+                }
+            }            
         }
         height += 24;
         this.objectHeight = height;

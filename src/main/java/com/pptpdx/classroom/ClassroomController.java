@@ -14,6 +14,7 @@ import com.google.api.services.classroom.model.ListCoursesResponse;
 import com.google.api.services.classroom.model.ListTopicResponse;
 import com.google.gson.Gson;
 import com.pptpdx.model.CourseMetadata;
+import com.pptpdx.model.GlobalMetadata;
 import com.pptpdx.model.Models;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -137,6 +138,29 @@ public class ClassroomController {
             }
         }
     }
+    
+    public static void saveGlobalMetadata(Object configData) {
+        LOGGER.debug("save global configuration data " + configData);
+        try ( Session hsession = Models.MAIN.openSession()) {
+            GlobalMetadata metadata;
+            Gson gson = new Gson();
+            String configText = gson.toJson(configData);
+            Query<GlobalMetadata> qry = hsession.createQuery("from GlobalMetadata");            
+            if (!qry.list().isEmpty()) {
+                metadata = qry.list().get(0);
+                Transaction tx = hsession.beginTransaction();
+                metadata.setMetadataText(configText);
+                hsession.update(metadata);
+                tx.commit();
+            } else {
+                metadata = new GlobalMetadata();
+                Transaction tx = hsession.beginTransaction();
+                metadata.setMetadataText(configText);                
+                hsession.save(metadata);
+                tx.commit();
+            }
+        }
+    }    
 
     public static CourseMetadata getCourseMetadata(long courseId) {
         LOGGER.debug("get course metadata " + courseId);
