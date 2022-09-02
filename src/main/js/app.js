@@ -190,7 +190,7 @@ angular.module("AprendizApplication").controller('MainViewController', function 
             forceSetTimeOut: true
         },
         parent: 'aprendiz-block',
-        width: 4000,
+        width: 12000,
         height: 4000
     };
 
