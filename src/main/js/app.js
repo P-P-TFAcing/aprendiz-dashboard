@@ -186,11 +186,11 @@ angular.module("AprendizApplication").controller('MainViewController', function 
             createContainer: true
         },
         fps: {
-            target: 18,
+            target: 10,
             forceSetTimeOut: true
         },
         parent: 'aprendiz-block',
-        width: 12000,
+        width: 10000,
         height: 4000
     };
 
