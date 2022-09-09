@@ -176,6 +176,7 @@ class MainScene extends Phaser.Scene {
                     this.scene.data.sceneOffset.y += offsetY;
                     console.log('scene offset', this.scene.data.sceneOffset);
                     for(const object of this.scene.data.containers) {
+                        // update containers
                         let newX = object.x + this.scene.data.sceneOffset.x;
                         let newY = object.y + this.scene.data.sceneOffset.y;
                         object.container.setPosition(newX, newY);
