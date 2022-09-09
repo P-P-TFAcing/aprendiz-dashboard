@@ -93,7 +93,7 @@ class MainScene extends Phaser.Scene {
         }
         // mouse down in client area
         this.input.on('pointerdown', function (event) {
-            console.log('mouse down in desktop', event);
+            console.log('pointer down in desktop', event);
         });
         this.input.on('pointermove', function (event) {
             let x = event.worldX;
@@ -152,6 +152,8 @@ class MainScene extends Phaser.Scene {
                 dragContext.dragRect.destroy();
                 // update configuration
                 delete this.scene.data.dragContext;
+            } else {
+                console.log('pointer up in desktop', event);
             }
         });
     }
