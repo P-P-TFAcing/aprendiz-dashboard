@@ -73,6 +73,9 @@ class ZoomInButton extends Button {
         if(this.scene.data.sceneScale > 2.0) {
             this.scene.data.sceneScale += 0.1;
             console.log('scene zoom', this.scene.data.sceneScale);
+            for(const object of this.scene.data.sceneObjects) {
+                object.container.setScale(this.scene.data.sceneScale);                
+            }
         }
     }
 }
@@ -85,6 +88,9 @@ class ZoomOutButton extends Button {
         if(this.scene.data.sceneScale > 0.1) {
             this.scene.data.sceneScale -= 0.1;
             console.log('scene zoom', this.scene.data.sceneScale);
+            for(const object of this.scene.data.sceneObjects) {
+                object.container.setScale(this.scene.data.sceneScale);                
+            }
         }
     }
 }
