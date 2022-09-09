@@ -80,7 +80,7 @@ class MainScene extends Phaser.Scene {
     loadCourseIntoScene(course) {
 
         console.log('loading course', course);
-        this.scene.data.containers = [];
+        this.data.containers = [];
         this.data.containers.push(new CourseTitle(this, course, 16, 16));
 
         new SaveButton(this, 1000, 20, 'Save Changes');
