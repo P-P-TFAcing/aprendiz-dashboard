@@ -96,12 +96,14 @@ class MainScene extends Phaser.Scene {
         // mouse down in client area
         this.input.on('pointerdown', function (event) {
             //console.log('pointer down in desktop', event);
-            if(!this.scene.data.sceneDragContext) {
-                this.scene.data.sceneDragContext = {
-                    pointerX: event.downX,
-                    pointerY: event.downY
-                };
-                console.log('set scene drag context', this.scene.data.sceneDragContext);
+            if(!this.scene.data.dragContext) {
+                if(!this.scene.data.sceneDragContext) {
+                    this.scene.data.sceneDragContext = {
+                        pointerX: event.downX,
+                        pointerY: event.downY
+                    };
+                    console.log('set scene drag context', this.scene.data.sceneDragContext);
+                }
             }
         });
         this.input.on('pointermove', function (event) {
