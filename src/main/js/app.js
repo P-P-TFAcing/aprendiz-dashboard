@@ -159,8 +159,10 @@ class MainScene extends Phaser.Scene {
                 dragContext.dragRect.destroy();
                 // update configuration
                 delete this.scene.data.dragContext;
-            } else {
-                console.log('pointer up in desktop', event);
+            } else {                
+                if(!this.scene.data.sceneDragContext) {
+                    console.log('pointer up scene drag', this.scene.data.sceneDragContext);
+                }
             }
         });
     }
