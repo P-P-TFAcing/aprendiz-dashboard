@@ -81,7 +81,9 @@ class MainScene extends Phaser.Scene {
 
         console.log('loading course', course);
         this.data.containers = [];
-        this.data.containers.push(new CourseTitle(this, course, 16, 16));
+        let courseTitle = new CourseTitle(this, course, 16, 16);
+        this.data.courseTitle = courseTitle;
+        this.data.containers.push(courseTitle);
 
         new SaveButton(this, 1000, 20, 'Save Changes');
 
@@ -162,6 +164,7 @@ class MainScene extends Phaser.Scene {
                 delete this.scene.data.dragContext;
             } else {                
                 if(this.scene.data.sceneDragContext) {
+                    this.data.courseTitle.container.setPosition(10,10);
                     console.log('pointer up scene drag', this.scene.data.sceneDragContext);
                     let pointerX = event.upX;
                     let pointerY = event.upY;
@@ -180,7 +183,7 @@ class MainScene extends Phaser.Scene {
                         let newX = object.x + this.scene.data.sceneOffset.x;
                         let newY = object.y + this.scene.data.sceneOffset.y;
                         object.container.setPosition(newX, newY);
-                        console.log('updated container', object, newX, newY);
+                        console.log('updated container', object.container, newX, newY);
                     }
                 }
             }
