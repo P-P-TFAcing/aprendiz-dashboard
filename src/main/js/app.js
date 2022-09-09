@@ -101,8 +101,8 @@ class MainScene extends Phaser.Scene {
         this.data.sceneObjects.push(courseTitle);
 
         new SaveButton(this, 800, 20, 'Save Changes');
-        new ZoomInButton(this, 1000, 20, '+');
-        new ZoomOutButton(this, 1100, 20, '-');
+        new ZoomInButton(this, 1100, 20, '+');
+        new ZoomOutButton(this, 1150, 20, '-');
 
         let ypos = 200;
         let xpos = 100;
@@ -187,26 +187,28 @@ class MainScene extends Phaser.Scene {
                 // update configuration
                 delete this.scene.data.dragContext;
             } else if(this.scene.data.sceneDragContext) {
-                this.scene.data.courseTitle.container.setPosition(10,10);
+                //this.scene.data.courseTitle.container.setPosition(10,10);
                 console.log('pointer up scene drag', this.scene.data.sceneDragContext);
                 let pointerX = event.upX;
                 let pointerY = event.upY;
                 let offsetX = pointerX - this.scene.data.sceneDragContext.pointerX;
                 let offsetY = pointerY - this.scene.data.sceneDragContext.pointerY;
-                delete this.scene.data.sceneDragContext;
-                console.log('drag scene', offsetX, offsetY);
-                if(!this.scene.data.sceneOffset) {
-                    this.scene.data.sceneOffset = { x:0, y:0 };
-                }
-                this.scene.data.sceneOffset.x += offsetX;
-                this.scene.data.sceneOffset.y += offsetY;
-                console.log('scene offset', this.scene.data.sceneOffset);
-                for(const object of this.scene.data.sceneObjects) {
-                    // update containers
-                    let newX = object.x + this.scene.data.sceneOffset.x;
-                    let newY = object.y + this.scene.data.sceneOffset.y;
-                    object.container.setPosition(newX, newY);
-                    console.log('updated container', object.container, newX, newY);
+                if((offsetX !== 0) && (offsetY !== 0)) {
+                    delete this.scene.data.sceneDragContext;
+                    console.log('drag scene', offsetX, offsetY);
+                    if(!this.scene.data.sceneOffset) {
+                        this.scene.data.sceneOffset = { x:0, y:0 };
+                    }
+                    this.scene.data.sceneOffset.x += offsetX;
+                    this.scene.data.sceneOffset.y += offsetY;
+                    console.log('scene offset', this.scene.data.sceneOffset);
+                    for(const object of this.scene.data.sceneObjects) {
+                        // update containers
+                        let newX = object.x + this.scene.data.sceneOffset.x;
+                        let newY = object.y + this.scene.data.sceneOffset.y;
+                        object.container.setPosition(newX, newY);
+                        console.log('updated container', object.container, newX, newY);
+                    }
                 }
             }
         });
