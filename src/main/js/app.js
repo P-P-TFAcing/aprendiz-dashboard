@@ -79,18 +79,17 @@ class MainScene extends Phaser.Scene {
 
     loadCourseIntoScene(course) {
 
-        console.log('loading course', course);
-        this.data.containers = [];
+        console.log('loading course', course);        
         let courseTitle = new CourseTitle(this, course, 16, 16);
         this.data.courseTitle = courseTitle;
-        this.data.containers.push(courseTitle);
+        this.data.sceneObjects.push(courseTitle);
 
         new SaveButton(this, 1000, 20, 'Save Changes');
 
         let ypos = 200;
         let xpos = 100;
         for (const courseWork of course.courseWork) {
-            this.data.containers.push(new CourseWorkRect(this, course, courseWork, xpos, ypos));
+            this.data.sceneObjects.push(new CourseWorkRect(this, course, courseWork, xpos, ypos));
             ypos += 100;
             xpos += 80;
         }
@@ -178,7 +177,7 @@ class MainScene extends Phaser.Scene {
                     this.scene.data.sceneOffset.x += offsetX;
                     this.scene.data.sceneOffset.y += offsetY;
                     console.log('scene offset', this.scene.data.sceneOffset);
-                    for(const object of this.scene.data.containers) {
+                    for(const object of this.scene.data.sceneObjects) {
                         // update containers
                         let newX = object.x + this.scene.data.sceneOffset.x;
                         let newY = object.y + this.scene.data.sceneOffset.y;
@@ -199,13 +198,13 @@ class MainScene extends Phaser.Scene {
         }
         // open websocket
         this.websocket = new WebSocketContext(this.sys.game.scene, this.onWebSocketOpen.bind(this));
-
+        this.data.sceneObjects = [];
         // now we have access to courses
         for (const course of this.courses) {
             this.loadCourseIntoScene(course);
         }
         // legend rect
-        new LegendRect(this, this.courses, 16, 64);
+        this.data.sceneObjects.push(new LegendRect(this, this.courses, 16, 64));
     }
 }
 ;
