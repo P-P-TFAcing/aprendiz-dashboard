@@ -238,6 +238,7 @@ class MainScene extends Phaser.Scene {
         // open websocket
         this.websocket = new WebSocketContext(this.sys.game.scene, this.onWebSocketOpen.bind(this));
         this.data.sceneObjects = [];
+        this.data.sceneScale = 1.0;
         // now we have access to courses
         for (const course of this.courses) {
             this.loadCourseIntoScene(course);
