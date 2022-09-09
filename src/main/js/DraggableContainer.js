@@ -36,8 +36,9 @@ export default class DraggableContainer {
         if(this.scene.data.sceneDragContext) {
             delete this.scene.data.sceneDragContext;
             console.log('removed scene drag context');
-        }
+        }        
         this.scene.data.dragContext = dragContext;
+        console.log('start drag object', this);
     }
 
 }
