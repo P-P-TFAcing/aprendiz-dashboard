@@ -33,6 +33,10 @@ export default class DraggableContainer {
             container: this.container,
             parentObject: this
         };
+        if(this.scene.data.sceneDragContext) {
+            delete this.scene.data.sceneDragContext;
+            console.log('removed scene drag context');
+        }
         this.scene.data.dragContext = dragContext;
     }
 
