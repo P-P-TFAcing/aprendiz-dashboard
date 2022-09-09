@@ -80,14 +80,15 @@ class MainScene extends Phaser.Scene {
     loadCourseIntoScene(course) {
 
         console.log('loading course', course);
-        new CourseTitle(this, course, 16, 16);
+        this.scene.data.containers = [];
+        this.scene.data.containers.push(new CourseTitle(this, course, 16, 16));
 
         new SaveButton(this, 1000, 20, 'Save Changes');
 
         let ypos = 200;
         let xpos = 100;
         for (const courseWork of course.courseWork) {
-            new CourseWorkRect(this, course, courseWork, xpos, ypos);
+            this.scene.data.containers.push(new CourseWorkRect(this, course, courseWork, xpos, ypos));
             ypos += 100;
             xpos += 80;
         }
@@ -171,8 +172,8 @@ class MainScene extends Phaser.Scene {
                     if(!this.scene.data.sceneOffset) {
                         this.scene.data.sceneOffset = { x:0, y:0 };
                     }
-                    this.scene.data.sceneOffset.x -= offsetX;
-                    this.scene.data.sceneOffset.y -= offsetY;
+                    this.scene.data.sceneOffset.x += offsetX;
+                    this.scene.data.sceneOffset.y += offsetY;
                     console.log('scene offset', this.scene.data.sceneOffset);
                 }
             }
