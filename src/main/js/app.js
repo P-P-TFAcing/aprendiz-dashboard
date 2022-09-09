@@ -164,7 +164,7 @@ class MainScene extends Phaser.Scene {
                 delete this.scene.data.dragContext;
             } else {                
                 if(this.scene.data.sceneDragContext) {
-                    this.data.courseTitle.container.setPosition(10,10);
+                    this.scene.data.courseTitle.container.setPosition(10,10);
                     console.log('pointer up scene drag', this.scene.data.sceneDragContext);
                     let pointerX = event.upX;
                     let pointerY = event.upY;
