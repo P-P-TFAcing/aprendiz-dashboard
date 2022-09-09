@@ -91,7 +91,10 @@ class MainScene extends Phaser.Scene {
             ypos += 100;
             xpos += 80;
         }
-        // handle mouse inputs
+        // mouse down in client area
+        this.input.on('pointerdown', function (event) {
+            console.log('mouse down in desktop', event);
+        });
         this.input.on('pointermove', function (event) {
             let x = event.worldX;
             let y = event.worldY;
