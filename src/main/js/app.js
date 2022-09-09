@@ -66,6 +66,22 @@ class SaveButton extends Button {
 }
 ;
 
+class ZoomInButton extends Button {
+
+    onButtonClick() {
+        console.log('zoom in');
+    }
+}
+;
+
+class ZoomOutButton extends Button {
+
+    onButtonClick() {
+        console.log('zoom out');
+    }
+}
+;
+
 class MainScene extends Phaser.Scene {
 
     preload() {
@@ -85,6 +101,8 @@ class MainScene extends Phaser.Scene {
         this.data.sceneObjects.push(courseTitle);
 
         new SaveButton(this, 1000, 20, 'Save Changes');
+        new ZoomInButton(this, 1200, 20, '+');
+        new ZoomOutButton(this, 1300, 20, '-');
 
         let ypos = 200;
         let xpos = 100;
