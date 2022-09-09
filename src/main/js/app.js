@@ -178,6 +178,7 @@ angular.module("AprendizApplication", ['ngCookies']);
 require('./ClassroomDataLoaderService.js');
 
 angular.module("AprendizApplication").controller('MainViewController', function (ClassroomDataLoaderService) {
+    
     console.log('started main view controller');
 
     let config = {
