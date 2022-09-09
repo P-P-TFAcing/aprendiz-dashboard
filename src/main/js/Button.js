@@ -22,6 +22,7 @@ export default class Button {
 
     onButtonClick() {
         // possible override
+        this.scene.data.buttonClicked = true;
     }
 
     mouseDownHandler(event) {
