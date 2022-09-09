@@ -99,7 +99,7 @@ class MainScene extends Phaser.Scene {
                     pointerX: event.downX,
                     pointerY: event.downY
                 };
-                console.log('set scene drag context', this.data.sceneDragContext);
+                console.log('set scene drag context', this.scene.data.sceneDragContext);
             }
         });
         this.input.on('pointermove', function (event) {
