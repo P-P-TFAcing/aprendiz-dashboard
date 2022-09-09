@@ -94,6 +94,11 @@ class MainScene extends Phaser.Scene {
         // mouse down in client area
         this.input.on('pointerdown', function (event) {
             console.log('pointer down in desktop', event);
+            this.data.sceneDragContext = {
+                pointerX: event.downX,
+                pointerY: event.downY
+            };
+            console.log('set scene drag context', this.data.sceneDragContext);
         });
         this.input.on('pointermove', function (event) {
             let x = event.worldX;
