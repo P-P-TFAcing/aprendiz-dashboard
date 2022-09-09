@@ -168,6 +168,12 @@ class MainScene extends Phaser.Scene {
                     let offsetY = pointerY - this.scene.data.sceneDragContext.pointerY;
                     delete this.scene.data.sceneDragContext;
                     console.log('drag scene', offsetX, offsetY);
+                    if(!this.scene.data.sceneOffset) {
+                        this.scene.data.sceneOffset = { x:0, y:0 };
+                    }
+                    this.scene.data.sceneOffset.x -= offsetX;
+                    this.scene.data.sceneOffset.y -= offsetY;
+                    console.log('scene offset', this.scene.data.sceneOffset);
                 }
             }
         });
