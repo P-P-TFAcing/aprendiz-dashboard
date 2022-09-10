@@ -12,12 +12,12 @@ export default class ButtonPanel {
         let text = scene.add.text(4, 4, title, { font: "40px Arial" });
         text.setOrigin(0, 0);
         this.container.add(text);
-        this.width = text.width + 512;
-        this.height = text.height + 48;
+        this.width = text.width + 1024;
+        this.height = text.height + 8;
         this.buttonLeftPos = text.width + 256;
         let panelRectangle = scene.add.rectangle(0, 0, this.width, this.height);
         panelRectangle.setOrigin(0, 0);
-        panelRectangle.setStrokeStyle(2, 0xffffff, 2);
+        panelRectangle.setStrokeStyle(2, 0x444444, 2);
         panelRectangle.setFillStyle(0x333333, 0.2);        
         this.container.add(panelRectangle);
         this.panelRectangle = panelRectangle;
@@ -25,10 +25,13 @@ export default class ButtonPanel {
     
     addButton(scene, button) {
         this.buttons.push(button);
+        button.setPosition(this.buttonLeftPos, 8);
+        this.buttonLeftPos += button.width + 64;
         console.log('added button', button);
     }
 
     addSpacer(pixelCount) {
+        this.buttonLeftPos += pixelCount;
         console.log('added spacer', pixelCount);
     }
 

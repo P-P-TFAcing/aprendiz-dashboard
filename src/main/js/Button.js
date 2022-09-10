@@ -19,7 +19,11 @@ export default class Button {
         this.container.add(rectangle);
         rectangle.setInteractive({useHandCursor: true}).on('pointerdown', this.mouseDownHandler.bind(this));
     }
-
+    
+    setPosition(x, y) {
+        this.container.setPosition(x, y);
+    }
+    
     onButtonClick() {
         // possible override
         this.scene.data.buttonClicked = true;

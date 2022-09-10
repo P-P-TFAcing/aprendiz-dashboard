@@ -131,7 +131,7 @@ class MainScene extends Phaser.Scene {
         this.data.courseTitle = courseTitle;
         this.data.sceneObjects.push(courseTitle);
 
-        let buttonPanel = new ButtonPanel(this, 32, 32, 'Aprendiz Dashboard');
+        let buttonPanel = new ButtonPanel(this, 4, 4, 'Aprendiz Dashboard');
         buttonPanel.addButton(new SaveButton(this, 800, 20, 'Save'));
         buttonPanel.addSpacer(48);
         buttonPanel.addButton(new ZoomInButton(this, 1100, 20, '+'));
