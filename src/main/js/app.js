@@ -168,18 +168,18 @@ class MainScene extends Phaser.Scene {
                 let y = event.worldY;
                 dragContext.dragRect.setPosition(x + dragContext.deltaX, y + dragContext.deltaY);
             } else if(this.scene.data.sceneDragContext) {
+                // drag scene
+                if(!this.scene.data.sceneOffset) {
+                    this.scene.data.sceneOffset = { x:0, y:0 };
+                }
                 let pointerX = event.worldX;
                 let pointerY = event.worldY;
                 console.log('drag scene mouse move', pointerX, pointerY);
                 let offsetX = pointerX - this.scene.data.sceneDragContext.pointerX;
                 let offsetY = pointerY - this.scene.data.sceneDragContext.pointerY;
                 if((offsetX !== 0) && (offsetY !== 0)) {
-                    console.log('drag scene', offsetX, offsetY);
-                    if(!this.scene.data.sceneOffset) {
-                        this.scene.data.sceneOffset = { x:0, y:0 };
-                    }
-                    this.scene.data.sceneOffset.x += offsetX;
-                    this.scene.data.sceneOffset.y += offsetY;
+//                    this.scene.data.sceneOffset.x += offsetX;
+//                    this.scene.data.sceneOffset.y += offsetY;
                     console.log('scene offset', this.scene.data.sceneOffset);
                     for(const object of this.scene.data.sceneObjects) {
                         // update containers
