@@ -66,6 +66,15 @@ class SaveButton extends Button {
 }
 ;
 
+class FullScreenButton extends Button {
+
+    onButtonClick() {
+        console.log('full screen');
+        this.scene.game.scale.startFullscreen();
+    }
+}
+;
+
 class ZoomInButton extends Button {
 
     onButtonClick() {
@@ -126,6 +135,7 @@ class MainScene extends Phaser.Scene {
         new SaveButton(this, 800, 20, 'Save Changes');
         new ZoomInButton(this, 1100, 20, '+');
         new ZoomOutButton(this, 1150, 20, '-');
+        new FullScreenButton(this, 1450, 20, 'Full-Screen');
 
         let ypos = 200;
         let xpos = 100;
