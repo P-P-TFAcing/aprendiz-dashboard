@@ -278,16 +278,9 @@ angular.module("AprendizApplication").controller('MainViewController', function 
 
     let config = {
         type: Phaser.AUTO,
-        dom: {
-            createContainer: true
-        },
-        fps: {
-            target: 20,
-            forceSetTimeOut: true
-        },
         parent: 'aprendiz-block',
-        width: 2560,
-        height: 1440
+        width: 1920,
+        height: 1080
     };
 
     let game = new Phaser.Game(config);
