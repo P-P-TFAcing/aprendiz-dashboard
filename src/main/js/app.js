@@ -276,6 +276,11 @@ angular.module("AprendizApplication").controller('MainViewController', function 
     
     console.log('started main view controller');
 
+    let screenWidth = window.screen.width * window.devicePixelRatio;
+    let screenHeight = window.screen.height * window.devicePixelRatio;
+
+    console.log('screen resoution', screenWidth, screenHeight);
+
     let config = {
         type: Phaser.AUTO,
         parent: 'aprendiz-block',
