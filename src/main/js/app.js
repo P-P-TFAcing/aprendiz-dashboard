@@ -279,8 +279,8 @@ angular.module("AprendizApplication").controller('MainViewController', function 
     let config = {
         type: Phaser.AUTO,
         parent: 'aprendiz-block',
-        width: 5120,
-        height: 2880
+        width: 3840,
+        height: 2160
     };
 
     let game = new Phaser.Game(config);
