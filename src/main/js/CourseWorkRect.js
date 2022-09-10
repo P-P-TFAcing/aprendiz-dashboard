@@ -23,14 +23,14 @@ export default class CourseWorkRect extends DraggableContainer {
         let rectangle = scene.add.rectangle(0, 0, this.width, this.height);
         rectangle.setOrigin(0, 0);
         let rectColor = 0xffffff;        
-        if(course.id === "27112116911") {
-            // stage 0 : red
+        // stage 0 : red
+        if(course.id === "487896080001") {            
             rectColor = 0xff0000;
-        } else if(course.id === '532515737233') {
-            // stage 1 : orange
+        // stage 1 : orange
+        } else if(course.id === '532515737233') {            
             rectColor = 0xFFA500;
-        } else if(course.id === '105906227667') {
-            // stage 2: green
+        // stage 2: green
+        } else if(course.id === '105946048990') {            
             rectColor = 0x00ff00;
         } else if(course.id === '105946048998') {
             // stage 3: violet

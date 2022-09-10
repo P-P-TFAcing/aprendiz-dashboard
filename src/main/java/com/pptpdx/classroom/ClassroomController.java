@@ -85,7 +85,7 @@ public class ClassroomController {
         List<Course> courses = response.getCourses();
         if (courses != null) {
             for (Course c : courses) {
-                LOGGER.debug("found course " + c.getName() + " " + c.getId());
+                LOGGER.debug("found course " + c.getName() + " " + c.getId() + " " + c.getDescriptionHeading() + " " + c.getDescription());
                 String courseName = c.getName();
                 for(String loadedCourseName : LOADED_COURSES) {
                     if(loadedCourseName.equals(courseName)) {
