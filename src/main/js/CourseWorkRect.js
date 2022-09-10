@@ -24,15 +24,15 @@ export default class CourseWorkRect extends DraggableContainer {
         rectangle.setOrigin(0, 0);
         let rectColor = 0xffffff;        
         // stage 0 : red
-        if(course.id === "487896080001") {            
+        if(course.enrollmentCode === "ukxv7mb") {            
             rectColor = 0xff0000;
         // stage 1 : orange
-        } else if(course.id === '532515737233') {            
+        } else if(course.enrollmentCode === 'jdcft3j') {            
             rectColor = 0xFFA500;
         // stage 2: green
-        } else if(course.id === '105946048990') {            
+        } else if(course.enrollmentCode === '7khg5iv') {            
             rectColor = 0x00ff00;
-        } else if(course.id === '105946048998') {
+        } else if(course.enrollmentCode === '2oksark') {
             // stage 3: violet
             rectColor = 0xEE82EE;
         }
