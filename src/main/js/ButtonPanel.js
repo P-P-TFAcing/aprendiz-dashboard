@@ -28,8 +28,8 @@ export default class ButtonPanel {
         console.log('added button', button);
     }
 
-    addSpacer(spacePixels) {
-        console.log('added spacer', spacePixels);
+    addSpacer(pixelCount) {
+        console.log('added spacer', pixelCount);
     }
 
 }
