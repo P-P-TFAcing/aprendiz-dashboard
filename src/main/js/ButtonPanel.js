@@ -9,7 +9,7 @@ export default class ButtonPanel {
         this.x = x;
         this.y = y;
         this.buttons = [];
-        let text = scene.add.text(4, 4, title, {{ font: "40px Arial" }});
+        let text = scene.add.text(4, 4, title, { font: "40px Arial" });
         text.setOrigin(0, 0);
         this.container.add(text);
         this.width = text.width + 512;
