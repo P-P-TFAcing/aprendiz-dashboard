@@ -9,11 +9,11 @@ export default class ButtonPanel {
         this.x = x;
         this.y = y;
         this.buttons = [];
-        let text = scene.add.text(4, 4, title, { font: "40px Arial" });
+        let text = scene.add.text(8, 8, title, { font: "40px Arial" });
         text.setOrigin(0, 0);
         this.container.add(text);
         this.width = text.width + 1024;
-        this.height = text.height + 8;
+        this.height = text.height + 16;
         this.buttonLeftPos = text.width + 256;
         let panelRectangle = scene.add.rectangle(0, 0, this.width, this.height);
         panelRectangle.setOrigin(0, 0);
@@ -26,7 +26,7 @@ export default class ButtonPanel {
     addButton(button) {
         this.buttons.push(button);
         button.setPosition(this.buttonLeftPos, 8);
-        this.buttonLeftPos += button.width + 64;
+        this.buttonLeftPos += button.width + 8;
         console.log('added button', button);
     }
 
