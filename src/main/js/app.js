@@ -131,12 +131,13 @@ class MainScene extends Phaser.Scene {
         this.data.courseTitle = courseTitle;
         this.data.sceneObjects.push(courseTitle);
 
-        new ButtonPanel(this, 32, 32, 'Aprendiz Dashboard');
-
-        new SaveButton(this, 800, 20, 'Save Changes');
-        new ZoomInButton(this, 1100, 20, '+');
-        new ZoomOutButton(this, 1150, 20, '-');
-        new FullScreenButton(this, 1450, 20, 'Full-Screen');
+        let buttonPanel = new ButtonPanel(this, 32, 32, 'Aprendiz Dashboard');
+        buttonPanel.addButton(new SaveButton(this, 800, 20, 'Save'));
+        buttonPanel.addSpacer(48);
+        buttonPanel.addButton(new ZoomInButton(this, 1100, 20, '+'));
+        buttonPanel.addButton(new ZoomOutButton(this, 1150, 20, '-'));
+        buttonPanel.addSpacer(96);
+        buttonPanel.addButton(new FullScreenButton(this, 1450, 20, 'Full-Screen'));
 
         let ypos = 200;
         let xpos = 100;
