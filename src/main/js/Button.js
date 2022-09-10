@@ -37,13 +37,13 @@ export default class Button {
 
     mouseUpHandler(event) {
         this.buttonRectangle.setFillStyle(0xAAAAAA, 0.8);
-        event.stopPropogation();
+        event.stopPropagation();
     }
 
     mouseDownHandler(event) {
         console.log('button click');
         if (this.onButtonClick) {
-            event.stopPropogation();
+            event.stopPropagation();
             this.buttonRectangle.setFillStyle(0xDDDDDD, 0.8);
             this.onButtonClick();
         }

@@ -21,7 +21,7 @@ export default class DraggableContainer {
 
     mouseDownHandler(event) {
         // start dragging
-        event.stopPropogation();
+        event.stopPropagation();
         let deltaX = this.container.x - event.downX;
         let deltaY = this.container.y - event.downY;
         let dragRect = this.scene.add.rectangle(this.container.x, this.container.y, this.width, this.height);
