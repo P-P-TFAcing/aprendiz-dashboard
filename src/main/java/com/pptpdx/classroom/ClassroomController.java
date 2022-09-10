@@ -76,7 +76,7 @@ public class ClassroomController {
     private static final String[] LOADED_COURSES = { "Stage0-Audition", "Stage1-Tutor", "Stage2-Gude", "Stage3-Coach" }; 
     
     public static List<Course> getCourses(Credential credential) throws IOException {
-        LOGGER.debug("get courses");
+        LOGGER.debug("get all courses");
         Classroom service = getService(credential);
         ListCoursesResponse response = service.courses().list()
                 .setPageSize(20)
