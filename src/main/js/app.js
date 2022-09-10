@@ -254,16 +254,9 @@ class MainScene extends Phaser.Scene {
                     if(!this.scene.data.sceneOffset) {
                         this.scene.data.sceneOffset = { x:0, y:0 };
                     }
-                    this.scene.data.sceneOffset.x += offsetX;
-                    this.scene.data.sceneOffset.y += offsetY;
+                    this.scene.data.sceneOffset.x = offsetX;
+                    this.scene.data.sceneOffset.y = offsetY;
                     console.log('scene offset', this.scene.data.sceneOffset);
-                    for(const object of this.scene.data.sceneObjects) {
-                        // update containers
-                        let newX = (object.x * this.scene.data.sceneScale) + this.scene.data.sceneOffset.x;
-                        let newY = (object.y * this.scene.data.sceneScale) + this.scene.data.sceneOffset.y;
-                        object.container.setPosition(newX, newY);
-                        console.log('updated container', object.container, newX, newY);
-                    }
                 }
             }
         });
