@@ -11,11 +11,11 @@ export default class Button {
         let text = scene.add.text(4, 4, caption, { font: "20px Arial" });
         text.setOrigin(0, 0);
         this.container.add(text);
-        this.width = text.width + 32;
-        this.height = text.height + 32;
+        this.width = text.width + 8;
+        this.height = text.height + 8;
         let rectangle = scene.add.rectangle(0, 0, this.width, this.height);
         rectangle.setOrigin(0, 0);
-        rectangle.setStrokeStyle(2, 0x888888, 2);
+        rectangle.setStrokeStyle(2, 0xEEEEEE, 2);
         rectangle.setFillStyle(0xAAAAAA, 0.8);
         this.container.add(rectangle);
         rectangle.setInteractive({useHandCursor: true}).on('pointerdown', this.mouseDownHandler.bind(this));
