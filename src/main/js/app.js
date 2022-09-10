@@ -170,6 +170,7 @@ class MainScene extends Phaser.Scene {
             } else if(this.scene.data.sceneDragContext) {
                 let pointerX = event.worldX;
                 let pointerY = event.worldY;
+                console.log('mouse move', pointerX, pointerY);
                 let offsetX = pointerX - this.scene.data.sceneDragContext.pointerX;
                 let offsetY = pointerY - this.scene.data.sceneDragContext.pointerY;
                 if((offsetX !== 0) && (offsetY !== 0)) {
