@@ -8,7 +8,7 @@ export default class Button {
         this.container = scene.add.container(x, y);
         this.x = x;
         this.y = y;
-        let text = scene.add.text(4, 4, caption, { font: "20px Arial" });
+        let text = scene.add.text(4, 4, caption, { font: "20px Arial", color: '#111111' });
         text.setOrigin(0, 0);
         this.container.add(text);
         this.width = text.width + 8;
