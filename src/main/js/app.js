@@ -91,6 +91,9 @@ class ZoomOutButton extends Button {
         if(this.scene.data.sceneScale >= 0.1) {
             this.scene.data.sceneScale -= 0.1;
             console.log('scene zoom', this.scene.data.sceneScale);
+            if(!this.scene.data.sceneOffset) {
+                this.scene.data.sceneOffset = { x:0, y:0 };
+            }
             for(const object of this.scene.data.sceneObjects) {
                 object.container.setScale(this.scene.data.sceneScale);
                 let newX = (object.x * this.scene.data.sceneScale) + this.scene.data.sceneOffset.x;
