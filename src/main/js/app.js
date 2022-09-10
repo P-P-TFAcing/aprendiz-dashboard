@@ -168,6 +168,27 @@ class MainScene extends Phaser.Scene {
             if (dragContext) {
                 //console.log('drag context', dragContext);
                 dragContext.dragRect.setPosition(x + dragContext.deltaX, y + dragContext.deltaY);
+            } else if(this.scene.data.sceneDragContext) {
+                let pointerX = event.upX;
+                let pointerY = event.upY;
+                let offsetX = pointerX - this.scene.data.sceneDragContext.pointerX;
+                let offsetY = pointerY - this.scene.data.sceneDragContext.pointerY;
+                if((offsetX !== 0) && (offsetY !== 0)) {
+                    delete this.scene.data.sceneDragContext;
+                    console.log('drag scene', offsetX, offsetY);
+                    if(!this.scene.data.sceneOffset) {
+                        this.scene.data.sceneOffset = { x:0, y:0 };
+                    }
+                    this.scene.data.sceneOffset.x += offsetX;
+                    this.scene.data.sceneOffset.y += offsetY;
+                    console.log('scene offset', this.scene.data.sceneOffset);
+                    for(const object of this.scene.data.sceneObjects) {
+                        // update containers
+                        let newX = (object.x * this.scene.data.sceneScale) + this.scene.data.sceneOffset.x;
+                        let newY = (object.y * this.scene.data.sceneScale) + this.scene.data.sceneOffset.y;
+                        object.container.setPosition(newX, newY);
+                    }
+                }
             }
         });
         this.input.on('pointerup', function (event) {
