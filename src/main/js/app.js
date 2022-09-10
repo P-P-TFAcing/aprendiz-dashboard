@@ -70,7 +70,7 @@ class FullScreenButton extends Button {
 
     onButtonClick() {
         console.log('full screen');
-        this.scene.game.scale.startFullscreen();
+        this.scene.scale.startFullscreen();
     }
 }
 ;
