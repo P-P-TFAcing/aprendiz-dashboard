@@ -24,6 +24,8 @@ export default class DraggableContainer {
         let deltaX = this.container.x - event.downX;
         let deltaY = this.container.y - event.downY;
         let dragRect = this.scene.add.rectangle(this.container.x, this.container.y, this.width, this.height);
+        let sceneScale = this.scene.data.sceneScale;
+        dragRect.setScale(sceneScale);
         dragRect.setStrokeStyle(2, 0x00ffff, 2);
         dragRect.setOrigin(0, 0);
         let dragContext = {
