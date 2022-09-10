@@ -162,15 +162,14 @@ class MainScene extends Phaser.Scene {
             }
         });
         this.input.on('pointermove', function (event) {
-            let x = event.worldX;
-            let y = event.worldY;
             let dragContext = this.scene.data.dragContext;
             if (dragContext) {
-                //console.log('drag context', dragContext);
+                let x = event.worldX;
+                let y = event.worldY;
                 dragContext.dragRect.setPosition(x + dragContext.deltaX, y + dragContext.deltaY);
             } else if(this.scene.data.sceneDragContext) {
-                let pointerX = event.upX;
-                let pointerY = event.upY;
+                let pointerX = event.worldX;
+                let pointerY = event.worldY;
                 let offsetX = pointerX - this.scene.data.sceneDragContext.pointerX;
                 let offsetY = pointerY - this.scene.data.sceneDragContext.pointerY;
                 if((offsetX !== 0) && (offsetY !== 0)) {
