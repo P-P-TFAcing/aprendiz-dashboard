@@ -73,6 +73,8 @@ public class ClassroomController {
         return result;
     }
 
+    private static final String[] LOADED_COURSES = { "Stage0-Audition", "Stage1-Tutor", "Stage2-Gude", "Stage3-Coach" }; 
+    
     public static List<Course> getCourses(Credential credential) throws IOException {
         LOGGER.debug("get courses");
         Classroom service = getService(credential);
@@ -83,7 +85,13 @@ public class ClassroomController {
         List<Course> courses = response.getCourses();
         if (courses != null) {
             for (Course c : courses) {
-                result.add(c);
+                LOGGER.debug("found course " + c.getName() + " " + c.getId());
+                String courseName = c.getName();
+                for(String loadedCourseName : LOADED_COURSES) {
+                    if(loadedCourseName.equals(courseName)) {
+                        result.add(c);
+                    }
+                }                
             }
             LOGGER.debug("loaded " + result.size() + " courses");
         }
