@@ -276,8 +276,8 @@ angular.module("AprendizApplication").controller('MainViewController', function 
             forceSetTimeOut: true
         },
         parent: 'aprendiz-block',
-        width: 1280,
-        height: 720
+        width: 1920,
+        height: 1080
     };
 
     let game = new Phaser.Game(config);
