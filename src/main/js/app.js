@@ -44,9 +44,8 @@ class LoaderScene extends Phaser.Scene {
 ;
 
 import CourseWorkRect from './CourseWorkRect.js';
-
 import Button from './Button.js';
-
+import ButtonPanel from './ButtonPanel.js';
 import WebSocketContext from './WebSocketContext.js';
 
 class SaveButton extends Button {
@@ -131,6 +130,8 @@ class MainScene extends Phaser.Scene {
         let courseTitle = new CourseTitle(this, course, 16, 16);
         this.data.courseTitle = courseTitle;
         this.data.sceneObjects.push(courseTitle);
+
+        new ButtonPanel(this, 32, 32, 'Aprendiz Dashboard');
 
         new SaveButton(this, 800, 20, 'Save Changes');
         new ZoomInButton(this, 1100, 20, '+');
