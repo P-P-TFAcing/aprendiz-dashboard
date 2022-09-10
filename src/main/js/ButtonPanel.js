@@ -23,7 +23,7 @@ export default class ButtonPanel {
         this.panelRectangle = panelRectangle;
     }
     
-    addButton(scene, button) {
+    addButton(button) {
         this.buttons.push(button);
         button.setPosition(this.buttonLeftPos, 8);
         this.buttonLeftPos += button.width + 64;
