@@ -140,6 +140,7 @@ class MainScene extends Phaser.Scene {
     }
 
     pointerDownHandler(event) {
+        // mouse down
         console.log('pointerdown', event.downX, event.downY);
         this.data.mainScrollableContainer.setOffset(event.downX, event.downY);
 //        let rect = this.data.testRect;
