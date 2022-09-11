@@ -7,16 +7,16 @@ class RegionPointerEventHandler extends PointerEventHandler {
         this.parentScrollableContainer = parentScrollableContainer;
     }
 
-    onPointerDown(event) {
-        console.log('onPointerDown', event);
+    onPointerDown(event, scene) {
+        console.log('onPointerDown', event, scene);
     }
 
-    onPointerUp(event) {
-        console.log('onPointerUp', event);
+    onPointerUp(event, scene) {
+        console.log('onPointerUp', event, scene);
     }
     
-    onPointerMove(event) {
-        console.log('onPointerMove', event);
+    onPointerMove(event, scene) {
+        console.log('onPointerMove', event, scene);
     }
 
 }
