@@ -111,30 +111,8 @@ class ZoomOutButton extends Button {
     }
 }
 
-class ScrollableContainer extends Phaser.GameObjects.Container {
-
-    constructor(scene, x, y) {
-        super(scene, x, y);
-    }
-
-}
-
-class ScrollableContainerPlugin extends Phaser.Plugins.BasePlugin {
-
-    constructor(pluginManager)
-    {
-        super(pluginManager);
-
-        //  Register our new Game Object type
-        pluginManager.registerGameObject('scrollableContainer', this.createScrollableContainer);
-    }
-
-    createScrollableContainer(x, y)
-    {
-        return this.displayList.add(new ScrollableContainer(this.scene, x, y));
-    }
-
-}
+import ScrollableContainer from './ScrollableContainer.js';
+import ScrollableContainerPlugin from './ScrollableContainerPlugin.js';
 
 export default class TextObject extends DraggableContainer {
 
@@ -163,8 +141,9 @@ class MainScene extends Phaser.Scene {
 
     pointerDownHandler(event) {
         console.log('pointerdown', event.downX, event.downY);
-        let rect = this.data.testRect;
-        rect.setPosition(rect.x + 1, rect.y + 1);
+        this.data.mainScrollableContainer.setOffset(event.downX, event.downY);
+//        let rect = this.data.testRect;
+//        rect.setPosition(rect.x + 1, rect.y + 1);
     }
 
     pointerUpHandler(event) {
