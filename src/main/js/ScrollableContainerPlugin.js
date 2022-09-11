@@ -1,3 +1,5 @@
+import ScrollableContainer from './ScrollableContainer.js';
+
 export default class ScrollableContainerPlugin extends Phaser.Plugins.BasePlugin {
 
     constructor(pluginManager) {
