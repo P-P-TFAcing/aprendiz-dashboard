@@ -128,7 +128,11 @@ class MainScene extends Phaser.Scene {
 
         console.log('loading course', course);
         this.mainContainer = this.add.container(50,50);
-        
+        let rectangle = this.add.rectangle(0, 0, 500, 200);
+        rectangle.setOrigin(0, 0);        
+        rectangle.setStrokeStyle(2, 0xEEEEEE, 2);
+        rectangle.setFillStyle(0xAAAAAA);
+        this.mainContainer.add(rectangle);
         
 //        let courseTitle = new CourseTitle(this, course, 16, 16);
 //        this.data.courseTitle = courseTitle;
@@ -150,7 +154,7 @@ class MainScene extends Phaser.Scene {
 //            xpos += 80;
 //        }
         // mouse down in client area
-        this.mainContainer.input.on('pointerdown', function (event) {
+        this.input.on('pointerdown', function (event) {
             console.log('pointerdown', event);
             //console.log('pointer down in desktop', event);
 //            if (!this.scene.data.buttonClicked) {
@@ -165,7 +169,7 @@ class MainScene extends Phaser.Scene {
 //                }
 //            }
         });
-        this.mainContainer.input.on('pointermove', function (event) {
+        this.input.on('pointermove', function (event) {
             console.log('pointermove', event);
 //            let dragContext = this.scene.data.dragContext;
 //            if (dragContext) {
@@ -195,7 +199,7 @@ class MainScene extends Phaser.Scene {
 //                }
 //            }
         });
-        this.mainContainer.input.on('pointerup', function (event) {
+        this.input.on('pointerup', function (event) {
             console.log('pointerup', event);
 //            if (this.scene.data.buttonClicked) {
 //                delete this.scene.data.buttonClicked;
