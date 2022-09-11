@@ -146,14 +146,6 @@ class MainScene extends Phaser.Scene {
 //        this.data.courseTitle = courseTitle;
 //        this.data.sceneObjects.push(courseTitle);
 
-//        let buttonPanel = new ButtonPanel(this, 4, 4, 'Aprendiz Dashboard');
-//        buttonPanel.addButton(new SaveButton(this, 800, 20, 'Save'));
-//        buttonPanel.addSpacer(48);
-//        buttonPanel.addButton(new ZoomInButton(this, 1100, 20, '+'));
-//        buttonPanel.addButton(new ZoomOutButton(this, 1150, 20, '-'));
-//        buttonPanel.addSpacer(96);
-//        buttonPanel.addButton(new FullScreenButton(this, 1450, 20, 'Full-Screen'));
-
 //        let ypos = 200;
 //        let xpos = 100;
 //        for (const courseWork of course.courseWork) {
@@ -295,15 +287,27 @@ class MainScene extends Phaser.Scene {
         this.data.sceneScale = 1.0;
         // graphics
 
+        let buttonPanel = new ButtonPanel(this, 4, 4, 'Aprendiz Dashboard');
+        buttonPanel.addButton(new SaveButton(this, 800, 20, 'Save'));
+        buttonPanel.addSpacer(48);
+        buttonPanel.addButton(new ZoomInButton(this, 1100, 20, '+'));
+        buttonPanel.addButton(new ZoomOutButton(this, 1150, 20, '-'));
+        buttonPanel.addSpacer(96);
+        buttonPanel.addButton(new FullScreenButton(this, 1450, 20, 'Full-Screen'));
+
         //let testText = new TextObject(this, 100, 100);
         this.data.mainScrollableContainer = this.add.scrollableContainer(0, 100);        
 
-        let rectangle = this.add.rectangle(0, 0, 500, 200);
+        let regionRect = this.add.rectangle(0, 0, 19200, 10800);
+        regionRect.setOrigin(0, 0);
+        regionRect.setStrokeStyle(2, 0x0000EE, 2);        
+        this.data.mainScrollableContainer.add(regionRect);
+
+        let rectangle = this.add.rectangle(50, 0, 500, 200);
         rectangle.setOrigin(0, 0);
         rectangle.setStrokeStyle(2, 0x0000EE, 2);
         rectangle.setFillStyle(0xAAAAAA);
         this.data.mainScrollableContainer.add(rectangle);
-        this.data.testRect = rectangle;
         
         // now we have access to courses
 //        for (const course of this.courses) {
