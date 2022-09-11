@@ -123,6 +123,20 @@ class MainScene extends Phaser.Scene {
     onWebSocketOpen() {
         console.log('host websocket opened');
     }
+    
+    pointerDownHandler(event) {
+        console.log('pointerdown', event);        
+    }
+
+    pointerUpHandler(event) {
+        console.log('pointerup', event);
+        
+    }
+    
+    pointerMoveHandler(event) {
+        console.log('pointermove', event);
+        
+    }    
 
     loadCourseIntoScene(course) {
 
@@ -281,12 +295,15 @@ class MainScene extends Phaser.Scene {
         this.data.sceneScale = 1.0;
         // graphics
         this.mainContainer = this.add.container(50, 50);
+        this.mainContainer.input.on('pointerdown', this.pointerDownHander);
+        this.mainContainer.input.on('pointerup', this.pointerUpHander);
+        this.mainContainer.input.on('pointermove', this.pointerMoveHander);
         let rectangle = this.add.rectangle(0, 0, 500, 200);
         rectangle.setOrigin(0, 0);
         rectangle.setStrokeStyle(2, 0xEEEEEE, 2);
         rectangle.setFillStyle(0xAAAAAA);
         this.mainContainer.add(rectangle);
-
+        
         // now we have access to courses
 //        for (const course of this.courses) {
 //            this.loadCourseIntoScene(course);
