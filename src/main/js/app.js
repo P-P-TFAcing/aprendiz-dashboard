@@ -90,7 +90,6 @@ class ZoomInButton extends Button {
         }
     }
 }
-;
 
 class ZoomOutButton extends Button {
 
@@ -112,7 +111,7 @@ class ZoomOutButton extends Button {
     }
 }
 
-class ScrollableContainer extends Phaser.Container {
+class ScrollableContainer extends Phaser.GameObjects.Container {
 
     
     
