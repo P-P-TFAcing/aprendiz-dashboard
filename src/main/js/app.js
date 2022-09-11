@@ -111,7 +111,6 @@ class ZoomOutButton extends Button {
     }
 }
 
-import ScrollableContainer from './ScrollableContainer.js';
 import ScrollableContainerPlugin from './ScrollableContainerPlugin.js';
 
 export default class TextObject extends DraggableContainer {
