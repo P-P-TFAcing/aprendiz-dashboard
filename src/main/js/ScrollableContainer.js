@@ -2,6 +2,11 @@ import PointerEventHandler from './PointerEventHandler.js';
 
 class RegionPointerEventHandler extends PointerEventHandler {
 
+    constructor(scene, parentScrollableContainer) {
+        super(scene);
+        this.parentScrollableContainer = parentScrollableContainer;
+    }
+
     onPointerDown(event) {
         console.log('onPointerDown', event);
     }
@@ -21,6 +26,7 @@ export default class ScrollableContainer extends Phaser.GameObjects.Container {
     constructor(scene, x, y) {
         super(scene, x, y);
         this.sceneOffset = { x:0, y:0 };
+        new RegionPointerEventHandler(scene, this);
     }
     
     updateChildOffset(gameObject) {
