@@ -125,16 +125,16 @@ class MainScene extends Phaser.Scene {
     }
     
     pointerDownHandler(event) {
-        console.log('pointerdown', event);        
+        console.log('pointerdown', event.downX, event.downY);        
     }
 
     pointerUpHandler(event) {
-        console.log('pointerup', event);
+        console.log('pointerup', event.upX, event.upY);
         
     }
     
     pointerMoveHandler(event) {
-        console.log('pointermove', event);
+        console.log('pointermove', event.worldX, event.worldY);
         
     }    
 
