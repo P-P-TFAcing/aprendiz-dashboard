@@ -34,8 +34,7 @@ class RegionPointerEventHandler extends PointerEventHandler {
                 let deltaX = x - this.dragContext.startPosition.x;
                 let deltaY = y - this.dragContext.startPosition.y;
                 console.log('drag scene', event.position, deltaX, deltaY);
-                let sceneOffset = parent.sceneOffset;
-                parent.setOffset(sceneOffset.x + deltaX, sceneOffset.y + deltaY);
+                parent.scrollRegion(deltaX, deltaY);
             }
         }
     }
