@@ -125,7 +125,8 @@ class MainScene extends Phaser.Scene {
     }
     
     pointerDownHandler(event) {
-        console.log('pointerdown', event.downX, event.downY);        
+        console.log('pointerdown', event.downX, event.downY);   
+        this.data.testRect.setOrigin(100,100);
     }
 
     pointerUpHandler(event) {
@@ -294,7 +295,7 @@ class MainScene extends Phaser.Scene {
         this.data.sceneObjects = [];
         this.data.sceneScale = 1.0;
         // graphics
-        this.mainContainer = this.add.container(50, 50);
+        this.data.mainContainer = this.add.container(50, 50);
         this.input.on('pointerdown', this.pointerDownHandler);
         this.input.on('pointerup', this.pointerUpHandler);
         this.input.on('pointermove', this.pointerMoveHandler);
@@ -302,7 +303,8 @@ class MainScene extends Phaser.Scene {
         rectangle.setOrigin(0, 0);
         rectangle.setStrokeStyle(2, 0xEEEEEE, 2);
         rectangle.setFillStyle(0xAAAAAA);
-        this.mainContainer.add(rectangle);
+        this.data.mainContainer.add(rectangle);
+        this.data.testRect = rectangle;
         
         // now we have access to courses
 //        for (const course of this.courses) {
