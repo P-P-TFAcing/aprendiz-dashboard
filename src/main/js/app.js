@@ -116,8 +116,24 @@ class ScrollableContainer extends Phaser.GameObjects.Container {
     constructor(scene, x, y) {
         super(scene, x, y);
     }
-    
-    
+
+}
+
+class ScrollableContainerPlugin extends Phaser.Plugins.BasePlugin {
+
+    constructor(pluginManager)
+    {
+        super(pluginManager);
+
+        //  Register our new Game Object type
+        pluginManager.registerGameObject('scrollableContainer', this.createScrollableContainer);
+    }
+
+    createScrollableContainer(x, y)
+    {
+        return this.displayList.add(new ScrollableContainer(this.scene, x, y));
+    }
+
 }
 
 export default class TextObject extends DraggableContainer {
@@ -144,22 +160,22 @@ class MainScene extends Phaser.Scene {
     onWebSocketOpen() {
         console.log('host websocket opened');
     }
-    
+
     pointerDownHandler(event) {
-        console.log('pointerdown', event.downX, event.downY);   
+        console.log('pointerdown', event.downX, event.downY);
         let rect = this.data.testRect;
-        rect.setPosition(rect.x + 1,rect.y + 1);
+        rect.setPosition(rect.x + 1, rect.y + 1);
     }
 
     pointerUpHandler(event) {
         console.log('pointerup', event.upX, event.upY);
-        
+
     }
-    
+
     pointerMoveHandler(event) {
         console.log('pointermove', event.worldX, event.worldY);
-        
-    }    
+
+    }
 
     loadCourseIntoScene(course) {
 
@@ -321,18 +337,17 @@ class MainScene extends Phaser.Scene {
         this.input.on('pointerdown', this.pointerDownHandler.bind(this));
         this.input.on('pointerup', this.pointerUpHandler.bind(this));
         this.input.on('pointermove', this.pointerMoveHandler.bind(this));
-        
+
         //let testText = new TextObject(this, 100, 100);
-        this.data.mainScrollableContainer = new ScrollableContainer(this, 0, 100);
-        this.add(this.data.mainScrollableContainer);
-        
+        this.data.mainScrollableContainer = this.add.scrollableContainer(0, 100);        
+
         let rectangle = this.add.rectangle(0, 0, 500, 200);
         rectangle.setOrigin(0, 0);
         rectangle.setStrokeStyle(2, 0x0000EE, 2);
         rectangle.setFillStyle(0xAAAAAA);
         this.data.mainScrollableContainer.add(rectangle);
         this.data.testRect = rectangle;
-        
+
         // now we have access to courses
 //        for (const course of this.courses) {
 //            this.loadCourseIntoScene(course);
@@ -358,6 +373,11 @@ angular.module("AprendizApplication").controller('MainViewController', function 
     let config = {
         type: Phaser.AUTO,
         parent: 'aprendiz-block',
+        plugins: {
+            global: [
+                {key: 'ScrollableContainerPlugin', plugin: ScrollableContainerPlugin, start: true}
+            ]
+        },
         width: screenWidth / 2,
         height: screenHeight / 2
     };
