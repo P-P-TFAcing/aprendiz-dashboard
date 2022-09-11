@@ -113,6 +113,9 @@ class ZoomOutButton extends Button {
 
 class ScrollableContainer extends Phaser.GameObjects.Container {
 
+    constructor(scene, x, y) {
+        super(scene, x, y);
+    }
     
     
 }
@@ -320,7 +323,7 @@ class MainScene extends Phaser.Scene {
         this.input.on('pointermove', this.pointerMoveHandler.bind(this));
         
         //let testText = new TextObject(this, 100, 100);
-        this.data.mainScrollableContainer = new ScrollableContainer();
+        this.data.mainScrollableContainer = new ScrollableContainer(this, 0, 100);
         this.add(this.data.mainScrollableContainer);
         
         let rectangle = this.add.rectangle(0, 0, 500, 200);
