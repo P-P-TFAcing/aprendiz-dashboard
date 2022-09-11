@@ -13,8 +13,8 @@ export default class Button {
         text.setOrigin(0, 0);
         text.depth = 1;
         this.width = text.width + 16;
-        this.height = text.height + 16;        
-        rectangle.setOrigin(0, 0);        
+        this.height = text.height + 16;
+        rectangle.setOrigin(0, 0);
         rectangle.setStrokeStyle(2, 0xEEEEEE, 2);
         rectangle.setFillStyle(0xAAAAAA);
         rectangle.setSize(this.width, this.height);
@@ -37,13 +37,11 @@ export default class Button {
 
     mouseUpHandler(event) {
         this.buttonRectangle.setFillStyle(0xAAAAAA, 0.8);
-        event.stopPropagation();
     }
 
     mouseDownHandler(event) {
         console.log('button click');
         if (this.onButtonClick) {
-            event.stopPropagation();
             this.buttonRectangle.setFillStyle(0xDDDDDD, 0.8);
             this.onButtonClick();
         }
