@@ -162,8 +162,8 @@ class MainScene extends Phaser.Scene {
 //            xpos += 80;
 //        }
         // mouse down in client area
-        this.input.on('pointerdown', function (event) {
-            console.log('pointerdown', event);
+//        this.input.on('pointerdown', function (event) {
+//            console.log('pointerdown', event);
             //console.log('pointer down in desktop', event);
 //            if (!this.scene.data.buttonClicked) {
 //                if (!this.scene.data.dragContext) {
@@ -176,9 +176,9 @@ class MainScene extends Phaser.Scene {
 //                    }
 //                }
 //            }
-        });
-        this.input.on('pointermove', function (event) {
-            console.log('pointermove', event);
+//        });
+//        this.input.on('pointermove', function (event) {
+//            console.log('pointermove', event);
 //            let dragContext = this.scene.data.dragContext;
 //            if (dragContext) {
 //                let x = event.worldX;
@@ -206,9 +206,9 @@ class MainScene extends Phaser.Scene {
 //                    }
 //                }
 //            }
-        });
-        this.input.on('pointerup', function (event) {
-            console.log('pointerup', event);
+//        });
+//        this.input.on('pointerup', function (event) {
+//            console.log('pointerup', event);
 //            if (this.scene.data.buttonClicked) {
 //                delete this.scene.data.buttonClicked;
 //            }
@@ -277,7 +277,7 @@ class MainScene extends Phaser.Scene {
 //                    console.log('scene offset', this.scene.data.sceneOffset);
 //                }
 //            }
-        });
+//        });
     }
 
     create(config) {
@@ -294,10 +294,6 @@ class MainScene extends Phaser.Scene {
         this.data.sceneObjects = [];
         this.data.sceneScale = 1.0;
         // graphics
-        //this.data.mainContainer = this.add.container(0, 64);
-        this.input.on('pointerdown', this.pointerDownHandler.bind(this));
-        this.input.on('pointerup', this.pointerUpHandler.bind(this));
-        this.input.on('pointermove', this.pointerMoveHandler.bind(this));
 
         //let testText = new TextObject(this, 100, 100);
         this.data.mainScrollableContainer = this.add.scrollableContainer(0, 100);        
@@ -309,8 +305,6 @@ class MainScene extends Phaser.Scene {
         this.data.mainScrollableContainer.add(rectangle);
         this.data.testRect = rectangle;
         
-        new ScrollableContainer(this);
-
         // now we have access to courses
 //        for (const course of this.courses) {
 //            this.loadCourseIntoScene(course);
