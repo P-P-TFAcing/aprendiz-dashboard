@@ -126,7 +126,8 @@ class MainScene extends Phaser.Scene {
     
     pointerDownHandler(event) {
         console.log('pointerdown', event.downX, event.downY);   
-        this.data.testRect.setOrigin(100,100);
+        let rect = this.data.testRect;
+        rect.setPosition(rect.x + 1,rect.y + 1);
     }
 
     pointerUpHandler(event) {
@@ -295,7 +296,7 @@ class MainScene extends Phaser.Scene {
         this.data.sceneObjects = [];
         this.data.sceneScale = 1.0;
         // graphics
-        this.data.mainContainer = this.add.container(50, 50);
+        this.data.mainContainer = this.add.container(0, 0);
         this.input.on('pointerdown', this.pointerDownHandler.bind(this));
         this.input.on('pointerup', this.pointerUpHandler.bind(this));
         this.input.on('pointermove', this.pointerMoveHandler.bind(this));
