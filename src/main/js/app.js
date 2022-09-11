@@ -326,8 +326,8 @@ angular.module("AprendizApplication").controller('MainViewController', function 
                 {key: 'ScrollableContainerPlugin', plugin: ScrollableContainerPlugin, start: true}
             ]
         },
-        width: screenWidth / 2,
-        height: screenHeight / 2
+        width: screenWidth,
+        height: screenHeight
     };
 
     let game = new Phaser.Game(config);
