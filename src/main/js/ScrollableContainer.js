@@ -50,16 +50,15 @@ export default class ScrollableContainer extends Phaser.GameObjects.Container {
         new RegionPointerEventHandler(scene, this);
     }
 
-    updateChildOffset(gameObject) {
-        console.log('update object', gameObject);
-        gameObject.setPosition(this.sceneOffset.x, this.sceneOffset.y)
+    translateObject(gameObject, deltaX, deltaY) {        
+        gameObject.setPosition(gameObject.x + deltaX, gameObject.y + deltaY)
     }
 
-    setOffset(x, y) {
-        console.log('scrollable set offset', x, y);
-        this.sceneOffset.x = x;
-        this.sceneOffset.y = y;
-        this.iterate(this.updateChildOffset.bind(this));
+    scrollRegion(deltaX, deltaY) {
+        console.log('scrollRegion', deltaX, deltaY);
+        this.sceneOffset.x += deltaX;
+        this.sceneOffset.x += deltaY;
+        this.iterate(this.translateObject, this, deltaX, deltaY);
     }
 
 }
