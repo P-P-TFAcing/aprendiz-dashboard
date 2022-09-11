@@ -1,3 +1,21 @@
+import PointerEventHandler from './PointerEventHandler.js';
+
+class RegionPointerEventHandler extends PointerEventHandler {
+
+    onPointerDown(event) {
+        console.log('onPointerDown', event);
+    }
+
+    onPointerUp(event) {
+        console.log('onPointerUp', event);
+    }
+    
+    onPointerMove(event) {
+        console.log('onPointerMove', event);
+    }
+
+}
+
 export default class ScrollableContainer extends Phaser.GameObjects.Container {
 
     constructor(scene, x, y) {

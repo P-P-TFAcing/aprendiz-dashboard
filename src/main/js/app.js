@@ -138,24 +138,6 @@ class MainScene extends Phaser.Scene {
         console.log('host websocket opened');
     }
 
-    pointerDownHandler(event) {
-        // mouse down
-        console.log('pointerdown', event.downX, event.downY);
-        this.data.mainScrollableContainer.setOffset(event.downX, event.downY);
-//        let rect = this.data.testRect;
-//        rect.setPosition(rect.x + 1, rect.y + 1);
-    }
-
-    pointerUpHandler(event) {
-        console.log('pointerup', event.upX, event.upY);
-
-    }
-
-    pointerMoveHandler(event) {
-        console.log('pointermove', event.worldX, event.worldY);
-
-    }
-
     loadCourseIntoScene(course) {
 
         console.log('loading course', course);
@@ -326,6 +308,8 @@ class MainScene extends Phaser.Scene {
         rectangle.setFillStyle(0xAAAAAA);
         this.data.mainScrollableContainer.add(rectangle);
         this.data.testRect = rectangle;
+        
+        new ScrollableContainer(this);
 
         // now we have access to courses
 //        for (const course of this.courses) {
