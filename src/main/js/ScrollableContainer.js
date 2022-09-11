@@ -32,7 +32,7 @@ class RegionPointerEventHandler extends PointerEventHandler {
             if ((x >= parent.x) && (y >= parent.y)) {
                 let deltaX = x - this.dragContext.startPosition.x;
                 let deltaY = y - this.dragContext.startPosition.y;
-                console.log('drag scene', deltaX, deltaY);
+                console.log('drag scene', event.position, deltaX, deltaY);
             }
         }
     }
