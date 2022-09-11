@@ -295,10 +295,9 @@ class MainScene extends Phaser.Scene {
         this.data.sceneScale = 1.0;
         // graphics
         this.mainContainer = this.add.container(50, 50);
-        this.mainContainer.setInteractive();
-        this.mainContainer.input.on('pointerdown', this.pointerDownHander);
-        this.mainContainer.input.on('pointerup', this.pointerUpHander);
-        this.mainContainer.input.on('pointermove', this.pointerMoveHander);
+        this.input.on('pointerdown', this.pointerDownHander);
+        this.input.on('pointerup', this.pointerUpHander);
+        this.input.on('pointermove', this.pointerMoveHander);
         let rectangle = this.add.rectangle(0, 0, 500, 200);
         rectangle.setOrigin(0, 0);
         rectangle.setStrokeStyle(2, 0xEEEEEE, 2);
