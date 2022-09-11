@@ -14,7 +14,7 @@ class RegionPointerEventHandler extends PointerEventHandler {
         if ((x >= parent.x) && (y >= parent.y)) {
             // mark the global start
             this.dragContext = {
-                startPosition: {x: x, y: y}
+                position: {x: x, y: y}
             };
             console.log('start dragging', this.dragContext);
         }
@@ -30,11 +30,13 @@ class RegionPointerEventHandler extends PointerEventHandler {
             let x = event.position.x;
             let y = event.position.y;
             if ((x >= parent.x) && (y >= parent.y)) {
-                let deltaX = x - this.dragContext.startPosition.x;
-                let deltaY = y - this.dragContext.startPosition.y;
+                let deltaX = x - this.dragContext.position.x;
+                let deltaY = y - this.dragContext.position.y;
                 console.log('drag scene', event.position, deltaX, deltaY);
                 // scroll the scene
                 parent.scrollRegion(deltaX, deltaY);
+                this.dragContext.position.x += deltaX;
+                this.dragContext.position.y += deltaY;
             }
         }
     }
