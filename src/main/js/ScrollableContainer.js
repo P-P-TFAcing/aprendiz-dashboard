@@ -12,8 +12,9 @@ class RegionPointerEventHandler extends PointerEventHandler {
         let x = event.downX;
         let y = event.downY;
         if ((x >= parent.x) && (y >= parent.y)) {
+            // mark the global start
             this.dragContext = {
-                startPosition: {x: x - parent.x, y: y - parent.y}
+                startPosition: {x: x, y: y}
             };
             console.log('start dragging', this.dragContext);
         }
