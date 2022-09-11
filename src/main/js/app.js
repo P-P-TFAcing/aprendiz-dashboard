@@ -111,7 +111,28 @@ class ZoomOutButton extends Button {
         }
     }
 }
-;
+
+import DraggableContainer from './DraggableContainer.js';
+
+class ScrollableContainer extends Phaser.Container {
+
+    
+    
+}
+
+export default class TextObject extends DraggableContainer {
+
+    constructor(scene, x, y) {
+        super(scene, x, y, 'TextObject');
+        let text = scene.add.text(0, 0, 'this is text', {fontSize: '32px'});
+        text.setOrigin(0, 0);
+        this.width = text.width;
+        this.height = text.height;
+        this.container.add(text);
+    }
+
+}
+
 
 class MainScene extends Phaser.Scene {
 
@@ -296,15 +317,20 @@ class MainScene extends Phaser.Scene {
         this.data.sceneObjects = [];
         this.data.sceneScale = 1.0;
         // graphics
-        this.data.mainContainer = this.add.container(0, 0);
+        //this.data.mainContainer = this.add.container(0, 64);
         this.input.on('pointerdown', this.pointerDownHandler.bind(this));
         this.input.on('pointerup', this.pointerUpHandler.bind(this));
         this.input.on('pointermove', this.pointerMoveHandler.bind(this));
+        
+        //let testText = new TextObject(this, 100, 100);
+        this.data.mainScrollableContainer = new ScrollableContainer();
+        this.add(this.data.mainScrollableContainer);
+        
         let rectangle = this.add.rectangle(0, 0, 500, 200);
         rectangle.setOrigin(0, 0);
-        rectangle.setStrokeStyle(2, 0xEEEEEE, 2);
+        rectangle.setStrokeStyle(2, 0x0000EE, 2);
         rectangle.setFillStyle(0xAAAAAA);
-        this.data.mainContainer.add(rectangle);
+        this.data.mainScrollableContainer.add(rectangle);
         this.data.testRect = rectangle;
         
         // now we have access to courses
@@ -315,7 +341,6 @@ class MainScene extends Phaser.Scene {
 //        this.data.sceneObjects.push(new LegendRect(this, this.courses, 16, 64));
     }
 }
-;
 
 angular.module("AprendizApplication", ['ngCookies']);
 
@@ -333,8 +358,8 @@ angular.module("AprendizApplication").controller('MainViewController', function 
     let config = {
         type: Phaser.AUTO,
         parent: 'aprendiz-block',
-        width: screenWidth,
-        height: screenHeight
+        width: screenWidth / 2,
+        height: screenHeight / 2
     };
 
     let game = new Phaser.Game(config);
