@@ -20,11 +20,19 @@ class RegionPointerEventHandler extends PointerEventHandler {
     }
 
     onPointerUp(event, scene) {
-        console.log('onPointerUp', event, scene);
+        //console.log('onPointerUp', event, scene);
     }
     
     onPointerMove(event, scene) {
         //console.log('onPointerMove', event, scene);
+        let parent = this.parentScrollableContainer;
+        let x = event.position.x;
+        let y = event.position.y;
+        if((x >= parent.x) && (y >= parent.y)) {
+            let deltaX = x - this.dragContext.startPosition.x;
+            let deltaY = y - this.dragContext.startPosition.y;
+            console.log('drag scene', deltaX, deltaY);
+       }
     }
 
 }
