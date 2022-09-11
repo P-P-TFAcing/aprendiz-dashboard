@@ -23,9 +23,9 @@ export default class PointerEventHandler {
 
     constructor(scene) {
         this.scene = scene;
-        scene.input.on('pointermove', pointerMoveHandler.bind(scene));
-        scene.input.on('pointerdown', pointerDownHandler.bind(scene));
-        scene.input.on('pointerup', pointerUpHandler.bind(scene));
+        scene.input.on('pointermove', this.pointerMoveHandler.bind(scene));
+        scene.input.on('pointerdown', this.pointerDownHandler.bind(scene));
+        scene.input.on('pointerup', this.pointerUpHandler.bind(scene));
     }
 
 }
