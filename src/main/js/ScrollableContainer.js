@@ -14,7 +14,7 @@ export default class ScrollableContainer extends Phaser.GameObjects.Container {
         console.log('scrollable set offset', x, y);
         this.sceneOffset.x = x;
         this.sceneOffset.y = y;
-        this.iterate(this.updateChildOffset);
+        this.iterate(this.updateChildOffset.bind(this));
     }
 
 }
