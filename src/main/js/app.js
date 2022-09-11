@@ -112,8 +112,6 @@ class ZoomOutButton extends Button {
     }
 }
 
-import DraggableContainer from './DraggableContainer.js';
-
 class ScrollableContainer extends Phaser.Container {
 
     
