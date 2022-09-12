@@ -284,7 +284,7 @@ class MainScene extends Phaser.Scene {
 
         //let testText = new TextObject(this, 100, 100);
         this.data.mainScrollableContainer = this.add.scrollableContainer(0, 100);        
-        let scrollableContainerMaskRect = new Rectangle(this, 0, 100, 5000, 10000);
+        let scrollableContainerMaskRect = this.make.rectangle(0, 100, 5000, 10000);
         let scrollableContainerMask = new Phaser.Display.Masks.GeometryMask(this, scrollableContainerMaskRect);
         this.data.mainScrollableContainer.setMask(scrollableContainerMask);
 
