@@ -15,8 +15,8 @@ export default class ScrollableContainer extends Phaser.GameObjects.Container {
             // mark the global start
             this.dragContext = {
                 containerStartPosition: {
-                    x: parent.x,
-                    y: parent.y
+                    x: this.x,
+                    y: this.y
                 }
             };
             console.log('start dragging scene', this.dragContext);
