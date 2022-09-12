@@ -115,7 +115,7 @@ class MainScene extends Phaser.Scene {
 
         console.log('loading course', course, courseIndex);
 
-        this.add.courseTitle(16 + (courseIndex * 8), 16 + (courseIndex * 8), course);                
+        this.data.mainScrollableContainer.add(this.add.courseTitle(16 + (courseIndex * 8), 16 + (courseIndex * 8), course));                
 
 //        let ypos = 200;
 //        let xpos = 100;
