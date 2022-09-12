@@ -16,33 +16,34 @@ export default class DraggableContainer {
     }
 
     draggable(graphicsObject) {
-        graphicsObject.setInteractive({useHandCursor: true}).on('pointerdown', this.mouseDownHandler.bind(this));
+        this.containerObject = graphicsObject;
+        //graphicsObject.setInteractive({useHandCursor: true}).on('pointerdown', this.mouseDownHandler.bind(this));
     }
 
-    mouseDownHandler(event) {
-        // start dragging
-        event.stopPropagation();
-        let deltaX = this.container.x - event.downX;
-        let deltaY = this.container.y - event.downY;
-        let dragRect = this.scene.add.rectangle(this.container.x, this.container.y, this.width, this.height);
-        let sceneScale = this.scene.data.sceneScale;
-        dragRect.setScale(sceneScale);
-        dragRect.setStrokeStyle(2, 0x00ffff, 2);
-        dragRect.setOrigin(0, 0);
-        let dragContext = {
-            dragRect: dragRect,
-            deltaX: deltaX,
-            deltaY: deltaY,
-            container: this.container,
-            parentObject: this
-        };
-        if(this.scene.data.sceneDragContext) {
-            delete this.scene.data.sceneDragContext;
-            console.log('removed scene drag context');
-        }        
-        this.scene.data.dragContext = dragContext;
-        console.log('start drag object', this);
-    }
+//    mouseDownHandler(event) {
+//        // start dragging
+//        event.stopPropagation();
+//        let deltaX = this.container.x - event.downX;
+//        let deltaY = this.container.y - event.downY;
+//        let dragRect = this.scene.add.rectangle(this.container.x, this.container.y, this.width, this.height);
+//        let sceneScale = this.scene.data.sceneScale;
+//        dragRect.setScale(sceneScale);
+//        dragRect.setStrokeStyle(2, 0x00ffff, 2);
+//        dragRect.setOrigin(0, 0);
+//        let dragContext = {
+//            dragRect: dragRect,
+//            deltaX: deltaX,
+//            deltaY: deltaY,
+//            container: this.container,
+//            parentObject: this
+//        };
+//        if(this.scene.data.sceneDragContext) {
+//            delete this.scene.data.sceneDragContext;
+//            console.log('removed scene drag context');
+//        }        
+//        this.scene.data.dragContext = dragContext;
+//        console.log('start drag object', this);
+//    }
 
 }
 

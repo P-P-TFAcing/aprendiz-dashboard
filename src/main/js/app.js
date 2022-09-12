@@ -98,21 +98,7 @@ class ZoomOutButton extends Button {
     }
 }
 
-import ScrollableContainerPlugin from './ScrollableContainerPlugin.js';
-
-export default class TextObject extends DraggableContainer {
-
-    constructor(scene, x, y) {
-        super(scene, x, y, 'TextObject');
-        let text = scene.add.text(0, 0, 'this is text', {fontSize: '32px'});
-        text.setOrigin(0, 0);
-        this.width = text.width;
-        this.height = text.height;
-        this.container.add(text);
-    }
-
-}
-
+import DashboardAppPlugin from './DashboardAppPlugin.js';
 
 class MainScene extends Phaser.Scene {
 
@@ -129,9 +115,9 @@ class MainScene extends Phaser.Scene {
 
         console.log('loading course', course);
 
-//        let courseTitle = new CourseTitle(this, course, 16, 16);
-//        this.data.courseTitle = courseTitle;
-//        this.data.sceneObjects.push(courseTitle);
+        let courseTitle = new CourseTitle(this, course, 16, 16);
+        this.data.courseTitle = courseTitle;
+        this.data.sceneObjects.push(courseTitle);
 
 //        let ypos = 200;
 //        let xpos = 100;
@@ -256,7 +242,7 @@ class MainScene extends Phaser.Scene {
 //                    console.log('scene offset', this.scene.data.sceneOffset);
 //                }
 //            }
-//        });
+        ///});
     }
 
     create(config) {
@@ -283,7 +269,7 @@ class MainScene extends Phaser.Scene {
         buttonPanel.addButton(new FullScreenButton(this, 1450, 20, 'Full-Screen'));
 
         //let testText = new TextObject(this, 100, 100);
-        this.data.mainScrollableContainer = this.add.scrollableContainer(0, 100, 5000, 5000);        
+        this.data.mainScrollableContainer = this.add.scrollableContainer(0, 100, 50000, 50000);        
 
         let regionRect = this.add.rectangle(0, 0, 19200, 10800);
         regionRect.setOrigin(0, 0);
@@ -297,11 +283,11 @@ class MainScene extends Phaser.Scene {
         this.data.mainScrollableContainer.add(rectangle);
         
         // now we have access to courses
-//        for (const course of this.courses) {
-//            this.loadCourseIntoScene(course);
-//        }
-//        // legend rect
-//        this.data.sceneObjects.push(new LegendRect(this, this.courses, 16, 64));
+        for (const course of this.courses) {
+            this.loadCourseIntoScene(course);
+        }
+        // legend rect
+        this.data.sceneObjects.push(new LegendRect(this, this.courses, 16, 64));
     }
 }
 

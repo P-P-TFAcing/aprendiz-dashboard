@@ -1,9 +1,9 @@
 import DraggableContainer from './DraggableContainer.js';
 
-export default class CourseTitle extends DraggableContainer {
+export default class CourseTitle extends Phaser.GameObjects.Container {
 
-    constructor(scene, course, x, y) {
-        super(scene, x, y, 'CourseTitle');
+    constructor(scene, x, y, course) {
+        super(scene, x, y);
         this.course = course;
         let metadata = course.metadata;
         if(metadata) {
@@ -19,8 +19,8 @@ export default class CourseTitle extends DraggableContainer {
         this.width = text.width;
         this.height = text.height;
         this.titleText = text;
-        this.container.add(text);
-        this.draggable(text);
+        this.add(text);
+        //this.draggable(text);
     }
 
 }
