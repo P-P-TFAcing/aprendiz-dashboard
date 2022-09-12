@@ -309,7 +309,7 @@ angular.module("AprendizApplication").controller('MainViewController', function 
         parent: 'aprendiz-block',
         plugins: {
             global: [
-                {key: 'ScrollableContainerPlugin', plugin: ScrollableContainerPlugin, start: true}
+                {key: 'ScrollableContainerPlugin', plugin: DashboardAppPlugin, start: true}
             ]
         },
         width: screenWidth,
