@@ -1,4 +1,6 @@
 
+/* global Phaser */
+
 export default class ScrollableContainer extends Phaser.GameObjects.Container {
 
     constructor(scene, x, y) {
@@ -6,6 +8,11 @@ export default class ScrollableContainer extends Phaser.GameObjects.Container {
         scene.input.on('pointermove', this.onPointerMove.bind(this));
         scene.input.on('pointerdown', this.onPointerDown.bind(this));
         scene.input.on('pointerup', this.onPointerUp.bind(this));        
+        let graphics = scene.make.graphics();        
+        graphics.rectangle(0,0,500,500);
+        let scrollableContainerMask = new Phaser.Display.Masks.GeometryMask(scene, graphics);
+        this.setMask(scrollableContainerMask);
+
     }
     
     onPointerDown(event) {
