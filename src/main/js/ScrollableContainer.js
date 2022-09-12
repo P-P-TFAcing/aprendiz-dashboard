@@ -17,6 +17,10 @@ export default class ScrollableContainer extends Phaser.GameObjects.Container {
                 containerStartPosition: {
                     x: this.x,
                     y: this.y
+                },
+                pointerStartPosition: {
+                    x: x,
+                    y: y
                 }
             };
             console.log('start dragging scene', this.dragContext);
@@ -33,8 +37,8 @@ export default class ScrollableContainer extends Phaser.GameObjects.Container {
         if (this.dragContext) {
             let x = event.position.x;
             let y = event.position.y;
-            let deltaX = x - this.dragContext.containerStartPosition.x;
-            let deltaY = y - this.dragContext.containerStartPosition.y;
+            let deltaX = x - this.dragContext.pointerStartPosition.x;
+            let deltaY = y - this.dragContext.pointerStartPosition.y;
             console.log('drag scene', event.position, deltaX, deltaY);
             this.setPosition(this.dragContext.containerStartPosition.x + deltaX, this.dragContext.containerStartPosition.y + deltaY);
         }
