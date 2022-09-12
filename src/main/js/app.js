@@ -111,13 +111,11 @@ class MainScene extends Phaser.Scene {
         console.log('host websocket opened');
     }
 
-    loadCourseIntoScene(course) {
+    loadCourseIntoScene(course, courseIndex) {
 
-        console.log('loading course', course);
+        console.log('loading course', course, courseIndex);
 
-        let courseTitle = new CourseTitle(this, course, 16, 16);
-        this.data.courseTitle = courseTitle;
-        this.data.sceneObjects.push(courseTitle);
+        this.add.courseTitle(this, 16 * courseIndex, 16 * courseIndex, course);                
 
 //        let ypos = 200;
 //        let xpos = 100;
@@ -283,8 +281,10 @@ class MainScene extends Phaser.Scene {
         this.data.mainScrollableContainer.add(rectangle);
         
         // now we have access to courses
+        let courseIndex = 0;
         for (const course of this.courses) {
-            this.loadCourseIntoScene(course);
+            this.loadCourseIntoScene(course, courseIndex);
+            courseIndex++;
         }
         // legend rect
         this.data.sceneObjects.push(new LegendRect(this, this.courses, 16, 64));
