@@ -9,10 +9,9 @@ export default class ScrollableContainer extends Phaser.GameObjects.Container {
     }
     
     onPointerDown(event) {
-        let parent = this.parentScrollableContainer;
         let x = event.downX;
         let y = event.downY;
-        if ((x >= parent.x) && (y >= parent.y)) {
+        if ((x >= this.x) && (y >= this.y)) {
             // mark the global start
             this.dragContext = {
                 containerStartPosition: {
@@ -20,7 +19,7 @@ export default class ScrollableContainer extends Phaser.GameObjects.Container {
                     y: parent.y
                 }
             };
-            console.log('start dragging', this.dragContext);
+            console.log('start dragging scene', this.dragContext);
         }
     }
 
