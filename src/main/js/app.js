@@ -115,7 +115,7 @@ class MainScene extends Phaser.Scene {
 
         console.log('loading course', course, courseIndex);
 
-        this.data.mainScrollableContainer.add(this.add.courseTitle(16 + (courseIndex * 8), 16 + (courseIndex * 8), course));                
+        this.data.mainScrollableContainer.add(this.add.courseTitle(16 + (courseIndex * 64), 16 + (courseIndex * 64), course));                
 
 //        let ypos = 200;
 //        let xpos = 100;
@@ -274,11 +274,11 @@ class MainScene extends Phaser.Scene {
         regionRect.setStrokeStyle(2, 0x0000EE, 2);        
         this.data.mainScrollableContainer.add(regionRect);
 
-        let rectangle = this.add.rectangle(50, 0, 500, 200);
-        rectangle.setOrigin(0, 0);
-        rectangle.setStrokeStyle(2, 0x0000EE, 2);
-        rectangle.setFillStyle(0xAAAAAA);
-        this.data.mainScrollableContainer.add(rectangle);
+//        let rectangle = this.add.rectangle(50, 0, 500, 200);
+//        rectangle.setOrigin(0, 0);
+//        rectangle.setStrokeStyle(2, 0x0000EE, 2);
+//        rectangle.setFillStyle(0xAAAAAA);
+//        this.data.mainScrollableContainer.add(rectangle);
         
         // now we have access to courses
         let courseIndex = 0;
