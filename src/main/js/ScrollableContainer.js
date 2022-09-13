@@ -8,15 +8,15 @@ export default class ScrollableContainer extends Phaser.GameObjects.Container {
         this.draggableObjects = [];
         scene.input.on('pointermove', this.onPointerMove.bind(this));
         scene.input.on('pointerdown', this.onPointerDown.bind(this));
-        scene.input.on('pointerup', this.onPointerUp.bind(this));        
-        let graphics = scene.make.graphics();        
+        scene.input.on('pointerup', this.onPointerUp.bind(this));
+        let graphics = scene.make.graphics();
         graphics.fillStyle(0xFFFFFF, 1.0);
-        graphics.fillRect(x,y,width,height);
+        graphics.fillRect(x, y, width, height);
         let scrollableContainerMask = new Phaser.Display.Masks.GeometryMask(scene, graphics);
         this.setMask(scrollableContainerMask);
 
     }
-    
+
     onPointerDown(event) {
         let x = event.downX;
         let y = event.downY;
@@ -32,14 +32,14 @@ export default class ScrollableContainer extends Phaser.GameObjects.Container {
                     y: y
                 }
             };
-            console.log('start dragging scene', this.dragContext);
+            console.log('start dragging scene', this.x, this.y);
         }
     }
 
     onPointerUp(event) {
-        if(this.dragContext) {
+        if (this.dragContext) {
             delete this.dragContext;
-            console.log('stop dragging scene');
+            console.log('stop dragging scene', this.x, this.y);
         }
     }
 
@@ -48,10 +48,10 @@ export default class ScrollableContainer extends Phaser.GameObjects.Container {
             let x = event.position.x;
             let y = event.position.y;
             let deltaX = x - this.dragContext.pointerStartPosition.x;
-            let deltaY = y - this.dragContext.pointerStartPosition.y;            
+            let deltaY = y - this.dragContext.pointerStartPosition.y;
             this.setPosition(this.dragContext.containerStartPosition.x + deltaX, this.dragContext.containerStartPosition.y + deltaY);
         }
-    }    
+    }
 
 }
 
