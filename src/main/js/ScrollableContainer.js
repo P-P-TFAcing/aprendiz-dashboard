@@ -20,7 +20,6 @@ export default class ScrollableContainer extends Phaser.GameObjects.Container {
     onPointerDown(event) {
         let x = event.downX;
         let y = event.downY;
-        let sceneScale = this.getScale();
         x *= this.scaleX;
         y *= this.scaleY;
         if (this.selectedObject) {
