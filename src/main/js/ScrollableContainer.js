@@ -22,7 +22,7 @@ export default class ScrollableContainer extends Phaser.GameObjects.Container {
         let y = event.downY;
         if ((x >= this.x) && (y >= this.y)) {
             // mark the global start
-            this.dragContext = {
+            this.sceneDragContext = {
                 containerStartPosition: {
                     x: this.x,
                     y: this.y
@@ -37,19 +37,35 @@ export default class ScrollableContainer extends Phaser.GameObjects.Container {
     }
 
     onPointerUp(event) {
-        if (this.dragContext) {
-            delete this.dragContext;
+        if (this.sceneDragContext) {
+            delete this.sceneDragContext;
             console.log('stop dragging scene', this.x, this.y);
         }
     }
 
     onPointerMove(event) {
-        if (this.dragContext) {
+        if (this.sceneDragContext) {
             let x = event.position.x;
             let y = event.position.y;
-            let deltaX = x - this.dragContext.pointerStartPosition.x;
-            let deltaY = y - this.dragContext.pointerStartPosition.y;
-            this.setPosition(this.dragContext.containerStartPosition.x + deltaX, this.dragContext.containerStartPosition.y + deltaY);
+            let deltaX = x - this.sceneDragContext.pointerStartPosition.x;
+            let deltaY = y - this.sceneDragContext.pointerStartPosition.y;
+            this.setPosition(this.sceneDragContext.containerStartPosition.x + deltaX, this.sceneDragContext.containerStartPosition.y + deltaY);
+        }
+        if(!this.selectedObject) {
+            for(const draggableObject of this.draggableObjects) {
+                if((x >= draggableObject.x) && (y <= draggableObject.y)) {
+                    let x2 = draggableObject.width - draggableObject.x + 1;
+                    let y2 = draggableObject. height - draggableObject.y + 1;
+                    if((x <= x2) && (y <= y2)) {
+                        draggableObject.selectObject();
+                        this.selectedObject = draggableObject;
+                        break;
+                    }
+                }
+            }            
+        } else {
+            // an object is selected.
+            
         }
     }
 
