@@ -90,7 +90,7 @@ export default class ScrollableContainer extends Phaser.GameObjects.Container {
             // select the object we're hovering
             x -= this.x;
             y -= this.y;
-            console.log('move mouse local', x, y);
+            //console.log('move mouse local', x, y);
             for (const draggableObject of this.draggableObjects) {
                 if (draggableObject.isPointIn(x, y)) {
                     console.log('select object', draggableObject);
