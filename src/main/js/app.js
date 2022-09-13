@@ -287,7 +287,7 @@ class MainScene extends Phaser.Scene {
             courseIndex++;
         }
         // legend rect
-        this.data.sceneObjects.push(new LegendRect(this, this.courses, 16, 64));
+        //this.data.sceneObjects.push(new LegendRect(this, this.courses, 16, 64));
     }
 }
 
