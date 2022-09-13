@@ -69,7 +69,7 @@ export default class ScrollableContainer extends Phaser.GameObjects.Container {
             let deltaY = y - this.sceneDragContext.pointerStartPosition.y;
             this.setPosition(this.sceneDragContext.containerStartPosition.x + deltaX, this.sceneDragContext.containerStartPosition.y + deltaY);
         }
-        if (this.selectedObject) {
+        if ((this.selectedObject) && (!this.objectDragContext)) {
             // an object is selected.
             x -= this.x;
             y -= this.y;
