@@ -20,6 +20,9 @@ export default class ScrollableContainer extends Phaser.GameObjects.Container {
     onPointerDown(event) {
         let x = event.downX;
         let y = event.downY;
+        let sceneScale = this.getScale();
+        x *= sceneScale;
+        y *= sceneScale;        
         if (this.selectedObject) {
             x -= this.x;
             y -= this.y;
@@ -64,6 +67,9 @@ export default class ScrollableContainer extends Phaser.GameObjects.Container {
     onPointerMove(event) {
         let x = event.position.x;
         let y = event.position.y;
+        let sceneScale = this.getScale();
+        x *= sceneScale;
+        y *= sceneScale;
         if (this.sceneDragContext) {
             let deltaX = x - this.sceneDragContext.pointerStartPosition.x;
             let deltaY = y - this.sceneDragContext.pointerStartPosition.y;
