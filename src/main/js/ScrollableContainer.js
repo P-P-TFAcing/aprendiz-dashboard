@@ -77,9 +77,10 @@ export default class ScrollableContainer extends Phaser.GameObjects.Container {
                 if(!this.objectDragContext) {
                     // only deselect if we're not dragging
                     this.selectedObject.deselectObject();
-                    delete this.selectedObject;
+                    delete this.selectedObject;                    
                 }
-            } else if(this.objectDragContext) {
+            }
+            if(this.objectDragContext) {
                 // drag object?
                 let deltaX = x - this.objectDragContext.pointerStartPosition.x;
                 let deltaY = y - this.objectDragContext.pointerStartPosition.y;
