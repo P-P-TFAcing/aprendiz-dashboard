@@ -306,14 +306,18 @@ angular.module("AprendizApplication").controller('MainViewController', function 
 
     let config = {
         type: Phaser.AUTO,
-        parent: 'aprendiz-block',
+        scale: {          
+                parent: 'aprendiz-block',
+                mode: Phaser.Scale.FIT,
+                autoCenter: Phaser.Scale.CENTER_BOTH,
+                width: 1920,
+                height: 1080
+        },
         plugins: {
             global: [
                 {key: 'ScrollableContainerPlugin', plugin: DashboardAppPlugin, start: true}
             ]
-        },
-        width: screenWidth,
-        height: screenHeight
+        }
     };
 
     let game = new Phaser.Game(config);
