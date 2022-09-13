@@ -28,6 +28,17 @@ export default class DraggableContainer extends Phaser.GameObjects.Container {
         this.selected = false;
         this.selectRect.destroy();
     }
+    
+    isPointIn(x, y) {
+        if((x >= this.x) && (y >= this.y)) {
+            let x2 = this.width + this.x;
+            let y2 = this. height + this.y;
+            if((x <= x2) && (y <= y2)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
         //    
 //    mouseDownHandler(event) {
