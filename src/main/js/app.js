@@ -256,7 +256,6 @@ class MainScene extends Phaser.Scene {
         this.websocket = new WebSocketContext(this.sys.game.scene, this.onWebSocketOpen.bind(this));        
         this.data.sceneScale = 1.0;
         // graphics
-
         let buttonPanel = new ButtonPanel(this, 4, 4, 'Aprendiz Dashboard');
         buttonPanel.addButton(new SaveButton(this, 800, 20, 'Save'));
         buttonPanel.addSpacer(48);
@@ -271,13 +270,7 @@ class MainScene extends Phaser.Scene {
         regionRect.setOrigin(0, 0);
         regionRect.setStrokeStyle(2, 0x0000EE, 2);        
         this.data.mainScrollableContainer.add(regionRect);
-
-//        let rectangle = this.add.rectangle(50, 0, 500, 200);
-//        rectangle.setOrigin(0, 0);
-//        rectangle.setStrokeStyle(2, 0x0000EE, 2);
-//        rectangle.setFillStyle(0xAAAAAA);
-//        this.data.mainScrollableContainer.add(rectangle);
-        
+       
         // now we have access to courses
         let courseIndex = 0;
         for (const course of this.courses) {
