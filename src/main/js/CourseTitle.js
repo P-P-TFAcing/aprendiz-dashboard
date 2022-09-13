@@ -2,8 +2,8 @@ import DraggableContainer from './DraggableContainer.js';
 
 export default class CourseTitle extends DraggableContainer {
 
-    constructor(scene, x, y, course) {
-        super(scene, x, y);
+    constructor(scene, scrollableContainer, x, y, course) {
+        super(scene, scrollableContainer, x, y);
         this.course = course;
         let metadata = course.metadata;
         if(metadata) {

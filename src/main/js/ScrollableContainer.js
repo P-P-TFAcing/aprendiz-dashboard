@@ -5,6 +5,7 @@ export default class ScrollableContainer extends Phaser.GameObjects.Container {
 
     constructor(scene, x, y, width, height) {
         super(scene, x, y);
+        this.draggableObjects = [];
         scene.input.on('pointermove', this.onPointerMove.bind(this));
         scene.input.on('pointerdown', this.onPointerDown.bind(this));
         scene.input.on('pointerup', this.onPointerUp.bind(this));        

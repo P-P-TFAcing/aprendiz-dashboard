@@ -115,7 +115,7 @@ class MainScene extends Phaser.Scene {
 
         console.log('loading course', course, courseIndex);
 
-        this.data.mainScrollableContainer.add(this.add.courseTitle(16 + (courseIndex * 64), 16 + (courseIndex * 64), course));                
+        this.data.mainScrollableContainer.add(this.add.courseTitle(16 + (courseIndex * 64), 16 + (courseIndex * 64), this.data.mainScrollableContainer, course));                
 
 //        let ypos = 200;
 //        let xpos = 100;
@@ -253,8 +253,7 @@ class MainScene extends Phaser.Scene {
             };
         }
         // open websocket
-        this.websocket = new WebSocketContext(this.sys.game.scene, this.onWebSocketOpen.bind(this));
-        this.data.sceneObjects = [];
+        this.websocket = new WebSocketContext(this.sys.game.scene, this.onWebSocketOpen.bind(this));        
         this.data.sceneScale = 1.0;
         // graphics
 

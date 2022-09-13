@@ -4,7 +4,7 @@
  */
 export default class DraggableContainer extends Phaser.GameObjects.Container {
 
-    constructor(scene, x, y, width, height, children) {
+    constructor(scene, scrollableContainer, x, y, width, height, children) {
         super(scene, x, y, children);
         this.scene = scene;
         this.container = scene.add.container(x, y);
@@ -12,6 +12,8 @@ export default class DraggableContainer extends Phaser.GameObjects.Container {
         this.y = y;
         this.width = width;
         this.height = height;
+        this.scrollableContainer = scrollableContainer;
+        scrollableContainer.draggableObjects.push(this);        
     }
 
 //    mouseDownHandler(event) {
