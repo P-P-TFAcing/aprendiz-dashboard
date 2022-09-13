@@ -20,6 +20,21 @@ export default class ScrollableContainer extends Phaser.GameObjects.Container {
     onPointerDown(event) {
         let x = event.downX;
         let y = event.downY;
+        if (this.selectedObject) {
+            x -= this.x;
+            y -= this.y;
+            this.objectDragContext = {
+                objectStartPosition: {
+                    x: this.selectedObject.x,
+                    y: this.selectedObject.y
+                },
+                pointerStartPosition: {
+                    x: x,
+                    y: y
+                }
+            };
+            console.log('start dragging object', this.objectDragContext);            
+        }
         if ((x >= this.x) && (y >= this.y)) {
             // mark the global start
             this.sceneDragContext = {
@@ -37,6 +52,10 @@ export default class ScrollableContainer extends Phaser.GameObjects.Container {
     }
 
     onPointerUp(event) {
+        if(this.objectDragContext) {
+            delete this.objectDragContext;
+            console.log('stop dragging object', this.x, this.y);            
+        }
         if (this.sceneDragContext) {
             delete this.sceneDragContext;
             console.log('stop dragging scene', this.x, this.y);
@@ -45,32 +64,32 @@ export default class ScrollableContainer extends Phaser.GameObjects.Container {
 
     onPointerMove(event) {
         let x = event.position.x;
-        let y = event.position.y;        
+        let y = event.position.y;
         if (this.sceneDragContext) {
             let deltaX = x - this.sceneDragContext.pointerStartPosition.x;
             let deltaY = y - this.sceneDragContext.pointerStartPosition.y;
             this.setPosition(this.sceneDragContext.containerStartPosition.x + deltaX, this.sceneDragContext.containerStartPosition.y + deltaY);
         }
-        if(!this.selectedObject) {
+        if (this.selectedObject) {
+            // an object is selected.
+            x -= this.x;
+            y -= this.y;
+            if (!this.selectedObject.isPointIn(x, y)) {
+                this.selectedObject.deselectObject();
+                delete this.selectedObject;
+            }
+        } else {
             x -= this.x;
             y -= this.y;
             console.log('move mouse local', x, y);
-            for(const draggableObject of this.draggableObjects) {
-                if(draggableObject.isPointIn(x, y)) {
+            for (const draggableObject of this.draggableObjects) {
+                if (draggableObject.isPointIn(x, y)) {
                     console.log('select object', draggableObject);
                     draggableObject.selectObject();
                     this.selectedObject = draggableObject;
                     break;
                 }
-            }            
-        } else {
-            // an object is selected.
-            x -= this.x;
-            y -= this.y;
-            if(!this.selectedObject.isPointIn(x, y)) {
-                this.selectedObject.deselectObject();
-                delete this.selectedObject;
-            }                
+            }
         }
     }
 
