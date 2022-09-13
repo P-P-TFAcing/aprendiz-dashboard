@@ -67,7 +67,7 @@ export default class ScrollableContainer extends Phaser.GameObjects.Container {
             // an object is selected.
             x -= this.x;
             y -= this.y;
-            if(this.selectedObject.isPointIn(x, y)) {
+            if(!this.selectedObject.isPointIn(x, y)) {
                 this.selectedObject.deselectObject();
                 delete this.selectedObject;
             }                
