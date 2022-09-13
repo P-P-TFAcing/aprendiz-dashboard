@@ -1,23 +1,21 @@
 /**
- * draggable container
+ * Draggable container is a Phaser container that also has width and height and 
+ * can be dragged in the ScrollableContainer.
  */
-export default class DraggableContainer {
+export default class DraggableContainer extends Phaser.GameObjects.Container {
 
     setPosition(x, y) {
         this.container.setPosition(x, y);
     }
 
-    constructor(scene, x, y, containerId) {
+    constructor(scene, x, y, width, height, children) {
+        super(scene, x, y, children);
         this.scene = scene;
         this.container = scene.add.container(x, y);
         this.x = x;
         this.y = y;
-        this.containerId = containerId;
-    }
-
-    draggable(graphicsObject) {
-        this.containerObject = graphicsObject;
-        //graphicsObject.setInteractive({useHandCursor: true}).on('pointerdown', this.mouseDownHandler.bind(this));
+        this.width = width;
+        this.height = height;
     }
 
 //    mouseDownHandler(event) {

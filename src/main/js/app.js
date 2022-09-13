@@ -33,7 +33,7 @@ class LoaderScene extends Phaser.Scene {
 
     create() {
         console.log('created LoaderScene');
-        let text = this.add.text(50, 50, 'Welcome to Aprendiz Dashboard. Loading Classroom data...', {fontSize: '24px'});
+        let text = this.add.text(50, 50, 'Welcome to Aprendiz Dashboard. Loading Classroom data...', { font: "24px Arial", color: '#FFFFFF' });
         text.setOrigin(0, 0);
         this.progressBar = this.add.graphics();
         this.progressBox = this.add.graphics();
