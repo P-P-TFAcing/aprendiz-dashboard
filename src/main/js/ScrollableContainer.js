@@ -23,8 +23,8 @@ export default class ScrollableContainer extends Phaser.GameObjects.Container {
         if (this.selectedObject) {
             x -= this.x;
             y -= this.y;
-            x *= this.scaleX;
-            y *= this.scaleY;            
+            x /= this.scaleX;
+            y /= this.scaleY;            
             this.objectDragContext = {
                 objectStartPosition: {
                     x: this.selectedObject.x,
@@ -75,8 +75,8 @@ export default class ScrollableContainer extends Phaser.GameObjects.Container {
             // an object is selected.
             x -= this.x;
             y -= this.y;
-            x *= this.scaleX;
-            y *= this.scaleY;
+            x /= this.scaleX;
+            y /= this.scaleY;
             if (!this.selectedObject.isPointIn(x, y)) {
                 if (!this.objectDragContext) {
                     // only deselect if we're not dragging
@@ -94,8 +94,8 @@ export default class ScrollableContainer extends Phaser.GameObjects.Container {
             // select the object we're hovering
             x -= this.x;
             y -= this.y;
-            x *= this.scaleX;
-            y *= this.scaleY;
+            x /= this.scaleX;
+            y /= this.scaleY;
             //console.log('move mouse local', x, y);
             for (const draggableObject of this.draggableObjects) {
                 if (draggableObject.isPointIn(x, y)) {
