@@ -20,6 +20,7 @@ export default class DraggableContainer extends Phaser.GameObjects.Container {
         let selectRect = this.scene.add.rectangle(this.x, this.y, this.width, this.height);
         selectRect.setStrokeStyle(2, 0x00ffff, 2);
         this.selectRect = selectRect;
+        this.scrollableContainer.add(selectRect);
     }
     
     deselectObject() {
