@@ -265,7 +265,7 @@ class MainScene extends Phaser.Scene {
         buttonPanel.addSpacer(96);
         buttonPanel.addButton(new FullScreenButton(this, 1450, 20, 'Full-Screen'));
 
-        this.data.mainScrollableContainer = this.add.scrollableContainer(0, buttonPanel.height + 12, 10000, 5000);        
+        this.data.mainScrollableContainer = this.add.scrollableContainer(this.data.mainScrollableContainer, 0, buttonPanel.height + 12, 10000, 5000);        
 
         let regionRect = this.add.rectangle(0, 0, 19200, 10800);
         regionRect.setOrigin(0, 0);
