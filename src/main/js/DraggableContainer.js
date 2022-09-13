@@ -4,10 +4,6 @@
  */
 export default class DraggableContainer extends Phaser.GameObjects.Container {
 
-    setPosition(x, y) {
-        this.container.setPosition(x, y);
-    }
-
     constructor(scene, x, y, width, height, children) {
         super(scene, x, y, children);
         this.scene = scene;
