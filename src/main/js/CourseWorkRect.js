@@ -6,9 +6,10 @@ export default class CourseWorkRect extends DraggableContainer {
         super(scene, scrollableContainer, 'CourseWorkRect_' + courseWork.id, course.metadata, x, y);        
         this.course = course;
         this.courseWork = courseWork;
-        let text = scene.add.text(16, 16, courseWork.title, {fontSize: '24px'});
+        // title
+        let text = scene.add.text(16, 16, courseWork.title, { font: "24px Arial", color: '#CCEEFF' });
         text.setOrigin(0, 0);
-        this.container.add(text);
+        this.add(text);
         this.width = text.width + 32;
         this.height = text.height + 32;
         let rectangle = scene.add.rectangle(0, 0, this.width, this.height);
