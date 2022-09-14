@@ -58,6 +58,17 @@ class SaveButton extends Button {
         for (const course of this.scene.courses) {
             let metadata = course.metadata;
             if (metadata) {
+                // update the metadata with draggableobjects
+                let containerPositions = {};
+                for (const draggableObject of this.draggableObjects) {
+                    if(draggableObject.course.id === course.id) {
+                        containerPositions[draggableObject.containerId] = {
+                            x: draggableObject.x,
+                            y: draggableObject.y
+                        };
+                    }
+                }
+                metadata.containerPositions = containerPositions;
                 this.scene.websocket.sendMessage('SAVE_COURSE_CONFIGURATION', metadata);
             }
         }
