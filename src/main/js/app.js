@@ -119,7 +119,7 @@ class MainScene extends Phaser.Scene {
         let xpos = 50;
         let ypos = 50;
         for (const courseWork of course.courseWork) {
-            this.data.mainScrollableContainer.add(new CourseWorkRect(this, course, courseWork, xpos, ypos));
+            this.data.mainScrollableContainer.add(new CourseWorkRect(this, xpos, ypos, course, courseWork));
             ypos += 100;
             xpos += 80;
         }
