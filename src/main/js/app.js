@@ -60,7 +60,7 @@ class SaveButton extends Button {
             if (metadata) {
                 // update the metadata with draggableobjects
                 let containerPositions = {};
-                for (const draggableObject of this.draggableObjects) {
+                for (const draggableObject of this.scene.data.mainScrollableContainer.draggableObjects) {
                     if(draggableObject.course.id === course.id) {
                         containerPositions[draggableObject.containerId] = {
                             x: draggableObject.x,
