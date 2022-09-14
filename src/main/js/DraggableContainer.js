@@ -4,8 +4,9 @@
  */
 export default class DraggableContainer extends Phaser.GameObjects.Container {
 
-    constructor(scene, scrollableContainer, x, y, width, height, children) {
+    constructor(scene, scrollableContainer, containerId, metadata, x, y, width, height, children) {
         super(scene, x, y, children);
+        this.containerId = containerId;
         this.scene = scene;        
         this.x = x;
         this.y = y;
@@ -13,6 +14,14 @@ export default class DraggableContainer extends Phaser.GameObjects.Container {
         this.height = height;
         this.scrollableContainer = scrollableContainer;
         scrollableContainer.draggableObjects.push(this);        
+        if(metadata) {
+            let containerMetadata = metadata.containerPositions[this.containerId];
+            if(containerMetadata) {
+                this.x = containerMetadata.x;
+                this.y = containerMetadata.y;
+                this.setPosition(this.x, this.y);
+            }
+        }                
     }
 
     selectObject() {

@@ -72,10 +72,12 @@ public class ClassroomController {
         }
         return result;
     }
-
-    private static final String[] LOADED_COURSES = { "ukxv7mb", "jdcft3j", "7khg5iv", "2oksark" }; 
     
     public static List<Course> getCourses(Credential credential) throws IOException {
+        
+        // @TODO configure somehow. global metadata? (including colors)
+        final String[] loadedCourses = { "ukxv7mb", "jdcft3j", "7khg5iv", "2oksark" }; 
+        
         LOGGER.debug("get all courses");
         Classroom service = getService(credential);
         ListCoursesResponse response = service.courses().list()
@@ -86,8 +88,8 @@ public class ClassroomController {
         if (courses != null) {
             for (Course c : courses) {
                 LOGGER.debug("found course " + c.getName() + " " + c.getId() + " " + c.getDescriptionHeading() + " " + c.getEnrollmentCode());
-                String enrollmentCode = c.getEnrollmentCode();
-                for(String loadedCourseName : LOADED_COURSES) {
+                String enrollmentCode = c.getEnrollmentCode();                
+                for(String loadedCourseName : loadedCourses) {
                     if(loadedCourseName.equals(enrollmentCode)) {
                         result.add(c);
                     }
@@ -120,7 +122,7 @@ public class ClassroomController {
         String courseIdText = (String) configData.get("courseId");
         Long courseId = null;
         if (courseIdText != null) {
-            courseId = Long.parseLong(courseIdText);
+            courseId = Long.valueOf(courseIdText);
         }
         if (courseId != null) {
             try ( Session hsession = Models.MAIN.openSession()) {

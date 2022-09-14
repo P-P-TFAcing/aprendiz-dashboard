@@ -116,14 +116,14 @@ class MainScene extends Phaser.Scene {
         console.log('loading course', course, courseIndex);
 
         this.data.mainScrollableContainer.add(this.add.courseTitle(this.data.mainScrollableContainer, 16 + (courseIndex * 64), 16 + (courseIndex * 64), course));                
+        for (const courseWork of course.courseWork) {
+            this.data.mainScrollableContainer.add(new CourseWorkRect(this, course, courseWork, xpos, ypos));
+            ypos += 100;
+            xpos += 80;
+        }
 
 //        let ypos = 200;
 //        let xpos = 100;
-//        for (const courseWork of course.courseWork) {
-//            this.data.sceneObjects.push(new CourseWorkRect(this, course, courseWork, xpos, ypos));
-//            ypos += 100;
-//            xpos += 80;
-//        }
         // mouse down in client area
 //        this.input.on('pointerdown', function (event) {
 //            console.log('pointerdown', event);
