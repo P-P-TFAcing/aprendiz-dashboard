@@ -69,44 +69,17 @@ export default class ScrollableContainer extends Phaser.GameObjects.Container {
         let x = event.position.x;
         let y = event.position.y;
         console.log('pointer move', x, y);
-//        if (this.sceneDragContext) {
-//            let deltaX = x - this.sceneDragContext.pointerStartPosition.x;
-//            let deltaY = y - this.sceneDragContext.pointerStartPosition.y;
-//            this.setPosition(this.sceneDragContext.containerStartPosition.x + deltaX, this.sceneDragContext.containerStartPosition.y + deltaY);
-//        } else if (this.selectedObject) {
-//            // an object is selected.
-//            x -= this.x;
-//            y -= this.y;
-//            x /= this.scaleX;
-//            y /= this.scaleY;
-////            if (!this.selectedObject.isPointIn(x, y)) {
-////                if (!this.objectDragContext) {
-////                    // only deselect if we're not dragging
-////                    this.selectedObject.deselectObject();
-////                    delete this.selectedObject;
-////                }
-////            }
-//            if (this.objectDragContext) {
-//                // drag object?
-//                let deltaX = x - this.objectDragContext.pointerStartPosition.x;
-//                let deltaY = y - this.objectDragContext.pointerStartPosition.y;
-//                this.selectedObject.setPosition(this.objectDragContext.objectStartPosition.x + deltaX, this.objectDragContext.objectStartPosition.y + deltaY);
-//            }
-////        } else {
-////            // select the object we're hovering
-////            x -= this.x;
-////            y -= this.y;
-////            x /= this.scaleX;
-////            y /= this.scaleY;
-////            for (const draggableObject of this.draggableObjects) {
-////                if (draggableObject.isPointIn(x, y)) {
-////                    console.log('select object', draggableObject);
-////                    draggableObject.selectObject();
-////                    this.selectedObject = draggableObject;
-////                    break;
-////                }
-////            }
-//        }
+        if (this.dragContext) {
+            let deltaX = x - this.dragContext.startPosition.x;
+            let deltaY = y - this.dragContext.startPosition.y;
+            if(this.selectedObject) {
+                // dragging the object
+                this.selectedObject.setPosition(this.dragContext.dragObjectStartPos.x + deltaX, this.dragContext.dragObjectStartPos.y + deltaY);
+            } else {
+                // dragging the scene
+                this.setPosition(this.dragContext.startPosition.x + deltaX, this.sceneDragContext.startPosition.y + deltaY);
+            }            
+        } 
     }
 
 }
