@@ -27,6 +27,7 @@ export default class CourseWorkRect extends DraggableContainer {
             // stage 3: violet
             rectColor = 0xEE82EE;
         }
+        // solid rect
         rectangle.setFillStyle(rectColor);
         rectangle.setStrokeStyle(2, 0x888888, 2);
         // add to container
