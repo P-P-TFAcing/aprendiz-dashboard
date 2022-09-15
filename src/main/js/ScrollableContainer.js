@@ -25,7 +25,7 @@ export default class ScrollableContainer extends Phaser.GameObjects.Container {
             x -= this.x;
             y -= this.y;
             x /= this.scaleX;
-            y /= this.scaleY;            
+            y /= this.scaleY;
             this.objectDragContext = {
                 objectStartPosition: {
                     x: this.selectedObject.x,
@@ -38,18 +38,36 @@ export default class ScrollableContainer extends Phaser.GameObjects.Container {
             };
             console.log('start dragging object', this.objectDragContext);
         } else if ((x >= this.x) && (y >= this.y)) {
-            // mark the global start
-            this.sceneDragContext = {
-                containerStartPosition: {
-                    x: this.x,
-                    y: this.y
-                },
-                pointerStartPosition: {
-                    x: x,
-                    y: y
+            // is an object being selected?
+            if (!this.selectedObject) {
+                x -= this.x;
+                y -= this.y;
+                x /= this.scaleX;
+                y /= this.scaleY;
+                for (const draggableObject of this.draggableObjects) {
+                    if (draggableObject.isPointIn(x, y)) {
+                        console.log('select object', draggableObject);
+                        draggableObject.selectObject();
+                        this.selectedObject = draggableObject;
+                        break;
+                    }
                 }
-            };
-            console.log('start dragging scene', this.x, this.y);
+                
+            }
+            if(!this.selectedObject) {
+                // mark the global start
+                this.sceneDragContext = {
+                    containerStartPosition: {
+                        x: this.x,
+                        y: this.y
+                    },
+                    pointerStartPosition: {
+                        x: x,
+                        y: y
+                    }
+                };                
+                console.log('start dragging scene', this.x, this.y);
+            }
         }
     }
 
@@ -101,7 +119,6 @@ export default class ScrollableContainer extends Phaser.GameObjects.Container {
             y -= this.y;
             x /= this.scaleX;
             y /= this.scaleY;
-            //console.log('move mouse local', x, y);
             for (const draggableObject of this.draggableObjects) {
                 if (draggableObject.isPointIn(x, y)) {
                     console.log('select object', draggableObject);
