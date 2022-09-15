@@ -8,8 +8,7 @@ export default class CourseWorkRect extends DraggableContainer {
         this.courseWork = courseWork;
         // title
         let text = scene.add.text(16, 16, courseWork.title, { font: "24px Arial", color: '#000000' });
-        text.setOrigin(0, 0);
-        this.add(text);
+        text.setOrigin(0, 0);        
         this.width = text.width + 32;
         this.height = text.height + 32;
         let rectangle = scene.add.rectangle(0, 0, this.width, this.height);
@@ -31,6 +30,7 @@ export default class CourseWorkRect extends DraggableContainer {
         rectangle.setFillStyle(rectColor);
         rectangle.setStrokeStyle(2, 0x888888, 2);
         this.add(rectangle);
+        this.add(text);
     }
 }
 
