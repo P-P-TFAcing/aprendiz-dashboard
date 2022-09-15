@@ -29,6 +29,7 @@ export default class CourseWorkRect extends DraggableContainer {
         }
         rectangle.setFillStyle(rectColor);
         rectangle.setStrokeStyle(2, 0x888888, 2);
+        // add to container
         this.add(rectangle);
         this.add(text);
     }
