@@ -41,6 +41,9 @@ public class ClassroomResource {
     @Path("/topics/{courseId}")
     @GET
     public List<Topic> getTopics(@CookieParam(APRENDIZ_SESSION_AUTH) Cookie cookie, @PathParam("courseId") String courseId) {
+        if(cookie == null) {
+            throw new WebApplicationException(Response.Status.UNAUTHORIZED);
+        }        
         try {
             Credential credential = OauthConfiguration.getCredential(cookie.getValue());            
             return ClassroomController.getTopics(credential, courseId);
@@ -54,6 +57,9 @@ public class ClassroomResource {
     @Path("/coursework/{courseId}")
     @GET
     public List<CourseWork> getCourseWork(@CookieParam(APRENDIZ_SESSION_AUTH) Cookie cookie, @PathParam("courseId") String courseId) {
+        if(cookie == null) {
+            throw new WebApplicationException(Response.Status.UNAUTHORIZED);
+        }        
         try {
             Credential credential = OauthConfiguration.getCredential(cookie.getValue());
             return ClassroomController.getCourseWork(credential, courseId);
@@ -67,6 +73,9 @@ public class ClassroomResource {
     @Path("/metadata/{courseId}")
     @GET
     public Map<String, Object> getCourseMetadata(@CookieParam(APRENDIZ_SESSION_AUTH) Cookie cookie, @PathParam("courseId") Long courseId) {
+        if(cookie == null) {
+            throw new WebApplicationException(Response.Status.UNAUTHORIZED);
+        }        
         CourseMetadata metadata = ClassroomController.getCourseMetadata(courseId);
         if(metadata == null) {
             throw new WebApplicationException(Response.Status.NOT_FOUND);
@@ -79,6 +88,9 @@ public class ClassroomResource {
     @Path("/globalmetadata")
     @GET
     public Object getGlobalMetadata(@CookieParam(APRENDIZ_SESSION_AUTH) Cookie cookie) {
+        if(cookie == null) {
+            throw new WebApplicationException(Response.Status.UNAUTHORIZED);
+        }        
         GlobalMetadata metadata = ClassroomController.getGlobalMetadata();
         if(metadata == null) {
             throw new WebApplicationException(Response.Status.NOT_FOUND);
@@ -91,6 +103,9 @@ public class ClassroomResource {
     @Path("/courseworkmaterials/{courseId}")
     @GET
     public List<CourseWorkMaterial> getCourseWorkMaterials(@CookieParam(APRENDIZ_SESSION_AUTH) Cookie cookie, @PathParam("courseId") String courseId) {
+        if(cookie == null) {
+            throw new WebApplicationException(Response.Status.UNAUTHORIZED);
+        }
         try {            
             Credential credential = OauthConfiguration.getCredential(cookie.getValue());
             return ClassroomController.getCourseWorkMaterials(credential, courseId);
@@ -104,6 +119,9 @@ public class ClassroomResource {
     @Path("/courses")
     @GET
     public List<Course> getCourses(@CookieParam(APRENDIZ_SESSION_AUTH) Cookie cookie) {
+        if(cookie == null) {
+            throw new WebApplicationException(Response.Status.UNAUTHORIZED);
+        }
         try {
             LOGGER.debug("get courses");
             Credential credential = OauthConfiguration.getCredential(cookie.getValue());
