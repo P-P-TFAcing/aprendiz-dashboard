@@ -25,7 +25,12 @@ export default class ScrollableContainer extends Phaser.GameObjects.Container {
         y -= this.y;
         x /= this.scaleX;
         y /= this.scaleY;        
-        let dragContext = { };        
+        let dragContext = { 
+            startPosition: {
+                x: event.downX,
+                y: event.downY
+            }
+        };        
         this.dragContext = dragContext;
         console.log('drag context', this.dragContext);
         // is an object selected? deselect it
