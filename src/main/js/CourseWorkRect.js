@@ -7,7 +7,7 @@ export default class CourseWorkRect extends DraggableContainer {
         this.course = course;
         this.courseWork = courseWork;
         // title
-        let text = scene.add.text(16, 16, courseWork.title, { font: "24px Arial", color: '#CCEEFF' });
+        let text = scene.add.text(16, 16, courseWork.title, { font: "24px Arial", color: '#000000' });
         text.setOrigin(0, 0);
         this.add(text);
         this.width = text.width + 32;
@@ -28,7 +28,8 @@ export default class CourseWorkRect extends DraggableContainer {
             // stage 3: violet
             rectColor = 0xEE82EE;
         }
-        rectangle.setStrokeStyle(2, rectColor, 2);
+        rectangle.setFillStyle(rectColor);
+        rectangle.setStrokeStyle(2, 0x888888, 2);
         this.add(rectangle);
     }
 }
