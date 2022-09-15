@@ -25,19 +25,13 @@ export default class ScrollableContainer extends Phaser.GameObjects.Container {
         y -= this.y;
         x /= this.scaleX;
         y /= this.scaleY;        
-        let dragContext = {
-            // used to calculate pointer delta so maintain global position
-            startPosition: {
-                x: event.downX,
-                y: event.downY
-            }
-        };        
+        let dragContext = { };        
         this.dragContext = dragContext;
         console.log('drag context', this.dragContext);
         // is an object selected? deselect it
         if(this.selectedObject) {
             this.selectedObject.deselectObject();
-            delete this.selectedObject;
+            delete this.selectedObject;            
         }
         // is an object being selected?
         for (const object of this.draggableObjects) {
@@ -52,6 +46,12 @@ export default class ScrollableContainer extends Phaser.GameObjects.Container {
                 };
                 break;
             }
+        }
+        if(!this.selectedObject) {
+            dragContext.dragObjectStartPos = {
+                    x: this.x,
+                    y: this.y
+            };            
         }
     }
 
@@ -77,7 +77,7 @@ export default class ScrollableContainer extends Phaser.GameObjects.Container {
                 this.selectedObject.setPosition(this.dragContext.dragObjectStartPos.x + deltaX, this.dragContext.dragObjectStartPos.y + deltaY);
             } else {
                 // dragging the scene
-                this.setPosition(this.dragContext.startPosition.x + deltaX, this.dragContext.startPosition.y + deltaY);
+                this.setPosition(this.dragContext.dragObjectStartPos.x + deltaX, this.dragContext.dragObjectStartPos.y + deltaY);
             }            
         } 
     }
