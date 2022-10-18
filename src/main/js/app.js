@@ -160,7 +160,7 @@ class MainScene extends Phaser.Scene {
         this.data.mainScrollableContainer = this.add.scrollableContainer(0, buttonPanel.height + 12, 10000, 5000);        
         
         let checkboxHtmlText = '<input type="checkbox" name="legend-rect-checkbox"> Legend';
-        let checkboxDom = this.add.dom(1600, 20);
+        let checkboxDom = this.add.dom(1400, 30);
         checkboxDom.createFromHTML(checkboxHtmlText);
 
         let regionRect = this.add.rectangle(0, 0, 19200, 10800);
@@ -176,7 +176,7 @@ class MainScene extends Phaser.Scene {
         }
         // legend rect
         let screenWidth = window.screen.width;
-        this.legendPanel = new LegendRect(this, this.courses, 1700, 64);        
+        this.legendPanel = new LegendRect(this, this.courses, 1550, 64);        
     }
 }
 
