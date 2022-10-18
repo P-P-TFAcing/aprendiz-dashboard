@@ -1,9 +1,8 @@
 import DraggableContainer from './DraggableContainer.js';
 import LegendTopicRect from './LegendTopicRect.js';
 
-export default class LegendRect extends DraggableContainer {
-    constructor(scene, courses, x, y) {
-        super(scene, x, y, 'LegendRect');
+export default class LegendRect {
+    constructor(scene, courses, x, y) {        
         this.courses = courses;
         // global metadata object
         let metadata = scene.globalMetadata;
