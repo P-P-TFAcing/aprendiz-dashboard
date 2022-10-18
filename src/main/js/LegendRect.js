@@ -2,6 +2,11 @@ import DraggableContainer from './DraggableContainer.js';
 import LegendTopicRect from './LegendTopicRect.js';
 
 export default class LegendRect {
+        
+    setVisible(visible) {
+        this.container.setVisible(visible);
+    }
+        
     constructor(scene, courses, x, y) {        
         this.courses = courses;
         this.scene = scene;

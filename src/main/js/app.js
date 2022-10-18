@@ -87,6 +87,9 @@ class LegendToggleButton extends Button {
 
     onButtonClick() {
         console.log('legend toggle');        
+        let legendVisible = this.scene.legendVisible;
+        this.scene.legendVisible = !legendVisible;        
+        this.scene.legendPanel.setVisible(this.scene.legendVisible);                
     }
 }
 
@@ -177,9 +180,9 @@ class MainScene extends Phaser.Scene {
             this.loadCourseIntoScene(course, courseIndex);
             courseIndex++;
         }
-        // legend rect
-        let screenWidth = window.screen.width;
-        this.legendPanel = new LegendRect(this, this.courses, 1460, 80);        
+        // legend rect        
+        this.legendPanel = new LegendRect(this, this.courses, 1460, 80);   
+        this.legendVisible = true;
     }
 }
 
