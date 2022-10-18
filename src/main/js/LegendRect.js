@@ -44,6 +44,7 @@ export default class LegendRect {
                 }
             }            
         }
+        
         height += 24;
         this.objectHeight = height;
         this.objectWidth = width;
