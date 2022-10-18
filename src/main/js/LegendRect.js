@@ -20,6 +20,13 @@ export default class LegendRect {
         let width = 0;
         let legendText = scene.add.text(16, ypos, 'Legend', {fontSize: '28px'});
         let height = legendText.height + 16;
+
+        let legendRect = scene.add.rectangle(0, 0, this.objectWidth, this.objectHeight);
+        legendRect.setOrigin(0, 0);
+        legendRect.setStrokeStyle(2, 0xffffff, 2);
+        legendRect.setFillStyle(0x222222, 0.8);
+        this.container.add(legendRect);
+            
         ypos += legendText.height + 16;
         this.container.add(legendText);
         let courseTopicMap = { };
@@ -40,11 +47,6 @@ export default class LegendRect {
         height += 24;
         this.objectHeight = height;
         this.objectWidth = width;
-        let legendRect = scene.add.rectangle(0, 0, this.objectWidth, this.objectHeight);
-        legendRect.setOrigin(0, 0);
-        legendRect.setStrokeStyle(2, 0xffffff, 2);
-        legendRect.setFillStyle(0x222222, 0.8);
-        this.container.add(legendRect);
         this.container.setSize(this.objectWidth, this.objectHeight);
         this.width = width;
         this.height = height;

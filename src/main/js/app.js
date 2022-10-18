@@ -180,7 +180,7 @@ class MainScene extends Phaser.Scene {
         }
         // legend rect
         let screenWidth = window.screen.width;
-        this.legendPanel = new LegendRect(this, this.courses, 1460, 72);        
+        this.legendPanel = new LegendRect(this, this.courses, 1460, 80);        
     }
 }
 
