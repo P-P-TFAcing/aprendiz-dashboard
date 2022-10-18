@@ -159,7 +159,7 @@ class MainScene extends Phaser.Scene {
 
         this.data.mainScrollableContainer = this.add.scrollableContainer(0, buttonPanel.height + 12, 10000, 5000);        
         
-        this.add.dom(100, 10, 'div', 'background-color: lime; width: 220px; height: 100px; font: 48px Arial', 'TimWasHere');
+        this.add.dom(100, 100, 'div', 'background-color: gray; width: 220px; height: 100px; font: 48px Arial', 'TimWasHere');
 
         let regionRect = this.add.rectangle(0, 0, 19200, 10800);
         regionRect.setOrigin(0, 0);
@@ -173,7 +173,8 @@ class MainScene extends Phaser.Scene {
             courseIndex++;
         }
         // legend rect
-        this.legendPanel = new LegendRect(this, this.courses, 16, 64);        
+        let screenWidth = window.screen.width;
+        this.legendPanel = new LegendRect(this, this.courses, screenWidth - 200, 64);        
     }
 }
 
