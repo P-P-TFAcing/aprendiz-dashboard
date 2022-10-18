@@ -48,8 +48,7 @@ export default class LegendRect {
         height += 24;
         this.objectHeight = height;
         this.objectWidth = width;
-        legendRect.height = this.objectHeight;
-        legendRect.width = this.objectWidth;
+        legendRect.setSize(this.objectWidth, this.objectHeight);
         this.container.setSize(this.objectWidth, this.objectHeight);
         this.width = width;
         this.height = height;
