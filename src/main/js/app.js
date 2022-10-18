@@ -158,6 +158,8 @@ class MainScene extends Phaser.Scene {
         buttonPanel.addButton(new FullScreenButton(this, 1450, 20, 'Full-Screen'));
 
         this.data.mainScrollableContainer = this.add.scrollableContainer(0, buttonPanel.height + 12, 10000, 5000);        
+        
+        this.add.dom(100, 10, 'div', 'background-color: lime; width: 220px; height: 100px; font: 48px Arial', 'TimWasHere');
 
         let regionRect = this.add.rectangle(0, 0, 19200, 10800);
         regionRect.setOrigin(0, 0);
@@ -171,7 +173,7 @@ class MainScene extends Phaser.Scene {
             courseIndex++;
         }
         // legend rect
-        this.data.sceneObjects.push(new LegendRect(this, this.courses, 16, 64));
+        this.legendPanel = new LegendRect(this, this.courses, 16, 64);        
     }
 }
 

@@ -51,6 +51,7 @@ public class ClassroomController {
         if (topics != null) {
             for (Topic t : topics) {
                 result.add(t);
+                LOGGER.debug("topic " + t.getTopicId() + " " + t.getName());
             }
             LOGGER.debug("loaded " + result.size() + " topics");
         }
