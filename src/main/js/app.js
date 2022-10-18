@@ -134,126 +134,6 @@ class MainScene extends Phaser.Scene {
             ypos += 100;
             xpos += 80;
         }
-
-//        let ypos = 200;
-//        let xpos = 100;
-        // mouse down in client area
-//        this.input.on('pointerdown', function (event) {
-//            console.log('pointerdown', event);
-            //console.log('pointer down in desktop', event);
-//            if (!this.scene.data.buttonClicked) {
-//                if (!this.scene.data.dragContext) {
-//                    if (!this.scene.data.sceneDragContext) {
-//                        this.scene.data.sceneDragContext = {
-//                            pointerX: event.downX,
-//                            pointerY: event.downY
-//                        };
-//                        console.log('set scene drag context', this.scene.data.sceneDragContext);
-//                    }
-//                }
-//            }
-//        });
-//        this.input.on('pointermove', function (event) {
-//            console.log('pointermove', event);
-//            let dragContext = this.scene.data.dragContext;
-//            if (dragContext) {
-//                let x = event.worldX;
-//                let y = event.worldY;
-//                dragContext.dragRect.setPosition(x + dragContext.deltaX, y + dragContext.deltaY);
-//            } else if (this.scene.data.sceneDragContext) {
-//                // drag scene
-//                if (!this.scene.data.sceneOffset) {
-//                    this.scene.data.sceneOffset = {x: 0, y: 0};
-//                }
-//                let pointerX = event.worldX;
-//                let pointerY = event.worldY;
-//                console.log('drag scene mouse move', pointerX, pointerY);
-//                let offsetX = pointerX - this.scene.data.sceneDragContext.pointerX;
-//                let offsetY = pointerY - this.scene.data.sceneDragContext.pointerY;
-//                if ((offsetX !== 0) && (offsetY !== 0)) {
-////                    this.scene.data.sceneOffset.x += offsetX;
-////                    this.scene.data.sceneOffset.y += offsetY;
-//                    console.log('scene offset', this.scene.data.sceneOffset);
-//                    for (const object of this.scene.data.sceneObjects) {
-//                        // update containers
-//                        let newX = (object.x * this.scene.data.sceneScale) + offsetX;
-//                        let newY = (object.y * this.scene.data.sceneScale) + offsetY;
-//                        object.container.setPosition(newX, newY);
-//                    }
-//                }
-//            }
-//        });
-//        this.input.on('pointerup', function (event) {
-//            console.log('pointerup', event);
-//            if (this.scene.data.buttonClicked) {
-//                delete this.scene.data.buttonClicked;
-//            }
-//            let x = event.worldX;
-//            let y = event.worldY;
-//            let dragContext = this.scene.data.dragContext;
-//            if (dragContext) {
-//                console.log('drag context mouse up', x, y, dragContext);
-//                let newX = x + dragContext.deltaX;
-//                let newY = y + dragContext.deltaY;
-//                dragContext.container.setPosition(newX, newY);
-//                dragContext.parentObject.x = newX;
-//                dragContext.parentObject.y = newY;
-//
-//                // update metadata (to save on server if save button is pushed)
-//                let metadata;
-//                if (dragContext.parentObject.course) {
-//                    metadata = dragContext.parentObject.course.metadata;
-//                } else {
-//                    metadata = dragContext.parentObject.scene.globalMetadata;
-//                }
-//                if (!metadata) {
-//                    metadata = {containerPositions: {}};
-//                    dragContext.parentObject.course.metadata = metadata;
-//                }
-//                let containerId = dragContext.parentObject.containerId;
-//                if (dragContext.parentObject.course) {
-//                    // course metadata                    
-//                    let containerPosition = metadata.containerPositions[containerId];
-//                    if (!containerPosition) {
-//                        metadata.courseId = dragContext.parentObject.course.id;
-//                        metadata.containerPositions[containerId] = {x: newX, y: newY};
-//                    } else {
-//                        containerPosition.x = newX;
-//                        containerPosition.y = newY;
-//                    }
-//                } else {
-//                    // global metadata                    
-//                    let containerPosition = metadata.containerPositions[containerId];
-//                    if (!containerPosition) {
-//                        metadata.containerPositions[containerId] = {x: newX, y: newY};
-//                    } else {
-//                        containerPosition.x = newX;
-//                        containerPosition.y = newY;
-//                    }
-//                }
-//                console.log('update course configuration', metadata);
-//                dragContext.dragRect.destroy();
-//                // update configuration
-//                delete this.scene.data.dragContext;
-//            } else if (this.scene.data.sceneDragContext) {
-//                //this.scene.data.courseTitle.container.setPosition(10,10);
-//                console.log('pointer up scene drag', this.scene.data.sceneDragContext);
-//                let pointerX = event.upX;
-//                let pointerY = event.upY;
-//                let offsetX = pointerX - this.scene.data.sceneDragContext.pointerX;
-//                let offsetY = pointerY - this.scene.data.sceneDragContext.pointerY;
-//                if ((offsetX !== 0) && (offsetY !== 0)) {
-//                    delete this.scene.data.sceneDragContext;
-//                    console.log('drag scene', offsetX, offsetY);
-//                    if (!this.scene.data.sceneOffset) {
-//                        this.scene.data.sceneOffset = {x: 0, y: 0};
-//                    }
-//                    this.scene.data.sceneOffset.x = offsetX;
-//                    this.scene.data.sceneOffset.y = offsetY;
-//                    console.log('scene offset', this.scene.data.sceneOffset);
-//                }
-//            }
-        ///});
     }
 
     create(config) {
@@ -291,7 +171,7 @@ class MainScene extends Phaser.Scene {
             courseIndex++;
         }
         // legend rect
-        //this.data.sceneObjects.push(new LegendRect(this, this.courses, 16, 64));
+        this.data.sceneObjects.push(new LegendRect(this, this.courses, 16, 64));
     }
 }
 
@@ -310,12 +190,15 @@ angular.module("AprendizApplication").controller('MainViewController', function 
 
     let config = {
         type: Phaser.AUTO,
+        dom: {
+          createContainer: true
+        },
         scale: {          
                 parent: 'aprendiz-block',
                 mode: Phaser.Scale.FIT,
                 autoCenter: Phaser.Scale.CENTER_BOTH,
                 width: 1920,
-                height: 1080
+                height: 1080,
         },
         plugins: {
             global: [

@@ -5,6 +5,7 @@ import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.gson.GsonFactory;
 import com.google.api.services.classroom.Classroom;
 import com.google.api.services.classroom.model.Topic;
+import com.google.api.services.classroom.model.CourseMaterial;
 import com.google.api.services.classroom.model.Course;
 import com.google.api.services.classroom.model.CourseWork;
 import com.google.api.services.classroom.model.CourseWorkMaterial;
@@ -56,6 +57,8 @@ public class ClassroomController {
         return result;
     }
 
+    
+
     public static List<CourseWork> getCourseWork(Credential credential, String courseId) throws IOException {
         LOGGER.debug("get coursework " + courseId);
         Classroom service = getService(credential);
@@ -67,6 +70,7 @@ public class ClassroomController {
         if (objects != null) {
             for (CourseWork t : objects) {
                 result.add(t);
+                
             }
             LOGGER.debug("loaded " + result.size() + " topics");
         }
