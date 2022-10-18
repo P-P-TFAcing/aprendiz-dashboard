@@ -111,6 +111,10 @@ class ZoomOutButton extends Button {
 
 import DashboardAppPlugin from './DashboardAppPlugin.js';
 
+function legendRectCheckboxChecked() {
+    console.log('legendRectCheckboxChecked');
+}
+
 class MainScene extends Phaser.Scene {
 
     preload() {
@@ -159,7 +163,7 @@ class MainScene extends Phaser.Scene {
 
         this.data.mainScrollableContainer = this.add.scrollableContainer(0, buttonPanel.height + 12, 10000, 5000);        
         
-        let checkboxHtmlText = '<input type="checkbox" name="legend-rect-checkbox"> Legend';
+        let checkboxHtmlText = '<input type="checkbox" name="legend-rect-checkbox" onclick="legendRectCheckboxChecked()"> Legend';
         let checkboxDom = this.add.dom(1300, 34);
         checkboxDom.createFromHTML(checkboxHtmlText);
 
@@ -176,7 +180,7 @@ class MainScene extends Phaser.Scene {
         }
         // legend rect
         let screenWidth = window.screen.width;
-        this.legendPanel = new LegendRect(this, this.courses, 1450, 64);        
+        this.legendPanel = new LegendRect(this, this.courses, 1460, 72);        
     }
 }
 
