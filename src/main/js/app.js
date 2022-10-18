@@ -166,7 +166,7 @@ class MainScene extends Phaser.Scene {
         let checkboxHtmlText = '<input id="legend-rect-checkbox" type="checkbox" name="legend-rect-checkbox"> Legend';
         let checkboxDom = this.add.dom(1300, 34);
         let checkboxElement = checkboxDom.createFromHTML(checkboxHtmlText);
-        checkboxElement.onclick = this.legendRectCheckboxChecked.bind(this);
+        checkboxElement.addEventListener('click', this.legendRectCheckboxChecked);        
 
         let regionRect = this.add.rectangle(0, 0, 19200, 10800);
         regionRect.setOrigin(0, 0);
