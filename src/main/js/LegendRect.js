@@ -4,6 +4,8 @@ import LegendTopicRect from './LegendTopicRect.js';
 export default class LegendRect {
     constructor(scene, courses, x, y) {        
         this.courses = courses;
+        this.scene = scene;
+        this.container = scene.add.container(x, y);
         // global metadata object
         let metadata = scene.globalMetadata;
         if(metadata) {
@@ -45,7 +47,6 @@ export default class LegendRect {
         this.container.setSize(this.objectWidth, this.objectHeight);
         this.width = width;
         this.height = height;
-        this.draggable(legendRect);        
     }
 }
 
