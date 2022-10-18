@@ -74,7 +74,6 @@ class SaveButton extends Button {
         }
     }
 }
-;
 
 class FullScreenButton extends Button {
 
@@ -83,7 +82,13 @@ class FullScreenButton extends Button {
         this.scene.scale.startFullscreen();
     }
 }
-;
+
+class LegendToggleButton extends Button {
+
+    onButtonClick() {
+        console.log('legend toggle');        
+    }
+}
 
 class ZoomInButton extends Button {
 
@@ -156,16 +161,11 @@ class MainScene extends Phaser.Scene {
         buttonPanel.addButton(new ZoomOutButton(this, 1150, 20, '-'));
         buttonPanel.addSpacer(96);
         buttonPanel.addButton(new FullScreenButton(this, 1450, 20, 'Full-Screen'));
+        buttonPanel.addSpacer(96);
+        buttonPanel.addButton(new LegendToggleButton(this, 1550, 20, 'Legend'));
 
         this.data.mainScrollableContainer = this.add.scrollableContainer(0, buttonPanel.height + 12, 10000, 5000);        
         
-        let checkboxHtmlText = '<input id="legend-rect-checkbox" type="checkbox" name="legend-rect-checkbox"> Legend';
-        let checkboxDom = this.add.dom(1300, 34);
-        let checkboxElement = checkboxDom.createFromHTML(checkboxHtmlText);
-        checkboxElement.onclick = function() {
-            console.log('legend checkbox click');
-        }; 
-
         let regionRect = this.add.rectangle(0, 0, 19200, 10800);
         regionRect.setOrigin(0, 0);
         regionRect.setStrokeStyle(2, 0x0000EE, 2);        
