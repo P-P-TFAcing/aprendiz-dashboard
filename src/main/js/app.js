@@ -136,10 +136,6 @@ class MainScene extends Phaser.Scene {
         }
     }
     
-    legendRectCheckboxChecked() {
-        console.log('legendRectCheckboxChecked');
-    }
-
     create(config) {
         console.log('created MainScene', config);
         this.globalMetadata = config.global;
@@ -166,7 +162,9 @@ class MainScene extends Phaser.Scene {
         let checkboxHtmlText = '<input id="legend-rect-checkbox" type="checkbox" name="legend-rect-checkbox"> Legend';
         let checkboxDom = this.add.dom(1300, 34);
         let checkboxElement = checkboxDom.createFromHTML(checkboxHtmlText);
-        checkboxElement.addEventListener('click', this.legendRectCheckboxChecked);        
+        checkboxElement.onclick = function() {
+            console.log('legend checkbox click');
+        }; 
 
         let regionRect = this.add.rectangle(0, 0, 19200, 10800);
         regionRect.setOrigin(0, 0);
