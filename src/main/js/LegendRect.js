@@ -43,6 +43,7 @@ export default class LegendRect {
         let legendRect = scene.add.rectangle(0, 0, this.objectWidth, this.objectHeight);
         legendRect.setOrigin(0, 0);
         legendRect.setStrokeStyle(2, 0xffffff, 2);
+        legendRect.setFillStyle(0x222222, 0.8);
         this.container.add(legendRect);
         this.container.setSize(this.objectWidth, this.objectHeight);
         this.width = width;
