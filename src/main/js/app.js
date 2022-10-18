@@ -159,7 +159,9 @@ class MainScene extends Phaser.Scene {
 
         this.data.mainScrollableContainer = this.add.scrollableContainer(0, buttonPanel.height + 12, 10000, 5000);        
         
-        this.add.dom(100, 100, 'div', 'background-color: gray; width: 220px; height: 100px; font: 48px Arial', 'TimWasHere');
+        let checkboxHtmlText = '<input type="checkbox" name="legend-rect-checkbox"> Legend';
+        let checkboxDom = this.add.dom(1600, 20);
+        checkboxDom.createFromHtml(checkboxHtmlText);
 
         let regionRect = this.add.rectangle(0, 0, 19200, 10800);
         regionRect.setOrigin(0, 0);
@@ -174,7 +176,7 @@ class MainScene extends Phaser.Scene {
         }
         // legend rect
         let screenWidth = window.screen.width;
-        this.legendPanel = new LegendRect(this, this.courses, screenWidth - 200, 64);        
+        this.legendPanel = new LegendRect(this, this.courses, 1700, 64);        
     }
 }
 
@@ -201,7 +203,7 @@ angular.module("AprendizApplication").controller('MainViewController', function 
                 mode: Phaser.Scale.FIT,
                 autoCenter: Phaser.Scale.CENTER_BOTH,
                 width: 1920,
-                height: 1080,
+                height: 1080
         },
         plugins: {
             global: [
