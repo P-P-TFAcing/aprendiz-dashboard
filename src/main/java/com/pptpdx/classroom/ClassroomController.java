@@ -42,18 +42,23 @@ public class ClassroomController {
     public static List<Topic> getTopics(Credential credential, String courseId) throws IOException {
         LOGGER.debug("get topics");
         Classroom service = getService(credential);
-        ListTopicResponse response = service.courses().topics().list(courseId)
-                .setPageSize(20)
-                .execute();
-        List<Topic> topics = response.getTopic();
+        String pageToken = null;
         List<Topic> result = new ArrayList<>();
-        if (topics != null) {
-            for (Topic t : topics) {
-                result.add(t);
-                LOGGER.debug("topic " + t.getTopicId() + " " + t.getName());
+        do {
+            ListTopicResponse response = service.courses().topics().list(courseId)
+                    .setPageSize(20)
+                    .setPageToken(pageToken)
+                    .execute();
+            pageToken = response.getNextPageToken();
+            List<Topic> topics = response.getTopic();            
+            if (topics != null) {
+                for (Topic t : topics) {
+                    result.add(t);
+                    LOGGER.debug("topic " + t.getTopicId() + " " + t.getName());
+                }                
             }
-            LOGGER.debug("loaded " + result.size() + " topics");
-        }
+        } while(pageToken != null);
+        LOGGER.debug("loaded " + result.size() + " topics");
         return result;
     }
 
@@ -88,41 +93,51 @@ public class ClassroomController {
         
         LOGGER.debug("get all courses");
         Classroom service = getService(credential);
-        ListCoursesResponse response = service.courses().list()
-                .setPageSize(20)
-                .execute();
+        String pageToken = null;
         List<Course> result = new ArrayList<>();
-        List<Course> courses = response.getCourses();
-        if (courses != null) {
-            for (Course c : courses) {
-                LOGGER.debug("found course " + c.getName() + " " + c.getId() + " " + c.getDescriptionHeading() + " " + c.getEnrollmentCode());
-                String enrollmentCode = c.getEnrollmentCode();                
-                for(String loadedCourseName : loadedCourses) {
-                    if(loadedCourseName.equals(enrollmentCode)) {
-                        result.add(c);
-                    }
+        do {
+            ListCoursesResponse response = service.courses().list()
+                    .setPageSize(20)
+                    .setPageToken(pageToken)
+                    .execute();        
+            pageToken = response.getNextPageToken();
+            List<Course> courses = response.getCourses();
+            if (courses != null) {
+                for (Course c : courses) {
+                    LOGGER.debug("found course " + c.getName() + " " + c.getId() + " " + c.getDescriptionHeading() + " " + c.getEnrollmentCode());
+                    String enrollmentCode = c.getEnrollmentCode();                
+                    for(String loadedCourseName : loadedCourses) {
+                        if(loadedCourseName.equals(enrollmentCode)) {
+                            result.add(c);
+                        }
+                    }                
                 }                
             }
-            LOGGER.debug("loaded " + result.size() + " courses");
-        }
+        } while(pageToken != null);
+        LOGGER.debug("loaded " + result.size() + " courses");
         return result;
     }
 
     public static List<CourseWorkMaterial> getCourseWorkMaterials(Credential credential, String courseId) throws IOException {
         LOGGER.debug("get courseworkmaterials " + courseId);
         Classroom service = getService(credential);
-        ListCourseWorkMaterialResponse response = service.courses().courseWorkMaterials().list(courseId)
-                .setPageSize(20)
-                .execute();        
-        List<CourseWorkMaterial> objects = response.getCourseWorkMaterial();        
+        String pageToken = null;
         List<CourseWorkMaterial> result = new ArrayList<>();
-        if (objects != null) {
-            for (CourseWorkMaterial t : objects) {
-                result.add(t);
-                LOGGER.debug("courseWorkMaterial " + courseId + " " + t.getTitle() + " description:" + t.getDescription());
+        do {
+            ListCourseWorkMaterialResponse response = service.courses().courseWorkMaterials().list(courseId)
+                    .setPageSize(20)
+                    .setPageToken(pageToken)
+                    .execute();   
+            pageToken = response.getNextPageToken();
+            List<CourseWorkMaterial> objects = response.getCourseWorkMaterial();                
+            if (objects != null) {
+                for (CourseWorkMaterial t : objects) {
+                    result.add(t);
+                    LOGGER.debug("courseWorkMaterial " + courseId + " " + t.getTitle() + " description:" + t.getDescription());
+                }                
             }
-            LOGGER.debug("loaded " + result.size() + " courseworkmaterials");
-        }
+        } while(pageToken != null);
+        LOGGER.debug("loaded " + result.size() + " courseworkmaterials");
         return result;
     }
 
