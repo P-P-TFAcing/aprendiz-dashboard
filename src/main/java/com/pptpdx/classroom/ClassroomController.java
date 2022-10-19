@@ -5,7 +5,6 @@ import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.gson.GsonFactory;
 import com.google.api.services.classroom.Classroom;
 import com.google.api.services.classroom.model.Topic;
-import com.google.api.services.classroom.model.CourseMaterial;
 import com.google.api.services.classroom.model.Course;
 import com.google.api.services.classroom.model.CourseWork;
 import com.google.api.services.classroom.model.CourseWorkMaterial;
@@ -66,12 +65,13 @@ public class ClassroomController {
         ListCourseWorkResponse response = service.courses().courseWork().list(courseId)
                 .setPageSize(20)
                 .execute();
+        
         List<CourseWork> objects = response.getCourseWork();
         List<CourseWork> result = new ArrayList<>();
         if (objects != null) {
             for (CourseWork t : objects) {
                 result.add(t);
-                LOGGER.debug("courseWork " + t.getTitle() + " assignment:" + t.getAssignment());
+                LOGGER.debug("courseWork " + t.getTitle() + " assignment:" + t.getAssignment() + " question:" + t.getMultipleChoiceQuestion() + " assignment:" + t.getAssignment());
             }
             LOGGER.debug("loaded " + result.size() + " topics");
         }
