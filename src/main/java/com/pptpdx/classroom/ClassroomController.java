@@ -71,7 +71,7 @@ public class ClassroomController {
         if (objects != null) {
             for (CourseWork t : objects) {
                 result.add(t);
-                LOGGER.debug("courseWork " + t.getTitle() + " assignment:" + t.getAssignment() + " question:" + t.getMultipleChoiceQuestion() + " assignment:" + t.getAssignment());
+                LOGGER.debug("courseWork " + courseId + " " + t.getTitle() + " assignment:" + t.getAssignment() + " question:" + t.getMultipleChoiceQuestion() + " assignment:" + t.getAssignment());
             }
             LOGGER.debug("loaded " + result.size() + " topics");
         }
