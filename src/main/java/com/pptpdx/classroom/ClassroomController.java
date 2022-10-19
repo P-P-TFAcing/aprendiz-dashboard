@@ -57,24 +57,27 @@ public class ClassroomController {
         return result;
     }
 
-    
-
     public static List<CourseWork> getCourseWork(Credential credential, String courseId) throws IOException {
         LOGGER.debug("get coursework " + courseId);
         Classroom service = getService(credential);
-        ListCourseWorkResponse response = service.courses().courseWork().list(courseId)
-                .setPageSize(20)
-                .execute();
-        
-        List<CourseWork> objects = response.getCourseWork();
+        String pageToken = null;
         List<CourseWork> result = new ArrayList<>();
-        if (objects != null) {
-            for (CourseWork t : objects) {
-                result.add(t);
-                LOGGER.debug("courseWork " + courseId + " " + t.getTitle() + " assignment:" + t.getAssignment() + " question:" + t.getMultipleChoiceQuestion() + " assignment:" + t.getAssignment());
+        do {
+            ListCourseWorkResponse response = service.courses().courseWork().list(courseId)                
+                    .setPageToken(pageToken)
+                    .setPageSize(20)
+                    .execute();        
+            pageToken = response.getNextPageToken();
+            LOGGER.debug("fetched page of " + response.getCourseWork().size() + " token:" + pageToken);
+            List<CourseWork> objects = response.getCourseWork();            
+            if (objects != null) {
+                for (CourseWork t : objects) {
+                    result.add(t);
+                    LOGGER.debug("courseWork " + courseId + " " + t.getTitle() + " assignment:" + t.getAssignment() + " question:" + t.getMultipleChoiceQuestion() + " assignment:" + t.getAssignment());
+                }                
             }
-            LOGGER.debug("loaded " + result.size() + " topics");
-        }
+        } while(pageToken != null);
+        LOGGER.debug("loaded " + result.size() + " coursework objects");
         return result;
     }
     
@@ -111,7 +114,7 @@ public class ClassroomController {
         ListCourseWorkMaterialResponse response = service.courses().courseWorkMaterials().list(courseId)
                 .setPageSize(20)
                 .execute();        
-        List<CourseWorkMaterial> objects = response.getCourseWorkMaterial();
+        List<CourseWorkMaterial> objects = response.getCourseWorkMaterial();        
         List<CourseWorkMaterial> result = new ArrayList<>();
         if (objects != null) {
             for (CourseWorkMaterial t : objects) {
