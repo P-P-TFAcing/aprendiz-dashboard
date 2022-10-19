@@ -110,13 +110,13 @@ public class ClassroomController {
         Classroom service = getService(credential);
         ListCourseWorkMaterialResponse response = service.courses().courseWorkMaterials().list(courseId)
                 .setPageSize(20)
-                .execute();
+                .execute();        
         List<CourseWorkMaterial> objects = response.getCourseWorkMaterial();
         List<CourseWorkMaterial> result = new ArrayList<>();
         if (objects != null) {
             for (CourseWorkMaterial t : objects) {
                 result.add(t);
-                LOGGER.debug("courseWorkMaterial " + t.getTitle() + " description:" + t.getDescription());
+                LOGGER.debug("courseWorkMaterial " + courseId + " " + t.getTitle() + " description:" + t.getDescription());
             }
             LOGGER.debug("loaded " + result.size() + " courseworkmaterials");
         }
