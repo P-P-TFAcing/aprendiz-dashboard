@@ -14,7 +14,14 @@ export default class ScrollableContainer extends Phaser.GameObjects.Container {
         graphics.fillRect(x, y, width, height);
         let scrollableContainerMask = new Phaser.Display.Masks.GeometryMask(scene, graphics);
         this.setMask(scrollableContainerMask);
-
+    }
+    
+    addEventHandlerHoverIn(handler) {
+        this.eventHandlerHoverIn = handler;
+    }
+    
+    addEventHandlerHoverOut(handler) {
+        this.eventHandlerHoverOut = handler;
     }
 
     onPointerDown(event) {
@@ -86,7 +93,10 @@ export default class ScrollableContainer extends Phaser.GameObjects.Container {
                 if( object.containerId && (object.containerId !== this.hoverContainerId)) {
                     console.log('hover in', object);
                     this.hoverContainerObject = object;
-                    this.hoverContainerId = object.containerId;                    
+                    this.hoverContainerId = object.containerId;                       
+                    if(this.eventHandlerHoverIn) {
+                        this.eventHandlerHoverIn(object);
+                    }                    
                 }
                 mouseInObject = true;
             }
@@ -96,7 +106,10 @@ export default class ScrollableContainer extends Phaser.GameObjects.Container {
                 let hoverOutObject = this.hoverContainerObject                
                 delete this.hoverContainerId;
                 delete this.hoverContainerObject;
-                console.log('hover out', hoverOutObject);
+                console.log('hover out', hoverOutObject);      
+                if(this.eventHandlerHoverOut) {
+                    this.eventHandlerHoverOut(hoverOutObject);
+                }
             }
         }
         if (this.dragContext) {

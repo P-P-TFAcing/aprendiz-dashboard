@@ -144,6 +144,15 @@ class MainScene extends Phaser.Scene {
         }
     }
     
+    onHoverIn(object) {
+        console.log('hover in', object);
+        
+    }
+    
+    onHoverOut(object) {
+        console.log('hover out', object);
+    }
+
     create(config) {
         console.log('created MainScene', config);
         this.globalMetadata = config.global;
@@ -168,6 +177,8 @@ class MainScene extends Phaser.Scene {
         buttonPanel.addButton(new LegendToggleButton(this, 1550, 20, 'Legend'));
 
         this.data.mainScrollableContainer = this.add.scrollableContainer(0, buttonPanel.height + 12, 10000, 5000);        
+        this.data.mainScrollableContainer.addEventHandlerHoverIn(onHoverIn);
+        this.data.mainScrollableContainer.addEventHandlerHoverOut(onHoverOut);
         
         let regionRect = this.add.rectangle(0, 0, 19200, 10800);
         regionRect.setOrigin(0, 0);
