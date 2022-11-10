@@ -177,8 +177,8 @@ class MainScene extends Phaser.Scene {
         buttonPanel.addButton(new LegendToggleButton(this, 1550, 20, 'Legend'));
 
         this.data.mainScrollableContainer = this.add.scrollableContainer(0, buttonPanel.height + 12, 10000, 5000);        
-        this.data.mainScrollableContainer.addEventHandlerHoverIn(onHoverIn);
-        this.data.mainScrollableContainer.addEventHandlerHoverOut(onHoverOut);
+        this.data.mainScrollableContainer.addEventHandlerHoverIn(this.onHoverIn);
+        this.data.mainScrollableContainer.addEventHandlerHoverOut(this.onHoverOut);
         
         let regionRect = this.add.rectangle(0, 0, 19200, 10800);
         regionRect.setOrigin(0, 0);
