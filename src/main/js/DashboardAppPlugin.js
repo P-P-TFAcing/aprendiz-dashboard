@@ -1,6 +1,7 @@
 import ScrollableContainer from './ScrollableContainer.js';
 import CourseTitle from './CourseTitle.js';
 import CourseWorkRect from './CourseWorkRect.js';
+import CourseWorkInfoPanel from './CourseWorkInfoPanel.js';
 
 export default class DashboardAppPlugin extends Phaser.Plugins.BasePlugin {
 
@@ -14,6 +15,9 @@ export default class DashboardAppPlugin extends Phaser.Plugins.BasePlugin {
         });
         pluginManager.registerGameObject('courseWorkRect', function (scrollableContainer, x, y, course, courseWork) {
             return this.displayList.add(new CourseWorkRect(this.scene, scrollableContainer, x, y, course, courseWork));
+        });
+        pluginManager.registerGameObject('courseWorkInfoPanel', function (scrollableContainer, x, y, course, courseWork) {
+            return this.displayList.add(new CourseWorkInfoPanel(this.scene, scrollableContainer, x, y, course, courseWork));
         });
     }
 

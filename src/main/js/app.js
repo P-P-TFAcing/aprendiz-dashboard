@@ -5,6 +5,7 @@ import DraggableContainer from './DraggableContainer.js';
 import CourseTitle from './CourseTitle.js';
 import LegendTopicRect from './LegendTopicRect.js';
 import LegendRect from './LegendRect.js';
+import CourseWorkInfoPanel from './CourseWorkInfoPanel.js';
 
 class LoaderScene extends Phaser.Scene {
 
@@ -145,12 +146,14 @@ class MainScene extends Phaser.Scene {
     }
     
     onHoverIn(object) {
-        console.log('hover in', object);
-        
+        console.log('object hover in', object);
+        this.hoverObject = object;        
+        this.data.mainScrollableContainer.add(this.add.courseWorkInfoPanel(this.data.mainScrollableContainer, 50,50, object.course, object.courseWork));
     }
     
     onHoverOut(object) {
-        console.log('hover out', object);
+        console.log('object hover out', object);
+        delete this.hoverObject;
     }
 
     create(config) {
