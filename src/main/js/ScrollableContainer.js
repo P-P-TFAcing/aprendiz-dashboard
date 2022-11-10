@@ -78,14 +78,28 @@ export default class ScrollableContainer extends Phaser.GameObjects.Container {
         x /= this.scaleX;
         y /= this.scaleY;        
         
-        console.log('pointer move', x, y);
+        //console.log('pointer move', x, y);
+        let mouseInObject = false;
         for (const object of this.draggableObjects) {
             if (object.isPointIn(x, y)) {
-                console.log('hover', object);
+                //console.log('hover', object);
+                if( object.containerId && (object.containerId !== this.hoverContainerId)) {
+                    console.log('hover in', object);
+                    this.hoverContainerObject = object;
+                    this.hoverContainerId = object.containerId;                    
+                }
+                mouseInObject = true;
+            }
+        }
+        if(!mouseInObject) {
+            if(this.hoverContainerId) {
+                let hoverOutObject = this.hoverContainerObject                
+                delete this.hoverContainerId;
+                delete this.hoverContainerObject;
+                console.log('hover out', hoverOutObject);
             }
         }
         if (this.dragContext) {
-
             let deltaX = event.position.x - this.dragContext.startPosition.x;
             let deltaY = event.position.y - this.dragContext.startPosition.y;
             if(this.selectedObject) {
