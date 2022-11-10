@@ -73,6 +73,11 @@ export default class ScrollableContainer extends Phaser.GameObjects.Container {
     onPointerMove(event) {
         let x = event.position.x;
         let y = event.position.y;
+        x -= this.x;
+        y -= this.y;
+        x /= this.scaleX;
+        y /= this.scaleY;        
+        
         console.log('pointer move', x, y);
         for (const object of this.draggableObjects) {
             if (object.isPointIn(x, y)) {
@@ -80,8 +85,9 @@ export default class ScrollableContainer extends Phaser.GameObjects.Container {
             }
         }
         if (this.dragContext) {
-            let deltaX = x - this.dragContext.startPosition.x;
-            let deltaY = y - this.dragContext.startPosition.y;
+
+            let deltaX = event.position.x - this.dragContext.startPosition.x;
+            let deltaY = event.position.y - this.dragContext.startPosition.y;
             if(this.selectedObject) {
                 // dragging the object
                 this.selectedObject.setPosition(this.dragContext.dragObjectStartPos.x + deltaX, this.dragContext.dragObjectStartPos.y + deltaY);
