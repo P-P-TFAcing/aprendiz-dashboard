@@ -10,12 +10,14 @@ export default class CourseWorkInfoPanel extends Phaser.GameObjects.Container {
         this.course = course;
         this.courseWork = courseWork;
         this.scene = scene;        
-        let infoPanelRect = scene.add.rectangle(x + 20, y + 20, x + 800, y + 800);
-        var style = { font: '10pt Arial', fill: 'white', align: 'left', wordWrap: { width: 700 } };
+        let infoPanelRect = scene.add.rectangle(x + 20, y + 20, x + 800, y + 800);        
+        var style = { font: '12pt Arial', fill: 'white', align: 'left', wordWrap: { width: 700 } };
         let text = scene.add.text(x + 24, y + 24, courseWork.description, style);
         infoPanelRect.setOrigin(0, 0);
         infoPanelRect.setStrokeStyle(2, 0x00cc00, 2);
         infoPanelRect.setFillStyle(0x002200, 0.6);
+        let textMask = infoPanelRect.createGeometryMask();
+        text.setMask(textMask);
         this.infoPanelRect = infoPanelRect;
         this.infoPanelText = text;
     }
