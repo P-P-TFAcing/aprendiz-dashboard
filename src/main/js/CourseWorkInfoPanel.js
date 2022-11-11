@@ -16,10 +16,11 @@ export default class CourseWorkInfoPanel extends Phaser.GameObjects.Container {
         infoPanelRect.setOrigin(0, 0);
         infoPanelRect.setStrokeStyle(2, 0x00cc00, 2);
         infoPanelRect.setFillStyle(0x002200, 0.6);
+        // clip text
         let textMask = infoPanelRect.createGeometryMask();
         text.setMask(textMask);
         this.infoPanelRect = infoPanelRect;
-        this.infoPanelText = text;
+        this.infoPanelText = text;        
     }
     
     destroy() {
