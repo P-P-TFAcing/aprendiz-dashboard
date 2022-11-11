@@ -16,8 +16,8 @@ export default class DashboardAppPlugin extends Phaser.Plugins.BasePlugin {
         pluginManager.registerGameObject('courseWorkRect', function (scrollableContainer, x, y, course, courseWork) {
             return this.displayList.add(new CourseWorkRect(this.scene, scrollableContainer, x, y, course, courseWork));
         });
-        pluginManager.registerGameObject('courseWorkInfoPanel', function (course, courseWork) {
-            return this.displayList.add(new CourseWorkInfoPanel(this.scene, course, courseWork));
+        pluginManager.registerGameObject('courseWorkInfoPanel', function (x, y, course, courseWork) {
+            return this.displayList.add(new CourseWorkInfoPanel(this.scene, x, y, course, courseWork));
         });
     }
 
