@@ -148,12 +148,14 @@ class MainScene extends Phaser.Scene {
     onHoverIn(object) {
         console.log('object hover in', object);
         this.hoverObject = object;        
-        this.data.mainScrollableContainer.add(this.add.courseWorkInfoPanel(100, 100, object.course, object.courseWork));
+        this.courseWorkInfoPanel = this.add.courseWorkInfoPanel(100, 100, object.course, object.courseWork)
+        this.data.mainScrollableContainer.add();
     }
     
     onHoverOut(object) {
         console.log('object hover out', object);
         delete this.hoverObject;
+        this.courseWorkInfoPanel.destroy();
     }
 
     create(config) {
