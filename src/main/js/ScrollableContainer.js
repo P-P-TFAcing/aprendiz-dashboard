@@ -79,6 +79,10 @@ export default class ScrollableContainer extends Phaser.GameObjects.Container {
             console.log('destroyed drag context');
         }
     }
+    
+    setHoverContainerId(hoverContainerId) {
+        this.hoverContainerId = hoverContainerId;
+    }
 
     onPointerMove(event) {
         let x = event.position.x;
