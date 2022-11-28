@@ -1,12 +1,13 @@
+import DraggableContainer from './DraggableContainer.js';
 
-export default class CourseWorkInfoPanel extends Phaser.GameObjects.Container {
+export default class CourseWorkInfoPanel extends DraggableContainer {
         
     setVisible(visible) {
         this.container.setVisible(visible);
     }
         
-    constructor(scene, x, y, course, courseWork) {
-        super(scene, x, y);
+    constructor(scene, scrollableContainer, x, y, course, courseWork) {
+        super(scene, scrollableContainer, 'COURSEWORK_INFO_PANEL', course.metadata, x, y);
         this.course = course;
         this.courseWork = courseWork;
         this.scene = scene;        

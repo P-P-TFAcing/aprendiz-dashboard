@@ -51,11 +51,14 @@ export default class ScrollableContainer extends Phaser.GameObjects.Container {
                 console.log('select object', object);
                 object.selectObject();
                 this.selectedObject = object;
-                dragContext.dragObject = object;
-                dragContext.dragObjectStartPos = {
-                    x: object.x,
-                    y: object.y
-                };
+                if(object.isDraggable) {
+                    console.log('drag object', object);
+                    dragContext.dragObject = object;
+                    dragContext.dragObjectStartPos = {
+                        x: object.x,
+                        y: object.y
+                    };
+                }
                 break;
             }
         }
