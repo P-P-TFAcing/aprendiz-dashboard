@@ -80,8 +80,9 @@ export default class ScrollableContainer extends Phaser.GameObjects.Container {
         }
     }
     
-    setHoverContainerId(hoverContainerId) {
-        this.hoverContainerId = hoverContainerId;
+    setHoverContainer(hoverContainer) {
+        this.hoverContainerId = hoverContainer.containerId;
+        this.hoverContainerObject = hoverContainer;        
     }
 
     onPointerMove(event) {
