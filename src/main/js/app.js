@@ -122,6 +122,8 @@ class InfoLinkButton extends Button {
 
     onButtonClick() {
         console.log('info link button click');
+        let viewLinkURL = this.scene.courseWorkInfoPanel.courseWork.alternateLink;
+        console.log('open link in new tab', viewLinkURL);
     }
 }
 
