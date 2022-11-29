@@ -130,7 +130,9 @@ class InfoCloseButton extends Button {
     onButtonClick() {
         console.log('info panel close click');
         delete this.scene.hoverObject;
-        this.scene.courseWorkInfoPanel.destroy();        
+        this.scene.courseWorkInfoPanel.destroy();    
+        this.infoPanelLinkButton.destroy();
+        this.infoPanelCloseButton.destroy();
     }
 }
 
@@ -168,8 +170,8 @@ class MainScene extends Phaser.Scene {
             this.courseWorkInfoPanel = this.add.courseWorkInfoPanel(100, 100, object.course, object.courseWork);
             this.data.mainScrollableContainer.add(this.courseWorkInfoPanel);
             // add buttons
-            new InfoLinkButton(this, 780, 130, 'View');
-            new InfoCloseButton(this, 850, 130, 'X');            
+            this.infoPanelLinkButton = new InfoLinkButton(this, 780, 130, 'View');
+            this.infoPanelCloseButton = new InfoCloseButton(this, 850, 130, 'X');            
         }
     }
     

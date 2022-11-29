@@ -3,6 +3,10 @@
  */
 export default class Button {
 
+    destroy() {
+        this.container.destroy();
+    }
+
     constructor(scene, x, y, caption) {
         this.scene = scene;
         this.container = scene.add.container(x, y);
