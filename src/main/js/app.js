@@ -118,6 +118,22 @@ class ZoomOutButton extends Button {
     }
 }
 
+class InfoLinkButton extends Button {
+
+    onButtonClick() {
+        console.log('info link button click');
+    }
+}
+
+class InfoCloseButton extends Button {
+
+    onButtonClick() {
+        console.log('info panel close click');
+        delete this.hoverObject;
+        this.courseWorkInfoPanel.destroy();        
+    }
+}
+
 import DashboardAppPlugin from './DashboardAppPlugin.js';
 
 class MainScene extends Phaser.Scene {
@@ -151,6 +167,9 @@ class MainScene extends Phaser.Scene {
             this.hoverObject = object;        
             this.courseWorkInfoPanel = this.add.courseWorkInfoPanel(100, 100, object.course, object.courseWork);
             this.data.mainScrollableContainer.add(this.courseWorkInfoPanel);
+            // add buttons
+            new InfoLinkButton(this, 750, 120, 'Open');
+            new InfoCloseButton(this, 780, 120, 'X');            
         }
     }
     
