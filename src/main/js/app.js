@@ -131,8 +131,8 @@ class InfoCloseButton extends Button {
         console.log('info panel close click');
         delete this.scene.hoverObject;
         this.scene.courseWorkInfoPanel.destroy();    
-        this.infoPanelLinkButton.destroy();
-        this.infoPanelCloseButton.destroy();
+        this.scene.infoPanelLinkButton.destroy();
+        this.scene.infoPanelCloseButton.destroy();
     }
 }
 
