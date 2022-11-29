@@ -27,6 +27,8 @@ export default class CourseWorkInfoPanel extends DraggableContainer {
         text.setMask(textMask);
         this.infoPanelRect = infoPanelRect;
         this.infoPanelText = text;        
+        this.add(this.infoPanelRect);
+        this.add(text);
     }
     
     destroy() {

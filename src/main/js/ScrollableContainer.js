@@ -99,7 +99,7 @@ export default class ScrollableContainer extends Phaser.GameObjects.Container {
             if (object.isPointIn(x, y)) {
                 //console.log('hover', object);
                 if( object.containerId && (object.containerId !== this.hoverContainerId)) {
-                    //console.log('hover in', object);
+                    console.log('hover in', object);
                     this.hoverContainerObject = object;
                     this.hoverContainerId = object.containerId;                       
                     if(this.eventHandlerHoverIn) {
