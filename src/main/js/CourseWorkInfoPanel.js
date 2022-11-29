@@ -1,7 +1,6 @@
-
 export default class CourseWorkInfoPanel extends Phaser.GameObjects.Container {
         
-    setVisible(visible) {
+    setVisible(visible) {        
         this.container.setVisible(visible);
     }
         
