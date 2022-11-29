@@ -6,7 +6,6 @@ export default class DraggableContainer extends Phaser.GameObjects.Container {
 
     constructor(scene, scrollableContainer, containerId, metadata, x, y, width, height, children) {
         super(scene, x, y, children);
-        this.isDraggable = true;
         this.containerId = containerId;
         this.scene = scene;        
         this.x = x;

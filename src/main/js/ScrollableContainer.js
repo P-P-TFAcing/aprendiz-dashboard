@@ -51,14 +51,11 @@ export default class ScrollableContainer extends Phaser.GameObjects.Container {
                 console.log('select object', object);
                 object.selectObject();
                 this.selectedObject = object;
-                if(object.isDraggable) {
-                    console.log('drag object', object);
-                    dragContext.dragObject = object;
-                    dragContext.dragObjectStartPos = {
-                        x: object.x,
-                        y: object.y
-                    };
-                }
+                dragContext.dragObject = object;
+                dragContext.dragObjectStartPos = {
+                    x: object.x,
+                    y: object.y
+                };
                 break;
             }
         }
@@ -79,11 +76,6 @@ export default class ScrollableContainer extends Phaser.GameObjects.Container {
             console.log('destroyed drag context');
         }
     }
-    
-    setHoverContainer(hoverContainer) {
-        this.hoverContainerId = hoverContainer.containerId;
-        this.hoverContainerObject = hoverContainer;        
-    }
 
     onPointerMove(event) {
         let x = event.position.x;
@@ -99,7 +91,7 @@ export default class ScrollableContainer extends Phaser.GameObjects.Container {
             if (object.isPointIn(x, y)) {
                 //console.log('hover', object);
                 if( object.containerId && (object.containerId !== this.hoverContainerId)) {
-                    console.log('hover in', object);
+                    //console.log('hover in', object);
                     this.hoverContainerObject = object;
                     this.hoverContainerId = object.containerId;                       
                     if(this.eventHandlerHoverIn) {

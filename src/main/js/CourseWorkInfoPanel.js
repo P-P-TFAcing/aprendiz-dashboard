@@ -1,20 +1,16 @@
-import DraggableContainer from './DraggableContainer.js';
 
-export default class CourseWorkInfoPanel extends DraggableContainer {
+export default class CourseWorkInfoPanel extends Phaser.GameObjects.Container {
         
     setVisible(visible) {
         this.container.setVisible(visible);
     }
         
-    constructor(scene, scrollableContainer, x, y, course, courseWork) {
-        super(scene, scrollableContainer, 'COURSEWORK_INFO_PANEL', course.metadata, x, y);
+    constructor(scene, x, y, course, courseWork) {
+        super(scene, x, y);
         this.course = course;
         this.courseWork = courseWork;
         this.scene = scene;        
-        let infoPanelRect = scene.add.rectangle(x + 20, y + 20, x + 800, y + 800);   
-        this.width = 780;
-        this.height = 780;
-        
+        let infoPanelRect = scene.add.rectangle(x + 20, y + 20, x + 800, y + 800);        
         var style = { font: '14pt Arial', fill: 'white', align: 'left', wordWrap: { width: 700 } };
         let text = scene.add.text(x + 24, y + 24, courseWork.description, style);
         infoPanelRect.setOrigin(0, 0);
@@ -28,10 +24,12 @@ export default class CourseWorkInfoPanel extends DraggableContainer {
         text.setMask(textMask);
         this.infoPanelRect = infoPanelRect;
         this.infoPanelText = text;        
-        this.add(this.infoPanelRect);
-        this.add(text);
     }
     
+    destroy() {
+        this.infoPanelText.destroy();
+        this.infoPanelRect.destroy();
+    }
 }
 
 
