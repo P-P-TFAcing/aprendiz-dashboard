@@ -32,10 +32,6 @@ export default class CourseWorkInfoPanel extends DraggableContainer {
         this.add(text);
     }
     
-    destroy() {
-        this.infoPanelText.destroy();
-        this.infoPanelRect.destroy();
-    }
 }
 
 
