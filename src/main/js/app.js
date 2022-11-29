@@ -168,8 +168,8 @@ class MainScene extends Phaser.Scene {
             this.courseWorkInfoPanel = this.add.courseWorkInfoPanel(100, 100, object.course, object.courseWork);
             this.data.mainScrollableContainer.add(this.courseWorkInfoPanel);
             // add buttons
-            new InfoLinkButton(this, 750, 120, 'Open');
-            new InfoCloseButton(this, 780, 120, 'X');            
+            new InfoLinkButton(this, 780, 130, 'Open');
+            new InfoCloseButton(this, 830, 130, 'X');            
         }
     }
     
