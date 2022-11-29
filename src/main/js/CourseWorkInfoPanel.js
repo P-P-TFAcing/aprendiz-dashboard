@@ -14,6 +14,7 @@ export default class CourseWorkInfoPanel extends DraggableContainer {
         let infoPanelRect = scene.add.rectangle(x + 20, y + 20, x + 800, y + 800);   
         this.width = 780;
         this.height = 780;
+        
         var style = { font: '14pt Arial', fill: 'white', align: 'left', wordWrap: { width: 700 } };
         let text = scene.add.text(x + 24, y + 24, courseWork.description, style);
         infoPanelRect.setOrigin(0, 0);
