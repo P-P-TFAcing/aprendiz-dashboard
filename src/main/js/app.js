@@ -124,6 +124,7 @@ class InfoLinkButton extends Button {
         console.log('info link button click');
         let viewLinkURL = this.scene.courseWorkInfoPanel.courseWork.alternateLink;
         console.log('open link in new tab', viewLinkURL);
+        window.open(viewLinkURL, '_blank');
     }
 }
 
@@ -172,8 +173,8 @@ class MainScene extends Phaser.Scene {
             this.courseWorkInfoPanel = this.add.courseWorkInfoPanel(100, 100, object.course, object.courseWork);
             this.data.mainScrollableContainer.add(this.courseWorkInfoPanel);
             // add buttons
-            this.infoPanelLinkButton = new InfoLinkButton(this, 780, 130, 'View');
-            this.infoPanelCloseButton = new InfoCloseButton(this, 850, 130, 'X');            
+            this.infoPanelLinkButton = new InfoLinkButton(this, 850, 130, 'View');
+            this.infoPanelCloseButton = new InfoCloseButton(this, 930, 130, 'X');            
         }
     }
     
