@@ -13,7 +13,7 @@ export default class CourseWorkRect extends DraggableContainer {
         this.height = text.height + 32;
         let rectangle = scene.add.rectangle(0, 0, this.width, this.height);
         rectangle.setOrigin(0, 0);
-        let rectColor = 0xffffff;        
+        let rectColor = 0x444466;        
         // TRH needs to be in config
         // stage 0 : red
         if(course.enrollmentCode === "ukxv7mb") {            
