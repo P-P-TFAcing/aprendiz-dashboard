@@ -105,12 +105,12 @@ public class ClassroomController {
             if (courses != null) {
                 for (Course c : courses) {
                     LOGGER.debug("found course " + c.getName() + " " + c.getId() + " " + c.getDescriptionHeading() + " " + c.getEnrollmentCode());
-                    String enrollmentCode = c.getEnrollmentCode();                
-                    for(String loadedCourseName : loadedCourses) {
-                        if(loadedCourseName.equals(enrollmentCode)) {
-                            result.add(c);
-                        }
-                    }                
+//                    String enrollmentCode = c.getEnrollmentCode();                
+//                    for(String loadedCourseName : loadedCourses) {
+//                        if(loadedCourseName.equals(enrollmentCode)) {
+                    result.add(c);
+//                        }
+//                    }                
                 }                
             }
         } while(pageToken != null);
