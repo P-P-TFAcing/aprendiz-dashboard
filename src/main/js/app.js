@@ -46,6 +46,7 @@ class LoaderScene extends Phaser.Scene {
 
 import CourseWorkRect from './CourseWorkRect.js';
 import Button from './Button.js';
+import Button from './ColorPickerButton.js';
 import ButtonPanel from './ButtonPanel.js';
 import WebSocketContext from './WebSocketContext.js';
 
@@ -91,6 +92,13 @@ class LegendToggleButton extends Button {
         let legendVisible = this.scene.legendVisible;
         this.scene.legendVisible = !legendVisible;        
         this.scene.legendPanel.setVisible(this.scene.legendVisible);                
+    }
+}
+
+class CourseColorButton extends ColorPickerButton {
+
+    onButtonClick() {
+        console.log('course color');        
     }
 }
 
@@ -144,7 +152,7 @@ import DashboardAppPlugin from './DashboardAppPlugin.js';
 class MainScene extends Phaser.Scene {
 
     preload() {
-        this.load.setBaseURL('https://aprendiz-dashboard.pptpdx.com');
+        this.load.setBaseURL('https://aprendiz-dashboard.pptpdx.com');        
         console.log('preloaded MainScene');
     }
 
@@ -204,8 +212,10 @@ class MainScene extends Phaser.Scene {
         buttonPanel.addButton(new ZoomOutButton(this, 1150, 20, '-'));
         buttonPanel.addSpacer(96);
         buttonPanel.addButton(new FullScreenButton(this, 1450, 20, 'Full-Screen'));
-        buttonPanel.addSpacer(96);
-        buttonPanel.addButton(new LegendToggleButton(this, 1550, 20, 'Legend'));
+        buttonPanel.addSpacer(64);
+        buttonPanel.addButton(new LegendToggleButton(this, 1500, 20, 'Legend'));
+        buttonPanel.addSpacer(64);
+        buttonPanel.addButton(new CourseColorButton(this, 1600, 20, 'Course Color'));
 
         this.data.mainScrollableContainer = this.add.scrollableContainer(0, buttonPanel.height + 12, 10000, 5000);        
         this.data.mainScrollableContainer.addEventHandlerHoverIn(this.onHoverIn.bind(this));
