@@ -46,7 +46,7 @@ class LoaderScene extends Phaser.Scene {
 
 import CourseWorkRect from './CourseWorkRect.js';
 import Button from './Button.js';
-import Button from './ColorPickerButton.js';
+import ColorPickerButton from './ColorPickerButton.js';
 import ButtonPanel from './ButtonPanel.js';
 import WebSocketContext from './WebSocketContext.js';
 
