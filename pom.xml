@@ -6,7 +6,7 @@
     <groupId>com.pptpdx</groupId>
     <artifactId>aprendiz-dashboard</artifactId>
     <packaging>war</packaging>
-    <name>Aprendiz Dashboard Web Application</name>
+    <name>Aprendiz Dashboard</name>
     <version>1</version>
 
     <properties>

@@ -72,10 +72,10 @@ public class ClassroomController {
                     .setPageToken(pageToken)
                     .setPageSize(20)
                     .execute();        
-            pageToken = response.getNextPageToken();
-            LOGGER.debug("fetched page of " + response.getCourseWork().size() + " token:" + pageToken);
+            pageToken = response.getNextPageToken();            
             List<CourseWork> objects = response.getCourseWork();            
             if (objects != null) {
+                LOGGER.debug("fetched page of " + response.getCourseWork().size() + " token:" + pageToken);
                 for (CourseWork t : objects) {
                     result.add(t);
                     LOGGER.debug("courseWork " + courseId + " " + t.getTitle() + " assignment:" + t.getAssignment() + " question:" + t.getMultipleChoiceQuestion() + " assignment:" + t.getAssignment());
@@ -89,7 +89,6 @@ public class ClassroomController {
     public static List<Course> getCourses(Credential credential) throws IOException {
         
         // @TODO configure somehow. global metadata? (including colors)
-        final String[] loadedCourses = { "ukxv7mb", "jdcft3j", "7khg5iv", "2oksark" }; 
         
         LOGGER.debug("get all courses");
         Classroom service = getService(credential);
