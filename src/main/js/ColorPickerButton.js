@@ -21,7 +21,7 @@ export default class ColorPickerButton {
         
         text.setOrigin(0, 0);
         text.depth = 1;
-        this.width = text.width + 16;
+        this.width = text.width + 48;
         this.height = text.height + 16;
         rectangle.setOrigin(0, 0);
         rectangle.setStrokeStyle(2, 0xEEEEEE, 2);
