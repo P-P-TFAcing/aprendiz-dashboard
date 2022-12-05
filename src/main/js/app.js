@@ -206,16 +206,16 @@ class MainScene extends Phaser.Scene {
         this.data.sceneScale = 1.0;
         // graphics
         let buttonPanel = new ButtonPanel(this, 4, 4, 'Aprendiz Dashboard');
-        buttonPanel.addButton(new SaveButton(this, 800, 20, 'Save'));
+        buttonPanel.addButton(new SaveButton(this, 600, 20, 'Save'));
         buttonPanel.addSpacer(48);
-        buttonPanel.addButton(new ZoomInButton(this, 1100, 20, '+'));
-        buttonPanel.addButton(new ZoomOutButton(this, 1150, 20, '-'));
+        buttonPanel.addButton(new ZoomInButton(this, 800, 20, '+'));
+        buttonPanel.addButton(new ZoomOutButton(this, 950, 20, '-'));
         buttonPanel.addSpacer(96);
-        buttonPanel.addButton(new FullScreenButton(this, 1450, 20, 'Full-Screen'));
+        buttonPanel.addButton(new FullScreenButton(this, 1250, 20, 'Full-Screen'));
         buttonPanel.addSpacer(64);
-        buttonPanel.addButton(new LegendToggleButton(this, 1500, 20, 'Legend'));
+        buttonPanel.addButton(new LegendToggleButton(this, 1400, 20, 'Legend'));
         buttonPanel.addSpacer(64);
-        buttonPanel.addButton(new CourseColorButton(this, 1600, 20, 'Course Color'));
+        buttonPanel.addButton(new CourseColorButton(this, 1500, 20, 'Course Color'));
 
         this.data.mainScrollableContainer = this.add.scrollableContainer(0, buttonPanel.height + 12, 10000, 5000);        
         this.data.mainScrollableContainer.addEventHandlerHoverIn(this.onHoverIn.bind(this));

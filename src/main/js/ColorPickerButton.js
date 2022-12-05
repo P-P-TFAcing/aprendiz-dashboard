@@ -13,7 +13,12 @@ export default class ColorPickerButton {
         this.x = x;
         this.y = y;
         let rectangle = scene.add.rectangle(0, 0, 32, 32);
-        let text = scene.add.text(8, 8, caption, {font: "20px Arial", color: '#000000'});
+        
+        let colorPicker = scene.add.dom(8,8, y, 'input', 'type="color"', 'Color');
+        colorPicker.setOrigin(0,0);
+        
+        let text = scene.add.text(32, 8, caption, {font: "20px Arial", color: '#000000'});
+        
         text.setOrigin(0, 0);
         text.depth = 1;
         this.width = text.width + 16;
@@ -24,6 +29,7 @@ export default class ColorPickerButton {
         rectangle.setSize(this.width, this.height);
         this.container.add(rectangle);
         this.container.add(text);
+        this.container.add(colorPicker);
 
         rectangle.setInteractive({useHandCursor: true}).on('pointerdown', this.mouseDownHandler.bind(this));
         rectangle.setInteractive({useHandCursor: true}).on('pointerup', this.mouseUpHandler.bind(this));
