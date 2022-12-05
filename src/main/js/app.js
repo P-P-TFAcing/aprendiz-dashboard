@@ -211,11 +211,11 @@ class MainScene extends Phaser.Scene {
         buttonPanel.addButton(new ZoomInButton(this, 800, 20, '+'));
         buttonPanel.addButton(new ZoomOutButton(this, 950, 20, '-'));
         buttonPanel.addSpacer(96);
-        buttonPanel.addButton(new FullScreenButton(this, 1250, 20, 'Full-Screen'));
+        buttonPanel.addButton(new FullScreenButton(this, 1200, 20, 'Full-Screen'));
         buttonPanel.addSpacer(64);
-        buttonPanel.addButton(new LegendToggleButton(this, 1400, 20, 'Legend'));
+        buttonPanel.addButton(new LegendToggleButton(this, 1300, 20, 'Legend'));
         buttonPanel.addSpacer(64);
-        buttonPanel.addButton(new CourseColorButton(this, 1500, 20, 'Course Color'));
+        buttonPanel.addButton(new CourseColorButton(this, 1400, 20, 'Color'));
 
         this.data.mainScrollableContainer = this.add.scrollableContainer(0, buttonPanel.height + 12, 10000, 5000);        
         this.data.mainScrollableContainer.addEventHandlerHoverIn(this.onHoverIn.bind(this));
