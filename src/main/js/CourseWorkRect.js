@@ -1,3 +1,5 @@
+/* global Phaser */
+
 import DraggableContainer from './DraggableContainer.js';
 
 export default class CourseWorkRect extends DraggableContainer {
@@ -15,7 +17,9 @@ export default class CourseWorkRect extends DraggableContainer {
         rectangle.setOrigin(0, 0);
         let rectColor = 0x444466;        
         if(course.metadata.courseColor) {
-            rectColor = course.metadata.courseColor;
+            let rectColorHexCode = course.metadata.courseColor;
+            rectColor = Phaser.Display.Color.HexStringToColor(rectColorHexCode).color;
+            console.log('course ' + course.id + ' color is ' + rectColor + ' from hexcode ' + rectColorHexCode);
         }
         // TRH needs to be in config
         // stage 0 : red        
