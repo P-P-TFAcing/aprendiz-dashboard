@@ -98,17 +98,6 @@ class CourseColorButton extends Button {
 
     onButtonClick() {
         console.log('course color');    
-        let elemDiv = document.createElement('div');
-        elemDiv.style.cssText = 'position:absolute;width:300px;height:120px;opacity:1.0;z-index:1;background:#fff;top:150px;left:150px;color:#000';
-        let htmlText = '<div style="padding: 16px;"><div style="padding: 8px;"><span><input type="color" value="#ff0000"> Course Color</span></div><div style="padding: 8px;"><span><button>Update</button><button id="color-picker-close-button">Close</button></span></div></div>';        
-        elemDiv.innerHTML = htmlText;                
-        document.body.appendChild(elemDiv);
-        let closeButtonElement = document.getElementById('color-picker-close-button');
-        if(closeButtonElement) {
-            closeButtonElement.addEventListener('click', function() { 
-                console.log('close button click'); 
-            });
-        }
     }
 }
 
@@ -225,7 +214,20 @@ class MainScene extends Phaser.Scene {
         buttonPanel.addSpacer(64);
         buttonPanel.addButton(new LegendToggleButton(this, 1300, 20, 'Legend'));
         buttonPanel.addSpacer(64);
-        buttonPanel.addButton(new CourseColorButton(this, 1400, 20, 'Color'));
+        //buttonPanel.addButton(new CourseColorButton(this, 1400, 20, 'Color'));
+        // add color picker
+        let elemDiv = document.createElement('div');
+        elemDiv.style.cssText = 'position:absolute;width:300px;height:120px;opacity:1.0;z-index:1;background:#fff;top:1400px;left:20px;color:#000';
+        let htmlText = '<div style="padding: 16px;"><div style="padding: 8px;"><span><input type="color" value="#ff0000"> Course Color</span></div><div style="padding: 8px;"><span><button>Update</button></span></div></div>';        
+        elemDiv.innerHTML = htmlText;                
+        document.body.appendChild(elemDiv);
+        let closeButtonElement = document.getElementById('color-picker-close-button');
+        if(closeButtonElement) {
+            closeButtonElement.addEventListener('click', function() { 
+                console.log('close button click'); 
+            });
+        }
+
 
         this.data.mainScrollableContainer = this.add.scrollableContainer(0, buttonPanel.height + 12, 10000, 5000);        
         this.data.mainScrollableContainer.addEventHandlerHoverIn(this.onHoverIn.bind(this));
