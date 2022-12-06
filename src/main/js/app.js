@@ -100,7 +100,7 @@ class CourseColorButton extends Button {
         console.log('course color');    
         var elemDiv = document.createElement('div');
         elemDiv.style.cssText = 'position:absolute;width:300px;height:120px;opacity:1.0;z-index:1;background:#fff;top:150px;left:150px;color:#000';
-        let htmlText = '<div><span style="padding: 16px;position:relative;top:16px;left:16px;"><input type="color" value="#ff0000"> Course Color</span><br><span><button>Update</button><button>Close</button></span></div>';
+        let htmlText = '<div><div><span><input type="color" value="#ff0000"> Course Color</span></div><div><span><button>Update</button><button>Close</button></span></div></div>';
         elemDiv.innerHTML = htmlText;
         document.body.appendChild(elemDiv);
     }
