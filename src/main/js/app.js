@@ -46,7 +46,6 @@ class LoaderScene extends Phaser.Scene {
 
 import CourseWorkRect from './CourseWorkRect.js';
 import Button from './Button.js';
-import ColorPickerButton from './ColorPickerButton.js';
 import ButtonPanel from './ButtonPanel.js';
 import WebSocketContext from './WebSocketContext.js';
 
@@ -95,13 +94,13 @@ class LegendToggleButton extends Button {
     }
 }
 
-class CourseColorButton extends ColorPickerButton {
+class CourseColorButton extends Button {
 
     onButtonClick() {
         console.log('course color');    
         var elemDiv = document.createElement('div');
         elemDiv.style.cssText = 'position:absolute;width:300px;height:120px;opacity:1.0;z-index:1;background:#fff;top:150px;left:150px;color:#000';
-        let htmlText = '<div><span style="padding: 32px;position:relative;top:16px;left:16px;"><input type="color" value="#ff0000"> Course Color</span></div>';
+        let htmlText = '<div><span style="padding: 16px;position:relative;top:16px;left:16px;"><input type="color" value="#ff0000"> Course Color</span><br><span><button>Update</button><button>Close</button></span></div>';
         elemDiv.innerHTML = htmlText;
         document.body.appendChild(elemDiv);
     }
