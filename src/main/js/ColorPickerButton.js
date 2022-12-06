@@ -14,7 +14,8 @@ export default class ColorPickerButton {
         this.y = y;
         let rectangle = scene.add.rectangle(0, 0, 32, 32);
         
-        let colorPicker = scene.add.dom(8,8, y, 'input', 'type="color" value="#e66465"', '');
+        //type="color" value="#e66465"
+        let colorPicker = scene.add.dom(8,8, y, 'div', 'color="blue"', '<p>This is a div</p>');
         colorPicker.setOrigin(0,0);
         
         let text = scene.add.text(32, 8, caption, {font: "20px Arial", color: '#000000'});
