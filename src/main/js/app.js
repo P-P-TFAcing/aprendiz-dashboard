@@ -100,8 +100,8 @@ class CourseColorButton extends ColorPickerButton {
     onButtonClick() {
         console.log('course color');    
         var elemDiv = document.createElement('div');
-        elemDiv.style.cssText = 'position:absolute;width:100%;height:100%;opacity:0.3;z-index:100;background:#000;';
-        elemDiv.innerHTML = 'This is some text from Tim';
+        elemDiv.style.cssText = 'position:absolute;width:400px;height:400px;opacity:1.0;z-index:1;background:#fff;top:150px;left:150px;color:#000';
+        elemDiv.innerHTML = '<input type="color" value="#ff0000" Color for course>';
         document.body.appendChild(elemDiv);
     }
 }
