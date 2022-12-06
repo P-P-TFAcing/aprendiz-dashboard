@@ -98,6 +98,12 @@ class CourseColorButton extends Button {
 
     onButtonClick() {
         console.log('course color');    
+        let x = document.getElementById("course-color-picker-block");
+        if (x.style.display === "none") {
+            x.style.display = "block";
+        } else {
+            x.style.display = "none";
+        }
     }
 }
 
@@ -220,8 +226,8 @@ class MainScene extends Phaser.Scene {
         if(!colorPickerBlock) {
             let colorPickerBlock = document.createElement('div');
             colorPickerBlock.setAttribute("id", "course-color-picker-block");
-            colorPickerBlock.style.cssText = 'position:absolute;width:250px;height:80px;opacity:1.0;z-index:1;background:#fff;top:200px;left:80px;color:#ccc';
-            let htmlText = '<div style="padding: 16px;"><div style="padding: 8px;"><span><input type="color" value="#ff0000"> Course Color </span></div></div>';        
+            colorPickerBlock.style.cssText = 'position:absolute;width:250px;height:80px;opacity:1.0;z-index:1;background:#222;top:200px;left:80px;color:#ccc';
+            let htmlText = '<div style="padding: 8px;"><span><input type="color" value="#ff0000"> Course Color </span></div>';        
             colorPickerBlock.innerHTML = htmlText;                
             document.body.appendChild(colorPickerBlock);
         }
