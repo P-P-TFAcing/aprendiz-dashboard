@@ -218,10 +218,10 @@ class MainScene extends Phaser.Scene {
         // add color picker
         let elemDiv = document.createElement('div');
         elemDiv.style.cssText = 'position:absolute;width:300px;height:120px;opacity:1.0;z-index:1;background:#fff;top:20px;left:1400px;color:#000';
-        let htmlText = '<div style="padding: 16px;"><div style="padding: 8px;"><span><input type="color" value="#ff0000"> Course Color <button>Update</button></span></div></div>';        
+        let htmlText = '<div style="padding: 16px;"><div style="padding: 8px;"><span><input type="color" value="#ff0000"> Course Color <button id="color-picker-update-button">Update</button></span></div></div>';        
         elemDiv.innerHTML = htmlText;                
-        document.body.appendChild(elemDiv);
-        let closeButtonElement = document.getElementById('color-picker-close-button');
+        //document.body.appendChild(elemDiv);
+        let closeButtonElement = document.getElementById('color-picker-update-button');
         if(closeButtonElement) {
             closeButtonElement.addEventListener('click', function() { 
                 console.log('close button click'); 
