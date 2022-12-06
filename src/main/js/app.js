@@ -233,7 +233,7 @@ class MainScene extends Phaser.Scene {
             let colorPickerInput = document.getElementById('course-color-picker-input');
             if(colorPickerInput) {
                 colorPickerInput.addEventListener("input", function(event) {                    
-                    let newColor = document.getElementById('course-color-picker-input').value();
+                    let newColor = event.target.value;
                     console.log('color update', newColor);
                 }.bind(this));
             }        
