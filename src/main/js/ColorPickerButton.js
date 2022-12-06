@@ -27,7 +27,7 @@ export default class ColorPickerButton {
         rectangle.setSize(this.width, this.height);
         this.container.add(rectangle);
         this.container.add(text);
-        let colorPicker = scene.add.dom(8,8, y, 'div', 'color="blue"', '<p>This is a div</p>');
+        let colorPicker = scene.add.dom(8,8, y, 'div', 'background-color: lime; width: 220px; height: 100px; font: 48px Arial;', '<p>This is a div</p>');
         colorPicker.setOrigin(0,0);        
         this.container.add(colorPicker);
 
