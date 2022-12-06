@@ -235,6 +235,17 @@ class MainScene extends Phaser.Scene {
                 colorPickerInput.addEventListener("input", function(event) {                    
                     let newColor = event.target.value;
                     console.log('color update', newColor);
+                    let scrollableContainer = this.data.mainScrollableContainer;
+                    if(scrollableContainer) {
+                        let selectedObject = scrollableContainer.selectedObject;
+                        if(selectedObject) {
+                            let course = selectedObject.course;
+                            if(course) {
+                                course.metadata.courseColor = newColor;
+                                console.log('update course color course:' + course.id + ' to color ' + newColor);
+                            }
+                        }
+                    }
                 }.bind(this));
             }        
         }

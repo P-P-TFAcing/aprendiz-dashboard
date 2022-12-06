@@ -37,6 +37,7 @@ export default class CourseWorkRect extends DraggableContainer {
         // add to container
         this.add(rectangle);
         this.add(text);
+        this.courseWorkRectangle = rectangle;
     }
 }
 
