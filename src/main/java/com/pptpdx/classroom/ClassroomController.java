@@ -132,7 +132,7 @@ public class ClassroomController {
             if (objects != null) {
                 for (CourseWorkMaterial t : objects) {
                     result.add(t);
-                    LOGGER.debug("courseWorkMaterial " + courseId + " " + t.getTitle() + " description:" + t.getDescription());
+                    LOGGER.debug("courseWorkMaterial " + courseId + " " + t.getTitle());
                 }                
             }
         } while(pageToken != null);
