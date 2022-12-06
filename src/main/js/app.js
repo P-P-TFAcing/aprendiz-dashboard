@@ -225,7 +225,6 @@ class MainScene extends Phaser.Scene {
             colorPickerBlock.innerHTML = htmlText;                
             document.body.appendChild(colorPickerBlock);
         }
-
         this.data.mainScrollableContainer = this.add.scrollableContainer(0, buttonPanel.height + 12, 10000, 5000);        
         this.data.mainScrollableContainer.addEventHandlerHoverIn(this.onHoverIn.bind(this));
         this.data.mainScrollableContainer.addEventHandlerHoverOut(this.onHoverOut.bind(this));
