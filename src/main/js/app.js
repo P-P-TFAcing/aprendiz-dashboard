@@ -226,7 +226,7 @@ class MainScene extends Phaser.Scene {
         if(!colorPickerBlock) {
             let colorPickerBlock = document.createElement('div');
             colorPickerBlock.setAttribute("id", "course-color-picker-block");
-            colorPickerBlock.style.cssText = 'display:none;position:absolute;width:200px;height:44px;opacity:1.0;z-index:1;background:#222;top:200px;left:80px;color:#ccc';
+            colorPickerBlock.style.cssText = 'display:none;position:absolute;width:200px;height:44px;opacity:1.0;z-index:1;background:#615959;top:140px;left:16px;color:#ccc';
             let htmlText = '<div style="padding: 8px;"><span><input type="color" value="#ff0000"> Course Color </span></div>';        
             colorPickerBlock.innerHTML = htmlText;                
             document.body.appendChild(colorPickerBlock);
