@@ -101,9 +101,9 @@ class CourseColorButton extends Button {
         let elemDiv = document.createElement('div');
         elemDiv.style.cssText = 'position:absolute;width:300px;height:120px;opacity:1.0;z-index:1;background:#fff;top:150px;left:150px;color:#000';
         let htmlText = '<div style="padding: 16px;"><div style="padding: 8px;"><span><input type="color" value="#ff0000"> Course Color</span></div><div style="padding: 8px;"><span><button>Update</button><button id="color-picker-close-button">Close</button></span></div></div>';        
-        elemDiv.innerHTML = htmlText;        
-        let closeButtonElement = document.getElementById('color-picker-close-button');
+        elemDiv.innerHTML = htmlText;                
         document.body.appendChild(elemDiv);
+        let closeButtonElement = document.getElementById('color-picker-close-button');
         if(closeButtonElement) {
             closeButtonElement.addEventListener('click', function() { 
                 console.log('close button click'); 
