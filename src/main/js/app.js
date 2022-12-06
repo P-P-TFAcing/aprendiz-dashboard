@@ -217,10 +217,10 @@ class MainScene extends Phaser.Scene {
         //buttonPanel.addButton(new CourseColorButton(this, 1400, 20, 'Color'));
         // add color picker
         let elemDiv = document.createElement('div');
-        elemDiv.style.cssText = 'position:absolute;width:300px;height:120px;opacity:1.0;z-index:1;background:#fff;top:20px;left:1400px;color:#000';
+        elemDiv.style.cssText = 'position:absolute;width:300px;height:120px;opacity:1.0;z-index:1;background:#fff;top:100px;left:100px;color:#000';
         let htmlText = '<div style="padding: 16px;"><div style="padding: 8px;"><span><input type="color" value="#ff0000"> Course Color <button id="color-picker-update-button">Update</button></span></div></div>';        
         elemDiv.innerHTML = htmlText;                
-        //document.body.appendChild(elemDiv);
+        document.body.appendChild(elemDiv);
         let closeButtonElement = document.getElementById('color-picker-update-button');
         if(closeButtonElement) {
             closeButtonElement.addEventListener('click', function() { 
@@ -269,7 +269,8 @@ angular.module("AprendizApplication").controller('MainViewController', function 
           createContainer: true
         },
         scale: {          
-                parent: 'aprendiz-block',
+                parent: 'aprendiz-block',                
+                fullscreenTarget: 'aprendiz-block',
                 mode: Phaser.Scale.FIT,
                 autoCenter: Phaser.Scale.CENTER_BOTH,
                 width: 1920,
