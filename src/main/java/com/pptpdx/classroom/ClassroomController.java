@@ -82,9 +82,12 @@ public class ClassroomController {
                 for (CourseWork t : objects) {
                     result.add(t);
                     LOGGER.debug("courseWork " + courseId + " " + t.getTitle() + " assignment:" + t.getAssignment() + " question:" + t.getMultipleChoiceQuestion() + " assignment:" + t.getAssignment());
-                    Classroom.Courses.CourseWork.StudentSubmissions.List studentSubmissions = service.courses().courseWork().studentSubmissions().list(courseId, t.getId());
+                    List<StudentSubmission> studentSubmissions = service.courses().courseWork().studentSubmissions().list(courseId, t.getId()).execute().getStudentSubmissions();
                     if(!studentSubmissions.isEmpty()) {
                         LOGGER.debug("found student submissions " + studentSubmissions);
+                        for(StudentSubmission submission : studentSubmissions) {
+                            LOGGER.debug(submission + " grade=" + submission.getAssignedGrade() + " " + submission.getId());
+                        }
                     }
                 }                
             }
