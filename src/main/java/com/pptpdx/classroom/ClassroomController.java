@@ -4,6 +4,7 @@ import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.gson.GsonFactory;
 import com.google.api.services.classroom.Classroom;
+import com.google.api.services.classroom.Classroom.Courses.CourseWork.StudentSubmissions;
 import com.google.api.services.classroom.model.Topic;
 import com.google.api.services.classroom.model.Course;
 import com.google.api.services.classroom.model.CourseWork;
@@ -11,7 +12,9 @@ import com.google.api.services.classroom.model.CourseWorkMaterial;
 import com.google.api.services.classroom.model.ListCourseWorkMaterialResponse;
 import com.google.api.services.classroom.model.ListCourseWorkResponse;
 import com.google.api.services.classroom.model.ListCoursesResponse;
+import com.google.api.services.classroom.model.ListStudentSubmissionsResponse;
 import com.google.api.services.classroom.model.ListTopicResponse;
+import com.google.api.services.classroom.model.StudentSubmission;
 import com.google.gson.Gson;
 import com.pptpdx.model.CourseMetadata;
 import com.pptpdx.model.GlobalMetadata;
@@ -79,6 +82,10 @@ public class ClassroomController {
                 for (CourseWork t : objects) {
                     result.add(t);
                     LOGGER.debug("courseWork " + courseId + " " + t.getTitle() + " assignment:" + t.getAssignment() + " question:" + t.getMultipleChoiceQuestion() + " assignment:" + t.getAssignment());
+                    Classroom.Courses.CourseWork.StudentSubmissions.List studentSubmissions = service.courses().courseWork().studentSubmissions().list(courseId, t.getId());
+                    if(!studentSubmissions.isEmpty()) {
+                        LOGGER.debug("found student submissions " + studentSubmissions);
+                    }
                 }                
             }
         } while(pageToken != null);
