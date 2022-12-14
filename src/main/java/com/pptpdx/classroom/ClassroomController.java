@@ -81,14 +81,7 @@ public class ClassroomController {
                 LOGGER.debug("fetched page of " + response.getCourseWork().size() + " token:" + pageToken);
                 for (CourseWork t : objects) {
                     result.add(t);
-                    LOGGER.debug("courseWork " + courseId + " " + t.getTitle() + " assignment:" + t.getAssignment() + " question:" + t.getMultipleChoiceQuestion() + " assignment:" + t.getAssignment());
-                    List<StudentSubmission> studentSubmissions = service.courses().courseWork().studentSubmissions().list(courseId, t.getId()).execute().getStudentSubmissions();
-                    if(!studentSubmissions.isEmpty()) {
-                        LOGGER.debug("found student submissions " + studentSubmissions);
-                        for(StudentSubmission submission : studentSubmissions) {
-                            LOGGER.debug(submission + " grade=" + submission.getAssignedGrade() + " " + submission.getId());
-                        }
-                    }
+                    LOGGER.debug("courseWork " + courseId + " " + t.getTitle() + " assignment:" + t.getAssignment() + " question:" + t.getMultipleChoiceQuestion() + " assignment:" + t.getAssignment());                    
                 }                
             }
         } while(pageToken != null);
@@ -96,6 +89,28 @@ public class ClassroomController {
         return result;
     }
     
+    public static List<StudentSubmission> getStudentSubmissions(Credential credential, String courseId, String courseWorkId) throws IOException {
+        LOGGER.debug("get student submissions " + courseId + " " + courseWorkId);
+        Classroom service = getService(credential);
+        String pageToken = null;
+        List<StudentSubmission> result = new ArrayList<>();
+        do {
+            ListStudentSubmissionsResponse response = service.courses().courseWork().studentSubmissions().list(courseId, courseWorkId)                
+                    .setPageToken(pageToken)
+                    .setPageSize(20)
+                    .execute();        
+            pageToken = response.getNextPageToken();            
+            List<StudentSubmission> objects = response.getStudentSubmissions();            
+            if (objects != null) {
+                for (StudentSubmission t : objects) {
+                    result.add(t);                                  
+                }                
+            }
+        } while(pageToken != null);
+        LOGGER.debug("loaded " + result.size() + " coursework student submission objects");
+        return result;
+    }
+
     public static List<Course> getCourses(Credential credential) throws IOException {
         
         // @TODO configure somehow. global metadata? (including colors)

@@ -47,6 +47,16 @@ angular.module("AprendizApplication").service('ClassroomDataLoaderService', func
                                         }).then(function (response) {
                                             if (response.data) {
                                                 course.courseWork = response.data;
+                                                // load student submissions
+                                                angular.forEach(course.courseWork, function (courseWork) {
+                                                     $http({
+                                                        method: 'GET',
+                                                        url: 'webresources/classroom/submissions/' + course.id + '/' + courseWork.id
+                                                    }).then(function (response) {
+                                                        courseWork.submissions = response.data;
+                                                    });
+                                                });
+                                                // load coursework materials
                                                 console.log('load topic courseworkmaterials', course.id);
                                                 $http({
                                                     method: 'GET',

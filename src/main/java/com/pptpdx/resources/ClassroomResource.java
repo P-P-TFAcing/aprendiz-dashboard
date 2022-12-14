@@ -4,6 +4,7 @@ import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.services.classroom.model.Course;
 import com.google.api.services.classroom.model.CourseWork;
 import com.google.api.services.classroom.model.CourseWorkMaterial;
+import com.google.api.services.classroom.model.StudentSubmission;
 import com.google.api.services.classroom.model.Topic;
 import com.google.api.services.oauth2.model.Userinfo;
 import com.google.gson.Gson;
@@ -109,6 +110,22 @@ public class ClassroomResource {
         try {            
             Credential credential = OauthConfiguration.getCredential(cookie.getValue());
             return ClassroomController.getCourseWorkMaterials(credential, courseId);
+        } catch (IOException ex) {
+            LOGGER.error("IO exception", ex);
+            throw new WebApplicationException(Response.Status.INTERNAL_SERVER_ERROR);
+        }
+    }
+    
+    @Produces({MediaType.APPLICATION_JSON})
+    @Path("/submissions/{courseId}/{courseWorkId}")
+    @GET
+    public List<StudentSubmission> getCourseWorkMaterials(@CookieParam(APRENDIZ_SESSION_AUTH) Cookie cookie, @PathParam("courseId") String courseId, @PathParam("courseWorkId") String courseWorkId) {
+        if(cookie == null) {
+            throw new WebApplicationException(Response.Status.UNAUTHORIZED);
+        }
+        try {            
+            Credential credential = OauthConfiguration.getCredential(cookie.getValue());
+            return ClassroomController.getStudentSubmissions(credential, courseId, courseWorkId);
         } catch (IOException ex) {
             LOGGER.error("IO exception", ex);
             throw new WebApplicationException(Response.Status.INTERNAL_SERVER_ERROR);
