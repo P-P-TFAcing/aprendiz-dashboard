@@ -54,6 +54,24 @@ angular.module("AprendizApplication").service('ClassroomDataLoaderService', func
                                                         url: 'webresources/classroom/submissions/' + course.id + '/' + courseWork.id
                                                     }).then(function (response) {
                                                         courseWork.submissions = response.data;
+                                                        let turnedInCount = 0;
+                                                        let gradedCount = 0;
+                                                        let totalCount = 0;
+                                                        angular.forEach(courseWork.submissions, function (submission) {
+                                                            totalCount++;
+                                                            if(submission.state === 'RETURNED') {
+                                                                gradedCount++;
+                                                            } else if(submission.state === 'TURNED-IN') {
+                                                                turnedInCount++;
+                                                            }
+                                                        });
+                                                        if(gradedCount === totalCount) {
+                                                            courseWork.progressState = 'COMPLETED';
+                                                        } else if(turnedInCount !== 0) {
+                                                            courseWork.progressState = 'PROGRESS';
+                                                        } else {
+                                                            courseWork.progressState = 'NONE';
+                                                        }
                                                     });
                                                 });
                                                 // load coursework materials
