@@ -72,6 +72,7 @@ angular.module("AprendizApplication").service('ClassroomDataLoaderService', func
                                                         } else {
                                                             courseWork.progressState = 'NONE';
                                                         }
+                                                        console.log('coursework ' + courseWork.title + ' progress:' + courseWork.progressState);
                                                     });
                                                 });
                                                 // load coursework materials
