@@ -103,7 +103,8 @@ public class ClassroomController {
             List<StudentSubmission> objects = response.getStudentSubmissions();            
             if (objects != null) {
                 for (StudentSubmission t : objects) {
-                    result.add(t);               
+                    result.add(t);
+                    LOGGER.debug("submission:" + t);
                     if(t.getAssignedGrade() != null) {
                         LOGGER.debug("found graded submission " + t.getId() + " grade=" + t.getAssignedGrade() + " coursework ID:" + courseWorkId);
                     }
