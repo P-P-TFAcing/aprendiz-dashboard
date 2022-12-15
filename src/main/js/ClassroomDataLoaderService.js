@@ -61,7 +61,7 @@ angular.module("AprendizApplication").service('ClassroomDataLoaderService', func
                                                             totalCount++;
                                                             if(submission.state === 'RETURNED') {
                                                                 gradedCount++;
-                                                            } else if(submission.state === 'TURNED-IN') {
+                                                            } else if(submission.state === 'TURNED_IN') {
                                                                 turnedInCount++;
                                                             }
                                                         });
