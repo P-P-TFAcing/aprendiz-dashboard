@@ -9,7 +9,14 @@ export default class CourseWorkRect extends DraggableContainer {
         this.course = course;
         this.courseWork = courseWork;
         // title
-        let text = scene.add.text(16, 16, courseWork.title, { font: "24px Arial", color: '#ffffff' });
+        var text;
+        if(courseWork.progressState === 'PROGRESS') {
+            text = scene.add.text(16, 16, courseWork.title, { font: "24px Arial", color: '#0000FF' });
+        } else if(courseWork.progressState === 'COMPLETE') {
+            text = scene.add.text(16, 16, courseWork.title, { font: "24px Arial Bold", color: '#ffffff' });
+        } else {
+            text = scene.add.text(16, 16, courseWork.title, { font: "24px Arial", color: '#444444' });          
+        }
         text.setOrigin(0, 0);        
         this.width = text.width + 32;
         this.height = text.height + 32;
@@ -21,23 +28,17 @@ export default class CourseWorkRect extends DraggableContainer {
             rectColor = Phaser.Display.Color.HexStringToColor(rectColorHexCode).color;
             console.log('course ' + course.id + ' color is ' + rectColor + ' from hexcode ' + rectColorHexCode);
         }
-        // TRH needs to be in config
-        // stage 0 : red        
-//        if(course.enrollmentCode === "ukxv7mb") {            
-//            rectColor = 0xff0000;
-//        // stage 1 : orange
-//        } else if(course.enrollmentCode === 'jdcft3j') {            
-//            rectColor = 0xFFA500;
-//        // stage 2: green
-//        } else if(course.enrollmentCode === '7khg5iv') {            
-//            rectColor = 0x00ff00;
-//        } else if(course.enrollmentCode === '2oksark') {
-//            // stage 3: violet
-//            rectColor = 0xEE82EE;
-//        }
         // solid rect
+        // progress NONE is gray
         rectangle.setFillStyle(rectColor);
-        rectangle.setStrokeStyle(2, 0x888888, 2);
+        
+        if(courseWork.progressState === 'PROGRESS') {
+            rectangle.setStrokeStyle(4, 0x0000FF, 1);
+        } else if(courseWork.progressState === 'COMPLETE') {
+            rectangle.setStrokeStyle(4, 0xFFFFFF, 1);
+        } else {
+            rectangle.setStrokeStyle(2, 0x444444, 1);            
+        }
         // add to container
         this.add(rectangle);
         this.add(text);
