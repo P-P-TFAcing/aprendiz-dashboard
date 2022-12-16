@@ -12,7 +12,7 @@ export default class CourseWorkRect extends DraggableContainer {
         var text;
         if(courseWork.progressState === 'PROGRESS') {
             text = scene.add.text(16, 16, courseWork.title, { font: "24px Arial", color: '#0000FF' });
-        } else if(courseWork.progressState === 'COMPLETE') {
+        } else if(courseWork.progressState === 'COMPLETED') {
             text = scene.add.text(16, 16, courseWork.title, { font: "24px Arial Bold", color: '#ffffff' });
         } else {
             text = scene.add.text(16, 16, courseWork.title, { font: "24px Arial", color: '#444444' });          
@@ -34,7 +34,7 @@ export default class CourseWorkRect extends DraggableContainer {
         
         if(courseWork.progressState === 'PROGRESS') {
             rectangle.setStrokeStyle(4, 0x0000FF, 1);
-        } else if(courseWork.progressState === 'COMPLETE') {
+        } else if(courseWork.progressState === 'COMPLETED') {
             rectangle.setStrokeStyle(4, 0xFFFFFF, 1);
         } else {
             rectangle.setStrokeStyle(2, 0x444444, 1);            
