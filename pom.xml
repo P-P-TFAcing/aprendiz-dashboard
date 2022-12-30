@@ -58,14 +58,14 @@
             <type>jar</type>
         </dependency>
         <dependency>
-            <groupId>lilycode.net</groupId>
+            <groupId>lilycode</groupId>
             <artifactId>lilycode-hibernate</artifactId>
-            <version>1.0.5</version>
+            <version>1.0.8</version>
         </dependency>
         <dependency>
-            <groupId>lilycode.net</groupId>
+            <groupId>lilycode</groupId>
             <artifactId>lilycode-configbundle</artifactId>
-            <version>1.0.5</version>
+            <version>1.0.8</version>
         </dependency>        
         <dependency>
             <groupId>org.jboss.resteasy</groupId>
@@ -88,7 +88,7 @@
         <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-api</artifactId>
-            <version>8.0</version>
+            <version>8.0.1</version>
             <type>jar</type>
         </dependency>
         <dependency>
