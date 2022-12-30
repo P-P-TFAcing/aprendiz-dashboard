@@ -5,16 +5,12 @@
         <listener-class>com.pptpdx.resources.ClassroomApplicationListener</listener-class>
     </listener>
     <servlet>
-        <servlet-name>LogoutServlet</servlet-name>
-        <servlet-class>com.pptpdx.oauth.LogoutServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>LogoutServlet</servlet-name>
-        <url-pattern>/logout</url-pattern>
-    </servlet-mapping>
-    <servlet>
         <servlet-name>Oauth2AuthorizationCodeServlet</servlet-name>
         <servlet-class>com.pptpdx.oauth.Oauth2AuthorizationCodeServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>TestServlet</servlet-name>
+        <servlet-class>com.pptpdx.oauth.TestServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Oauth2AuthorizationCodeServlet</servlet-name>
@@ -27,5 +23,9 @@
     <servlet-mapping>
         <servlet-name>Oauth2CallbackServlet</servlet-name>
         <url-pattern>/oauth2callback</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>TestServlet</servlet-name>
+        <url-pattern>/TestServlet</url-pattern>
     </servlet-mapping>
 </web-app>
