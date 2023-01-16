@@ -241,8 +241,10 @@ class MainScene extends Phaser.Scene {
                         if(selectedObject) {
                             let course = selectedObject.course;
                             if(course) {
-                                course.metadata.courseColor = newColor;
-                                console.log('update course color course:' + course.id + ' to color ' + newColor);
+                                if(course.metadata) {
+                                    course.metadata.courseColor = newColor;
+                                    console.log('update course color course:' + course.id + ' to color ' + newColor);
+                                }
                             }
                         }
                     }

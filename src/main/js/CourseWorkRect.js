@@ -23,10 +23,12 @@ export default class CourseWorkRect extends DraggableContainer {
         let rectangle = scene.add.rectangle(0, 0, this.width, this.height);
         rectangle.setOrigin(0, 0);
         let rectColor = 0x444466;        
-        if(course.metadata.courseColor) {
-            let rectColorHexCode = course.metadata.courseColor;
-            rectColor = Phaser.Display.Color.HexStringToColor(rectColorHexCode).color;
-            console.log('course ' + course.id + ' color is ' + rectColor + ' from hexcode ' + rectColorHexCode);
+        if(course.metadata) {
+            if(course.metadata.courseColor) {
+                let rectColorHexCode = course.metadata.courseColor;
+                rectColor = Phaser.Display.Color.HexStringToColor(rectColorHexCode).color;
+                console.log('course ' + course.id + ' color is ' + rectColor + ' from hexcode ' + rectColorHexCode);
+            }
         }
         // solid rect
         // progress NONE is gray
