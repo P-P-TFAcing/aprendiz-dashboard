@@ -2,6 +2,9 @@
 module.exports = {
   content: ["./src/**/*.{html,js}"],
   theme: {
+    container: {
+      padding: '1 rem'
+    },
     screens: {
       sm: '480px',
       md: '768px',
