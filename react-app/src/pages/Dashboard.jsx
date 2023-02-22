@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import CourseList from '../components/CourseList';
-
+import PageHeader from "../components/PageHeader";
 class Dashboard extends Component {
     state = {  }
     render() { 
         return (  
-            <div className='flex p-2'>
-                <CourseList/>
-                <CourseList/>
+            <div className='w-full'>
+                <PageHeader/>
                 <CourseList/>
             </div>
         );
